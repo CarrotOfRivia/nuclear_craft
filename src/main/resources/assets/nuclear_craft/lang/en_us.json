@@ -19,5 +19,6 @@
   "block.nuclear_craft.c4_smoke": "Smoke C4 Bomb",
   "block.nuclear_craft.c4_high_explosive": "High Explosive C4 Bomb",
   "item.nuclear_craft.c4_bomb.tooltip1": "C4 Bombs can be attached to any side of a block",
-  "item.nuclear_craft.c4_bomb.tooltip2": "Activate it with redstone signal, and RUN!"
+  "item.nuclear_craft.c4_bomb.tooltip2": "Activate it with redstone signal, and RUN!",
+  "menu.nuclear_craft.c4_bomb.display_name": "Set up a delay here"
 }

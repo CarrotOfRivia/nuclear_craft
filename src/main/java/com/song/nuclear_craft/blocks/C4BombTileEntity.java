@@ -1,14 +1,24 @@
 package com.song.nuclear_craft.blocks;
 
+import com.song.nuclear_craft.NuclearCraft;
+import com.song.nuclear_craft.blocks.container.C4BombContainer;
 import com.song.nuclear_craft.misc.SoundEventList;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-public class C4BombTileEntity extends TileEntity implements ITickableTileEntity {
+import javax.annotation.Nullable;
+
+public class C4BombTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
     private static final int DEFAULT_FUSE_TIME = 800;
     protected boolean is_active;
     protected int fuse_age;
@@ -90,4 +100,14 @@ public class C4BombTileEntity extends TileEntity implements ITickableTileEntity 
         this.is_active = true;
     }
 
+    @Nullable
+    @Override
+    public Container createMenu(int id, PlayerInventory inventory, PlayerEntity entity) {
+        return new C4BombContainer(id, inventory, this);
+    }
+
+    @Override
+    public ITextComponent getDisplayName() {
+        return new TranslationTextComponent(String.format("menu.%s.c4_bomb.display_name", NuclearCraft.MODID));
+    }
 }

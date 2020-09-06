@@ -2,6 +2,7 @@ package com.song.nuclear_craft;
 
 import com.song.nuclear_craft.blocks.BlockList;
 import com.song.nuclear_craft.blocks.TileEntityList;
+import com.song.nuclear_craft.blocks.container.ContainerTypeList;
 import com.song.nuclear_craft.entities.EntityList;
 import com.song.nuclear_craft.entities.renderers.AtomicBombRenderer;
 import com.song.nuclear_craft.event.MyEventHandler;
@@ -155,7 +156,7 @@ public class NuclearCraft
 
         @SubscribeEvent
         public static void onContainerTypeRegistry(final RegistryEvent.Register<ContainerType<?>> event){
-            event.getRegistry().registerAll();
+            event.getRegistry().registerAll(ContainerTypeList.C4_BOMB_CONTAINER_TYPE);
         }
     }
 }
