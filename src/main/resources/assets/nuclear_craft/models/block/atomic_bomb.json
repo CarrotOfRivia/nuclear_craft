@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "nuclear_craft:block/atomic_bomb_top",
+    "side": "nuclear_craft:block/atomic_bomb_side",
+    "bottom": "nuclear_craft:block/atomic_bomb_bottom"
+  }
+}

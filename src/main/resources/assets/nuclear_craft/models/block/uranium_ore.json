@@ -1,0 +1,7 @@
+{
+  "_comment": "Generated using MiningMark48's JSON Generator.",
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "nuclear_craft:block/uranium_ore"
+  }
+}

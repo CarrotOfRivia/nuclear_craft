@@ -1,0 +1,12 @@
+{
+  "c4_beep": {
+    "category": "block",
+    "subtitle": "nuclear_craft.subtitle.c4_beep",
+    "sounds": ["nuclear_craft:c4_beep"]
+  },
+  "bomb_planted": {
+    "category": "player",
+    "subtitle": "nuclear_craft.subtitle.bomb_planted",
+    "sounds": ["nuclear_craft:bomb_planted"]
+  }
+}

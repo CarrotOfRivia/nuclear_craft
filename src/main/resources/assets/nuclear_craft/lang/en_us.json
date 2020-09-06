@@ -1,0 +1,23 @@
+{
+  "item.nuclear_craft.atomic_bomb_rocket": "Atomic Bomb Rocket",
+  "item.nuclear_craft.incendiary_rocket": "Incendiary Rocket",
+  "item.nuclear_craft.smoke_rocket": "Smoke Rocket",
+  "item.nuclear_craft.high_explosive_rocket": "High Explosive Rocket",
+  "item.nuclear_craft.rocket_launcher": "Rocket Launcher",
+  "item.nuclear_craft.rocket_launcher.tooltip": "Used to fire a rocket",
+  "item.nuclear_craft.rocket_launcher.ammo_left": "Ammo left: ",
+  "item.nuclear_craft.rocket_launcher_atomic_bomb.tooltip": "You are the ruler now",
+  "item.nuclear_craft.rocket_launcher_atomic_bomb": "Rocket Launcher-Atomic Bomb",
+  "item.nuclear_craft.rocket_launcher_smoke": "Rocket Launcher-Smoke Rocket",
+  "item.nuclear_craft.rocket_launcher_incendiary": "Rocket Launcher-Incendiary Rocket",
+  "item.nuclear_craft.rocket_launcher_high_explosive": "Rocket Launcher-High Explosive Rocket",
+  "item.nuclear_craft.uranium_235": "Uranium 235",
+  "item.nuclear_craft.uranium_238": "Uranium 238",
+  "item.nuclear_craft.rocket_control_unit": "Rocket Control Unit",
+  "block.nuclear_craft.c4_atomic_bomb": "Atomic C4 Bomb",
+  "block.nuclear_craft.c4_incendiary": "Incendiary C4 Bomb",
+  "block.nuclear_craft.c4_smoke": "Smoke C4 Bomb",
+  "block.nuclear_craft.c4_high_explosive": "High Explosive C4 Bomb",
+  "item.nuclear_craft.c4_bomb.tooltip1": "C4 Bombs can be attached to any side of a block",
+  "item.nuclear_craft.c4_bomb.tooltip2": "Activate it with redstone signal, and RUN!"
+}

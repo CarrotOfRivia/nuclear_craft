@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "nuclear_craft:atomic_bomb_rocket"
+    },
+    {
+      "item": "nuclear_craft:rocket_launcher"
+    }
+  ],
+  "result": {
+    "item": "nuclear_craft:rocket_launcher_atomic_bomb"
+  }
+}
