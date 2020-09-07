@@ -50,7 +50,7 @@ public abstract class RocketLauncherWithAmmo extends Item {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         int n_ammo = getAmmoCount(stack);
-        tooltip.add(new TranslationTextComponent(String.format("item.%s.rocket_launcher.ammo_left", NuclearCraft.MODID)).func_240699_a_(TextFormatting.GRAY));
-        tooltip.add(new StringTextComponent(""+n_ammo).func_240699_a_(TextFormatting.GOLD));
+        tooltip.add(new TranslationTextComponent(String.format("item.%s.rocket_launcher.ammo_left", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY));
+        tooltip.add(new StringTextComponent(""+n_ammo).mergeStyle(TextFormatting.GOLD));
     }
 }

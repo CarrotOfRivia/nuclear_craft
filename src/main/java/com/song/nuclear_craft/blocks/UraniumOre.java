@@ -7,6 +7,6 @@ import net.minecraft.world.biome.Biomes;
 
 public class UraniumOre extends OreBlock {
     public UraniumOre() {
-        super(AbstractBlock.Properties.create(Material.ROCK).func_235861_h_().hardnessAndResistance(3.0F, 3.0F));
+        super(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F));
     }
 }

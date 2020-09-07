@@ -19,16 +19,18 @@ public class C4BombContainerScreen extends ContainerScreen<C4BombContainer> {
     }
 
     @Override
-    protected void func_230450_a_(MatrixStack matrixStack, float p_230450_2_, int mouse_x, int mouse_y) {
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float p_230450_2_, int mouse_x, int mouse_y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        assert this.field_230706_i_ != null;
-        this.field_230706_i_.getTextureManager().bindTexture(C4_GUI_TEXTURES);
-        int i = (this.field_230708_k_ - this.xSize) / 2;
-        int j = (this.field_230709_l_ - this.ySize) / 2;
-        this.func_238474_b_(matrixStack, i, j, 0, 0, this.xSize, this.ySize);
-        matrixStack.push();
-        this.field_230712_o_.func_238421_b_(matrixStack, "00:00:40", i+53f, j+46f, 0x000000);
-        matrixStack.pop();
+        assert this.minecraft != null;
+        this.minecraft.getTextureManager().bindTexture(C4_GUI_TEXTURES);
+        int i = (this.width - this.xSize) / 2;
+        int j = (this.height - this.ySize) / 2;
+        this.blit(matrixStack, i, j, 0, 0, this.xSize, this.ySize);
+        this.font.drawString(matrixStack, "00:00:40", i+53f, j+46f, 0x000000);
     }
 
+    @Override
+    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {
+        this.font.func_243248_b(matrixStack, this.title, (float)this.titleX, (float)this.titleY, 4210752);
+    }
 }

@@ -51,6 +51,6 @@ public class RocketLauncherAtomicBomb extends Item {
     @Override
     @OnlyIn(Dist.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent(String.format("item.%s.rocket_launcher_atomic_bomb.tooltip", NuclearCraft.MODID)).func_240699_a_(TextFormatting.GOLD));
+        tooltip.add(new TranslationTextComponent(String.format("item.%s.rocket_launcher_atomic_bomb.tooltip", NuclearCraft.MODID)).mergeStyle(TextFormatting.GOLD));
     }
 }

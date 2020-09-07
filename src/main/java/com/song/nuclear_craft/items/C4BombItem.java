@@ -20,7 +20,7 @@ public class C4BombItem extends BlockItem {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent(String.format("item.%s.c4_bomb.tooltip1", NuclearCraft.MODID)).func_240699_a_(TextFormatting.GRAY));
-        tooltip.add(new TranslationTextComponent(String.format("item.%s.c4_bomb.tooltip2", NuclearCraft.MODID)).func_240699_a_(TextFormatting.GRAY));
+        tooltip.add(new TranslationTextComponent(String.format("item.%s.c4_bomb.tooltip1", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY));
+        tooltip.add(new TranslationTextComponent(String.format("item.%s.c4_bomb.tooltip2", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY));
     }
 }

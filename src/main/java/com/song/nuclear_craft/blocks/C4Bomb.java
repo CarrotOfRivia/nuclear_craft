@@ -7,6 +7,7 @@ import net.minecraft.block.HorizontalFaceBlock;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.monster.piglin.PiglinTasks;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateContainer;
@@ -25,6 +26,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
@@ -119,7 +121,7 @@ public abstract class C4Bomb extends HorizontalFaceBlock {
         } else {
             TileEntity tileentity = worldIn.getTileEntity(pos);
             if (tileentity instanceof C4BombTileEntity) {
-                player.openContainer((INamedContainerProvider)tileentity);
+                NetworkHooks.openGui((ServerPlayerEntity) player, (C4BombTileEntity)tileentity, pos);
             }
             return ActionResultType.CONSUME;
         }

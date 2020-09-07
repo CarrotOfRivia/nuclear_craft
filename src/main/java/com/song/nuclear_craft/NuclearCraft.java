@@ -5,7 +5,6 @@ import com.song.nuclear_craft.blocks.TileEntityList;
 import com.song.nuclear_craft.blocks.container.ContainerTypeList;
 import com.song.nuclear_craft.entities.EntityList;
 import com.song.nuclear_craft.entities.renderers.AtomicBombRenderer;
-import com.song.nuclear_craft.event.MyEventHandler;
 import com.song.nuclear_craft.items.ItemList;
 import com.song.nuclear_craft.misc.Config;
 import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
@@ -68,7 +67,6 @@ public class NuclearCraft
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(new MyEventHandler());
         NuclearCraftPacketHandler.register();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.CONFIG);

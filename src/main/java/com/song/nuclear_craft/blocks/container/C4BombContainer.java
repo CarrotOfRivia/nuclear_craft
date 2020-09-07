@@ -2,6 +2,7 @@ package com.song.nuclear_craft.blocks.container;
 
 import com.song.nuclear_craft.blocks.BlockList;
 import com.song.nuclear_craft.blocks.C4BombTileEntity;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -36,7 +37,7 @@ public class C4BombContainer extends Container {
         }
         BlockPos blockPos = data.readBlockPos();
         TileEntity entity = playerInventory.player.world.getTileEntity(blockPos);
-        if (!(entity instanceof C4BombTileEntity)){
+        if (entity instanceof C4BombTileEntity){
             return (C4BombTileEntity)entity;
         }else {
             throw new IllegalStateException("tile entity is not correct at" + blockPos);

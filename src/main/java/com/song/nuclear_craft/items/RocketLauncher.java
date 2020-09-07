@@ -28,6 +28,6 @@ public class RocketLauncher extends Item {
     @Override
     @OnlyIn(Dist.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent(String.format("item.%s.rocket_launcher.tooltip", NuclearCraft.MODID)).func_240699_a_(TextFormatting.GRAY));
+        tooltip.add(new TranslationTextComponent(String.format("item.%s.rocket_launcher.tooltip", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY));
     }
 }

@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 @Deprecated
 public class UraniumCentrifuge extends Block {
     public UraniumCentrifuge() {
-        super(AbstractBlock.Properties.create(Material.ROCK).func_235861_h_().hardnessAndResistance(3.0F, 3.0F));
+        super(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F));
     }
 
     @Override
