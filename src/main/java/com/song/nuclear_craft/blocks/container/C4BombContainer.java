@@ -1,18 +1,13 @@
 package com.song.nuclear_craft.blocks.container;
 
-import com.song.nuclear_craft.blocks.BlockList;
-import com.song.nuclear_craft.blocks.C4BombTileEntity;
-import net.minecraft.client.gui.widget.button.Button;
+import com.song.nuclear_craft.blocks.tileentity.C4BombTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 
-import javax.annotation.Nullable;
 import java.util.Objects;
 
 public class C4BombContainer extends Container {
@@ -26,7 +21,6 @@ public class C4BombContainer extends Container {
     }
 
     public C4BombContainer(int windowId, PlayerInventory playerInventory, PacketBuffer data){
-        // TODO data is null
         this(windowId, playerInventory, getTEntity(playerInventory, data));
     }
 

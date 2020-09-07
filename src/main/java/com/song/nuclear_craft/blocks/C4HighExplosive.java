@@ -1,5 +1,7 @@
 package com.song.nuclear_craft.blocks;
 
+import com.song.nuclear_craft.blocks.tileentity.C4BombTileEntity;
+import com.song.nuclear_craft.blocks.tileentity.TileEntityList;
 import com.song.nuclear_craft.entities.AtomicBombEntity;
 import com.song.nuclear_craft.entities.HighExplosiveRocketEntity;
 import net.minecraft.block.BlockState;

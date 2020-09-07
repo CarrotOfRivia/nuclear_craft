@@ -1,30 +1,24 @@
 package com.song.nuclear_craft.blocks;
 
-import com.song.nuclear_craft.misc.SoundEventList;
+import com.song.nuclear_craft.blocks.tileentity.C4BombTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFaceBlock;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.monster.piglin.PiglinTasks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.AttachFace;
-import net.minecraft.stats.Stats;
-import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
@@ -110,7 +104,7 @@ public abstract class C4Bomb extends HorizontalFaceBlock {
     public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
         if (!worldIn.isRemote){
-            worldIn.playSound(null, new BlockPos(placer.getPosX(), placer.getPosY(), placer.getPosZ()), SoundEventList.BOMB_PLANTED, SoundCategory.PLAYERS, 1f, 1.0f);
+            this.neighborChanged(state, worldIn, pos, this, pos, false);
         }
     }
 
@@ -121,6 +115,7 @@ public abstract class C4Bomb extends HorizontalFaceBlock {
         } else {
             TileEntity tileentity = worldIn.getTileEntity(pos);
             if (tileentity instanceof C4BombTileEntity) {
+                ((C4BombTileEntity) tileentity).synToClient();
                 NetworkHooks.openGui((ServerPlayerEntity) player, (C4BombTileEntity)tileentity, pos);
             }
             return ActionResultType.CONSUME;

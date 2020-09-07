@@ -45,7 +45,6 @@ public class UraniumCentrifuge extends Block {
             TileEntity tileentity = worldIn.getTileEntity(pos);
             if (tileentity instanceof UraniumCentrifugeTEntity){
                 player.openContainer((INamedContainerProvider)tileentity);
-                // TODO add stat
             }
             return ActionResultType.CONSUME;
         }

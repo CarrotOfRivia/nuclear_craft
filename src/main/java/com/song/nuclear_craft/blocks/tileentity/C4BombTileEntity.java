@@ -1,12 +1,17 @@
-package com.song.nuclear_craft.blocks;
+package com.song.nuclear_craft.blocks.tileentity;
 
 import com.song.nuclear_craft.NuclearCraft;
+import com.song.nuclear_craft.blocks.C4Bomb;
 import com.song.nuclear_craft.blocks.container.C4BombContainer;
 import com.song.nuclear_craft.misc.SoundEventList;
+import com.song.nuclear_craft.network.C4BombSynPacket;
+import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -15,6 +20,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import javax.annotation.Nullable;
 
@@ -26,6 +32,7 @@ public class C4BombTileEntity extends TileEntity implements ITickableTileEntity,
 
     protected int threshold1;
     protected int threshold2;
+    public String inputPanel="";
 
     public C4BombTileEntity(TileEntityType<?> tileEntityTypeIn) {
         super(tileEntityTypeIn);
@@ -39,22 +46,6 @@ public class C4BombTileEntity extends TileEntity implements ITickableTileEntity,
     public C4BombTileEntity(TileEntityType<?> tileEntityTypeIn, int explode_time){
         this(tileEntityTypeIn);
         this.explode_time = explode_time;
-    }
-
-    public static C4BombTileEntity C4AtomicBombFactory(){
-        return new C4BombTileEntity(TileEntityList.C4_ATOMIC_BOMB_TE_TYPE);
-    }
-
-    public static C4BombTileEntity C4SmokeFactory(){
-        return new C4BombTileEntity(TileEntityList.C4_SMOKE_TE_TYPE);
-    }
-
-    public static C4BombTileEntity C4IncendiaryFactory(){
-        return new C4BombTileEntity(TileEntityList.C4_INCENDIARY_TE_TYPE);
-    }
-
-    public static C4BombTileEntity C4HighExplosiveFactory(){
-        return new C4BombTileEntity(TileEntityList.C4_HIGH_EXPLOSIVE_TE_TYPE);
     }
 
     private int getBeepInterval(){
@@ -98,6 +89,10 @@ public class C4BombTileEntity extends TileEntity implements ITickableTileEntity,
 
     public void setActive(){
         this.is_active = true;
+        assert world != null;
+        if (! world.isRemote){
+            world.playSound(null, pos, SoundEventList.BOMB_PLANTED, SoundCategory.PLAYERS, 1f, 1.0f);
+        }
     }
 
     @Nullable
@@ -109,5 +104,55 @@ public class C4BombTileEntity extends TileEntity implements ITickableTileEntity,
     @Override
     public ITextComponent getDisplayName() {
         return new TranslationTextComponent(String.format("menu.%s.c4_bomb.display_name", NuclearCraft.MODID));
+    }
+
+    @Override
+    public CompoundNBT write(CompoundNBT compound) {
+        CompoundNBT nbt = super.write(compound);
+        nbt.putInt("fuse_age", fuse_age);
+        nbt.putInt("explode_time", explode_time);
+        nbt.putBoolean("is_active", is_active);
+        nbt.putInt("threshold1", threshold1);
+        nbt.putInt("threshold2", threshold2);
+        nbt.putString("inputPanel", inputPanel);
+        return nbt;
+    }
+
+    @Override
+    public void read(BlockState state, CompoundNBT nbt) {
+        super.read(state, nbt);
+        fuse_age = nbt.getInt("fuse_age");
+        explode_time = nbt.getInt("explode_time");
+        is_active = nbt.getBoolean("is_active");
+        threshold1 = nbt.getInt("threshold1");
+        threshold2 = nbt.getInt("threshold2");
+        inputPanel = nbt.getString("inputPanel");
+        synToClient();
+    }
+
+    public void delete(){
+        this.inputPanel="";
+        synToClient();
+        this.markDirty();
+    }
+    public void addNum(int num){
+        this.inputPanel+=num;
+        synToClient();
+        this.markDirty();
+    }
+    public void activate(){
+        // sec to tick
+        this.explode_time=Integer.parseInt(this.inputPanel)*20;
+        setActive();
+        synToClient();
+    }
+
+    public void synToClient(){
+        if (world != null&&!world.isRemote){
+            NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.TRACKING_CHUNK.with(()-> {
+                assert this.world != null;
+                return this.world.getChunkAt(this.pos);
+            }), new C4BombSynPacket(this.pos, this.inputPanel));
+        }
     }
 }

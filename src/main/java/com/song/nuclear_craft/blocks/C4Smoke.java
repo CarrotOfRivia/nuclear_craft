@@ -1,5 +1,7 @@
 package com.song.nuclear_craft.blocks;
 
+import com.song.nuclear_craft.blocks.tileentity.C4BombTileEntity;
+import com.song.nuclear_craft.blocks.tileentity.TileEntityList;
 import com.song.nuclear_craft.entities.SmokeRocketEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;

@@ -34,12 +34,15 @@ public class SmokeBombPacket {
     }
 
     public static void handle(SmokeBombPacket packet, Supplier<NetworkEvent.Context> ctx){
-        NetworkEvent.Context context = ctx.get();
-        INetHandler handler = context.getNetworkManager().getNetHandler();
-        if (handler instanceof ClientPlayNetHandler){
-            ClientWorld world = ((ClientPlayNetHandler) handler).getWorld();
-            SmokeRocketEntity.generateSmoke(world, packet.x, packet.y, packet.z);
-        }
+        ctx.get().enqueueWork(() -> {
+            NetworkEvent.Context context = ctx.get();
+            INetHandler handler = context.getNetworkManager().getNetHandler();
+            if (handler instanceof ClientPlayNetHandler){
+                ClientWorld world = ((ClientPlayNetHandler) handler).getWorld();
+                SmokeRocketEntity.generateSmoke(world, packet.x, packet.y, packet.z);
+            }
+        });
+        ctx.get().setPacketHandled(true);
     }
 
 }

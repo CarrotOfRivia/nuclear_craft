@@ -23,9 +23,17 @@ public class NuclearCraftPacketHandler {
             PROTOCOL_VERSION::equals,
             PROTOCOL_VERSION::equals
     );
+    public static final SimpleChannel C4_SETTING_CHANNEL = NetworkRegistry.newSimpleChannel(
+            new ResourceLocation(NuclearCraft.MODID, "c4_setting"),
+            () -> PROTOCOL_VERSION,
+            PROTOCOL_VERSION::equals,
+            PROTOCOL_VERSION::equals
+    );
 
     public static void register(){
         EXPLOSION_CHANNEL.registerMessage(channel_id++, MySExplosionPacket.class, MySExplosionPacket::encode, MySExplosionPacket::new, MySExplosionPacket::handle);
         SMOKE_BOMB_CHANNEL.registerMessage(channel_id++, SmokeBombPacket.class, SmokeBombPacket::encode, SmokeBombPacket::new, SmokeBombPacket::handle);
+        C4_SETTING_CHANNEL.registerMessage(channel_id++, C4BombSettingPacket.class, C4BombSettingPacket::encode, C4BombSettingPacket::new, C4BombSettingPacket::handle);
+        C4_SETTING_CHANNEL.registerMessage(channel_id++, C4BombSynPacket.class, C4BombSynPacket::encode, C4BombSynPacket::new, C4BombSynPacket::handle);
     }
 }

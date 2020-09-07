@@ -1,7 +1,7 @@
 package com.song.nuclear_craft;
 
 import com.song.nuclear_craft.blocks.BlockList;
-import com.song.nuclear_craft.blocks.TileEntityList;
+import com.song.nuclear_craft.blocks.tileentity.TileEntityList;
 import com.song.nuclear_craft.blocks.container.ContainerTypeList;
 import com.song.nuclear_craft.entities.EntityList;
 import com.song.nuclear_craft.entities.renderers.AtomicBombRenderer;
@@ -136,7 +136,8 @@ public class NuclearCraft
         @SubscribeEvent
         public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event){
             // Tile Entities
-            event.getRegistry().registerAll(TileEntityList.C4_ATOMIC_BOMB_TE_TYPE);
+            event.getRegistry().registerAll(TileEntityList.C4_ATOMIC_BOMB_TE_TYPE, TileEntityList.C4_HIGH_EXPLOSIVE_TE_TYPE,
+                    TileEntityList.C4_INCENDIARY_TE_TYPE, TileEntityList.C4_SMOKE_TE_TYPE);
         }
 
         @SubscribeEvent
