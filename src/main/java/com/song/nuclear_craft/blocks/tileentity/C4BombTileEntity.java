@@ -73,6 +73,7 @@ public class C4BombTileEntity extends TileEntity implements ITickableTileEntity,
 
                 if (fuse_age % getBeepInterval() == 0) {
                     world.playSound(null, this.getPos(), SoundEventList.C4_BEEP, SoundCategory.BLOCKS, 2f, 1.0f);
+                    synToClient();
                 }
 
                 if (fuse_age >= explode_time) {
@@ -131,18 +132,27 @@ public class C4BombTileEntity extends TileEntity implements ITickableTileEntity,
     }
 
     public void delete(){
-        this.inputPanel="";
-        synToClient();
-        this.markDirty();
+        if(! is_active){
+            this.inputPanel="";
+            synToClient();
+            this.markDirty();
+        }
     }
     public void addNum(int num){
-        this.inputPanel+=num;
-        synToClient();
-        this.markDirty();
+        if (!is_active){
+            this.inputPanel+=num;
+            synToClient();
+            this.markDirty();
+        }
     }
     public void activate(){
         // sec to tick
-        this.explode_time=Integer.parseInt(this.inputPanel)*20;
+        if (!inputPanel.isEmpty()){
+            this.explode_time=Integer.parseInt(this.inputPanel)*20;
+        }
+        else{
+            this.explode_time=DEFAULT_FUSE_TIME;
+        }
         setActive();
         synToClient();
     }
@@ -152,7 +162,23 @@ public class C4BombTileEntity extends TileEntity implements ITickableTileEntity,
             NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.TRACKING_CHUNK.with(()-> {
                 assert this.world != null;
                 return this.world.getChunkAt(this.pos);
-            }), new C4BombSynPacket(this.pos, this.inputPanel));
+            }), new C4BombSynPacket(this.pos, this.inputPanel, fuse_age, explode_time, is_active));
         }
+    }
+
+    public int getCounter(){
+        return (explode_time-fuse_age)/20;
+    }
+
+    public boolean isActive(){
+        return is_active;
+    }
+
+    public void setAttr(String inputPanel, int fuse_age, int explode_time, boolean is_active){
+
+        this.inputPanel = inputPanel;
+        this.fuse_age = fuse_age;
+        this.explode_time = explode_time;
+        this.is_active = is_active;
     }
 }

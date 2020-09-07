@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class C4BombContainerScreen extends ContainerScreen<C4BombContainer> {
     public int i;
@@ -33,7 +34,10 @@ public class C4BombContainerScreen extends ContainerScreen<C4BombContainer> {
 
     @Override
     protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {
-        this.font.func_243248_b(matrixStack, this.title, 33, 28, 4210752);
+//        this.font.func_243248_b(matrixStack, this.title, 33, 28, 4210752);
         this.font.drawString(matrixStack, this.container.tileEntity.inputPanel+" s", 83f, 13f, 4210752);
+        if (this.container.tileEntity.isActive()){
+            this.font.drawString(matrixStack, new TranslationTextComponent("menu."+NuclearCraft.MODID+".c4_bomb.counter").getString()+this.container.tileEntity.getCounter()+" s", 33f, 33f, 4210752);
+        }
     }
 }

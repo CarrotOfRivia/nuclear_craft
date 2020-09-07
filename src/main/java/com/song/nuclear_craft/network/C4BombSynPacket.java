@@ -3,6 +3,7 @@ package com.song.nuclear_craft.network;
 import com.song.nuclear_craft.blocks.tileentity.C4BombTileEntity;
 import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.network.INetHandler;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
@@ -16,12 +17,18 @@ public class C4BombSynPacket {
     public double y;
     public double z;
     public String inputPanel;
+    public int fuse_age;
+    public int explode_time;
+    public boolean is_active;
 
-    public C4BombSynPacket(BlockPos pos, String inputPanel){
+    public C4BombSynPacket(BlockPos pos, String inputPanel, int fuse_age, int explode_time, boolean is_active){
         this.x = pos.getX();
         this.y = pos.getY();
         this.z = pos.getZ();
         this.inputPanel = inputPanel;
+        this.fuse_age = fuse_age;
+        this.explode_time = explode_time;
+        this.is_active = is_active;
     }
 
     public C4BombSynPacket(final PacketBuffer packetBuffer){
@@ -29,6 +36,9 @@ public class C4BombSynPacket {
         this.y = packetBuffer.readDouble();
         this.z = packetBuffer.readDouble();
         this.inputPanel = packetBuffer.readString();
+        this.fuse_age = packetBuffer.readInt();
+        this.explode_time = packetBuffer.readInt();
+        this.is_active = packetBuffer.readBoolean();
     }
 
     public void encode(final PacketBuffer packetBuffer){
@@ -36,6 +46,9 @@ public class C4BombSynPacket {
         packetBuffer.writeDouble(this.y);
         packetBuffer.writeDouble(this.z);
         packetBuffer.writeString(this.inputPanel);
+        packetBuffer.writeInt(fuse_age);
+        packetBuffer.writeInt(explode_time);
+        packetBuffer.writeBoolean(is_active);
     }
 
     public static void handle(C4BombSynPacket packet, Supplier<NetworkEvent.Context> ctx){
@@ -46,7 +59,7 @@ public class C4BombSynPacket {
                 ClientWorld world = ((ClientPlayNetHandler) handler).getWorld();
                 TileEntity entity = world.getTileEntity(new BlockPos(packet.x, packet.y, packet.z));
                 if (entity instanceof C4BombTileEntity){
-                    ((C4BombTileEntity) entity).inputPanel = packet.inputPanel;
+                    ((C4BombTileEntity) entity).setAttr(packet.inputPanel, packet.fuse_age, packet.explode_time, packet.is_active);
                 }
             }
         });
