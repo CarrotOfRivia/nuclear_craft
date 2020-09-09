@@ -88,7 +88,7 @@ public class C4BombTileEntity extends TileEntity implements ITickableTileEntity,
         }
     }
 
-    public void setActive(){
+    private void setActive(){
         this.is_active = true;
         assert world != null;
         if (! world.isRemote){
@@ -146,15 +146,17 @@ public class C4BombTileEntity extends TileEntity implements ITickableTileEntity,
         }
     }
     public void activate(){
-        // sec to tick
-        if (!inputPanel.isEmpty()){
-            this.explode_time=Integer.parseInt(this.inputPanel)*20;
+        if (!is_active){
+            // sec to tick
+            if (!inputPanel.isEmpty()){
+                this.explode_time=Integer.parseInt(this.inputPanel)*20;
+            }
+            else{
+                this.explode_time=DEFAULT_FUSE_TIME;
+            }
+            setActive();
+            synToClient();
         }
-        else{
-            this.explode_time=DEFAULT_FUSE_TIME;
-        }
-        setActive();
-        synToClient();
     }
 
     public void synToClient(){

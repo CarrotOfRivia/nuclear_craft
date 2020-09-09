@@ -2,8 +2,11 @@ package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.entities.AtomicBombRocketEntity;
+import com.song.nuclear_craft.entities.HighExplosiveRocketEntity;
+import com.song.nuclear_craft.misc.SoundEventList;
 import com.sun.javafx.geom.Vec3d;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.item.Item;
@@ -24,27 +27,34 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class RocketLauncherAtomicBomb extends Item {
+public class RocketLauncherAtomicBomb extends RocketLauncherWithAmmo {
     public RocketLauncherAtomicBomb() {
         super(new Item.Properties().maxStackSize(1).group(NuclearCraft.ITEM_GROUP));
+        this.MAX_AMMO=1;
+        this.BONDED_AMMO = ItemList.ATOMIC_BOMB_ROCKET;
+        this.coolDown = 5;
     }
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        ItemStack itemstack = new ItemStack(ItemList.ATOMIC_BOMB_ROCKET);
-        itemstack.getOrCreateChildTag("Fireworks").putByte("Flight", (byte) 127);
+        enterCD(playerIn);
+        ItemStack toBeFired = new ItemStack(ItemList.ATOMIC_BOMB_ROCKET);
+        toBeFired.getOrCreateChildTag("Fireworks").putByte("Flight", (byte) 127);
+
+        ItemStack thisItemStack = playerIn.getHeldItem(handIn);
+
         if (!worldIn.isRemote){
-            AtomicBombRocketEntity atomicBombRocketEntity = new AtomicBombRocketEntity(worldIn, itemstack, playerIn, playerIn.getPosX(), playerIn.getPosYEye() - (double)0.15F, playerIn.getPosZ(), true);
+            AtomicBombRocketEntity atomicBombRocketEntity = new AtomicBombRocketEntity(worldIn, toBeFired, playerIn, playerIn.getPosX(), playerIn.getPosYEye() - (double)0.15F, playerIn.getPosZ(), true);
             Vector3d vec3d = playerIn.getLookVec();
             atomicBombRocketEntity.shoot(vec3d.x, vec3d.y, vec3d.z, 5f, 0);
             worldIn.addEntity(atomicBombRocketEntity);
-            worldIn.playSound((PlayerEntity)null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), SoundEvents.ITEM_CROSSBOW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.f);
+            worldIn.playSound(null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), SoundEvents.ITEM_CROSSBOW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.f);
         }
         if (playerIn.isCreative()){
-            return ActionResult.func_233538_a_(new ItemStack(this), worldIn.isRemote());
+            return ActionResult.func_233538_a_(thisItemStack, worldIn.isRemote());
         }
         else {
-            return ActionResult.func_233538_a_(new ItemStack(ItemList.ROCKET_LAUNCHER), worldIn.isRemote());
+            return afterFire(worldIn, thisItemStack);
         }
     }
 

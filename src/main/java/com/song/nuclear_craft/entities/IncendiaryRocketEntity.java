@@ -75,7 +75,7 @@ public class IncendiaryRocketEntity extends FireworkRocketEntity {
         }
     }
 
-    private static double getValidY(World world, double x, double y, double z){
+    public static double getValidY(World world, double x, double y, double z){
         for (double deltaY=5; deltaY > -5; deltaY--){
             if (world.getBlockState(new BlockPos(x, y+deltaY, z)) == Blocks.AIR.getDefaultState()){
                 return y+deltaY;

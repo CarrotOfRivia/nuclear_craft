@@ -1,6 +1,7 @@
 package com.song.nuclear_craft.blocks;
 
 import com.song.nuclear_craft.blocks.tileentity.C4BombTileEntity;
+import com.song.nuclear_craft.blocks.tileentity.IncendiaryTileEntity;
 import com.song.nuclear_craft.blocks.tileentity.TileEntityList;
 import com.song.nuclear_craft.entities.IncendiaryRocketEntity;
 import net.minecraft.block.BlockState;
@@ -19,6 +20,7 @@ public class C4Incendiary extends C4Bomb{
 
     @Override
     public void explode(World world, double x, double y, double z) {
+        y = IncendiaryRocketEntity.getValidY(world, x, y, z);
         IncendiaryRocketEntity.fireExplode(world, x, y, z);
     }
 

@@ -8,5 +8,10 @@
     "category": "player",
     "subtitle": "nuclear_craft.subtitle.bomb_planted",
     "sounds": ["nuclear_craft:bomb_planted"]
+  },
+  "loading": {
+    "category": "player",
+    "subtitle": "nuclear_craft.subtitle.loading",
+    "sounds": ["nuclear_craft:loading"]
   }
 }

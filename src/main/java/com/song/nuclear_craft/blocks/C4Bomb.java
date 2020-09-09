@@ -54,7 +54,7 @@ public abstract class C4Bomb extends HorizontalFaceBlock {
         if(worldIn.isBlockPowered(pos)){
             TileEntity entity = worldIn.getTileEntity(pos);
             if (entity instanceof C4BombTileEntity){
-                ((C4BombTileEntity) entity).setActive();
+                ((C4BombTileEntity) entity).activate();
             }
         }
     }

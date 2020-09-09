@@ -13,6 +13,7 @@ import com.song.nuclear_craft.particles.ParticleList;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
@@ -27,6 +28,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -38,6 +40,7 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.stream.Collectors;
 
@@ -54,6 +57,7 @@ public class NuclearCraft
             return new ItemStack(Items.TNT);
         }
     };
+    public static KeyBinding keyBinding;
 
     public NuclearCraft() {
         // Register the setup method for modloading
@@ -82,6 +86,8 @@ public class NuclearCraft
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
         LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
+        keyBinding  = new KeyBinding("key.load_ammo", GLFW.GLFW_KEY_R, "key.categories.weapons"); // keyBinding is a static variable
+        ClientRegistry.registerKeyBinding(keyBinding);
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
@@ -123,7 +129,7 @@ public class NuclearCraft
                     ItemList.ROCKET_CONTROL_UNIT, ItemList.URANIUM_235, ItemList.URANIUM_238, ItemList.INCENDIARY_ROCKET,
                     ItemList.SMOKE_ROCKET, ItemList.ROCKET_LAUNCHER_INCENDIARY, ItemList.ROCKET_LAUNCHER_SMOKE, ItemList.HIGH_EXPLOSIVE_ROCKET,
                     ItemList.ROCKET_LAUNCHER_HIGH_EXPLOSIVE, ItemList.C4_ATOMIC_BOMB, ItemList.C4_HIGH_EXPLOSIVE, ItemList.C4_INCENDIARY,
-                    ItemList.C4_SMOKE);
+                    ItemList.C4_SMOKE, ItemList.DESERT_EAGLE, ItemList.AMMO_9MM);
         }
 
         @SubscribeEvent
