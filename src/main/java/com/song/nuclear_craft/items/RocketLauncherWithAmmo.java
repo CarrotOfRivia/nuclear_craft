@@ -79,6 +79,7 @@ public abstract class RocketLauncherWithAmmo extends Item {
                     ammo.shrink(n_loaded);
                     addAmmoCount(rocket, n_loaded);
                     entityIn.world.playSound(null, entityIn.getPosX(), entityIn.getPosY(), entityIn.getPosZ(), SoundEventList.LOADING, SoundCategory.PLAYERS, 0.3f, 1f);
+                    ((PlayerEntity) entityIn).getCooldownTracker().setCooldown(rocket.getItem(), 20);
                 }
             }
         }

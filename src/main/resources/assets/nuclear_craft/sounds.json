@@ -13,5 +13,10 @@
     "category": "player",
     "subtitle": "nuclear_craft.subtitle.loading",
     "sounds": ["nuclear_craft:loading"]
+  },
+  "desert_eagle": {
+    "category": "player",
+    "subtitle": "nuclear_craft.subtitle.desert_eagle",
+    "sounds": ["nuclear_craft:desert_eagle"]
   }
 }

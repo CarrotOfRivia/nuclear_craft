@@ -135,8 +135,7 @@ public class NuclearCraft
         @SubscribeEvent
         public static void onEntityRegistry(final RegistryEvent.Register<EntityType<?>> event){
             // register entities
-            event.getRegistry().registerAll(EntityList.ATOMIC_BOMB_ENTITY);
-            RenderingRegistry.registerEntityRenderingHandler(EntityList.ATOMIC_BOMB_ENTITY, AtomicBombRenderer::new);
+            event.getRegistry().registerAll(EntityList.ATOMIC_BOMB_ENTITY, EntityList.BULLET_ENTITY);
         }
 
         @SubscribeEvent
