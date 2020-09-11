@@ -13,4 +13,6 @@ public abstract class AbstractAmmo extends Item {
 
     @Nonnull
     public abstract String getType();
+
+    public abstract double getBaseDamage();
 }

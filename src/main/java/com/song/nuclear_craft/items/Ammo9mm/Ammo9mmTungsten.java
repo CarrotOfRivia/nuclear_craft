@@ -1,14 +1,15 @@
-package com.song.nuclear_craft.items;
+package com.song.nuclear_craft.items.Ammo9mm;
 
 import com.song.nuclear_craft.NuclearCraft;
+import com.song.nuclear_craft.items.AbstractAmmo;
 
 import javax.annotation.Nonnull;
 
-public class Ammo9mm extends AbstractAmmo{
-    public Ammo9mm() {
+public class Ammo9mmTungsten extends AbstractAmmo {
+
+    public Ammo9mmTungsten() {
         super(new Properties().group(NuclearCraft.ITEM_GROUP));
     }
-
     @Override
     public String getSize() {
         return "9mm";
@@ -17,6 +18,11 @@ public class Ammo9mm extends AbstractAmmo{
     @Nonnull
     @Override
     public String getType() {
-        return "normal";
+        return "tungsten";
+    }
+
+    @Override
+    public double getBaseDamage() {
+        return 50;
     }
 }

@@ -129,7 +129,8 @@ public class NuclearCraft
                     ItemList.ROCKET_CONTROL_UNIT, ItemList.URANIUM_235, ItemList.URANIUM_238, ItemList.INCENDIARY_ROCKET,
                     ItemList.SMOKE_ROCKET, ItemList.ROCKET_LAUNCHER_INCENDIARY, ItemList.ROCKET_LAUNCHER_SMOKE, ItemList.HIGH_EXPLOSIVE_ROCKET,
                     ItemList.ROCKET_LAUNCHER_HIGH_EXPLOSIVE, ItemList.C4_ATOMIC_BOMB, ItemList.C4_HIGH_EXPLOSIVE, ItemList.C4_INCENDIARY,
-                    ItemList.C4_SMOKE, ItemList.DESERT_EAGLE, ItemList.AMMO_9MM);
+                    ItemList.C4_SMOKE, ItemList.DESERT_EAGLE, ItemList.AMMO_9MM, ItemList.AMMO_TEST, ItemList.AMMO_9MM_ANTI_GRAVITY, ItemList.AMMO_9MM_INCENDIARY,
+                    ItemList.AMMO_9MM_NUKE, ItemList.AMMO_9MM_SILVER, ItemList.AMMO_9MM_TUNGSTEN);
         }
 
         @SubscribeEvent

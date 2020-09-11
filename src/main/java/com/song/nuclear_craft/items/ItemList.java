@@ -2,10 +2,9 @@ package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.blocks.BlockList;
 import com.song.nuclear_craft.NuclearCraft;
+import com.song.nuclear_craft.items.Ammo9mm.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import org.lwjgl.system.CallbackI;
 
 import java.util.Objects;
 
@@ -43,6 +42,13 @@ public class ItemList {
     // Guns and bullets
     public static final DesertEagle DESERT_EAGLE = new DesertEagle();
     public static final Ammo9mm AMMO_9MM = new Ammo9mm();
+    public static final AmmoTest AMMO_TEST = new AmmoTest();
+    public static final Ammo9mmAntiGravity AMMO_9MM_ANTI_GRAVITY = new Ammo9mmAntiGravity();
+    public static final Ammo9mmExplosive AMMO_9MM_EXPLOSIVE = new Ammo9mmExplosive();
+    public static final Ammo9mmIncendiary AMMO_9MM_INCENDIARY = new Ammo9mmIncendiary();
+    public static final Ammo9mmNuke AMMO_9MM_NUKE = new Ammo9mmNuke();
+    public static final Ammo9mmSilver AMMO_9MM_SILVER = new Ammo9mmSilver();
+    public static final Ammo9mmTungsten AMMO_9MM_TUNGSTEN = new Ammo9mmTungsten();
     static {
         C4_ATOMIC_BOMB.setRegistryName(Objects.requireNonNull(BlockList.C4_ATOMIC_BOMB.getRegistryName()));
         C4_HIGH_EXPLOSIVE.setRegistryName(Objects.requireNonNull(BlockList.C4_HIGH_EXPLOSIVE.getRegistryName()));
@@ -51,5 +57,12 @@ public class ItemList {
 
         DESERT_EAGLE.setRegistryName(NuclearCraft.MODID, "desert_eagle");
         AMMO_9MM.setRegistryName(NuclearCraft.MODID, "ammo_9mm");
+        AMMO_TEST.setRegistryName(NuclearCraft.MODID, "ammo_test");
+        AMMO_9MM_ANTI_GRAVITY.setRegistryName(NuclearCraft.MODID, "ammo_9mm_anti_gravity");
+        AMMO_9MM_EXPLOSIVE.setRegistryName(NuclearCraft.MODID, "ammo_9mm_explosive");
+        AMMO_9MM_INCENDIARY.setRegistryName(NuclearCraft.MODID, "ammo_9mm_incendiary");
+        AMMO_9MM_NUKE.setRegistryName(NuclearCraft.MODID, "ammo_9mm_nuke");
+        AMMO_9MM_SILVER.setRegistryName(NuclearCraft.MODID, "ammo_9mm_silver");
+        AMMO_9MM_TUNGSTEN.setRegistryName(NuclearCraft.MODID, "ammo_9mm_tungsten");
     }
 }

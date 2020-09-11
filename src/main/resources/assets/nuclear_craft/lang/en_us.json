@@ -23,5 +23,6 @@
   "menu.nuclear_craft.c4_bomb.display_name": "Set up a delay here",
   "menu.nuclear_craft.c4_bomb.counter": "Activated. Counter: ",
   "item.nuclear_craft.guns.ammo_left": "Ammo left: ",
-  "item.nuclear_craft.guns.ammo_type": "Ammo type: "
+  "item.nuclear_craft.guns.ammo_type": "Ammo type: ",
+  "death.attack.nuclear_craft:bullet": "%1$s was shoot by %2$s"
 }
