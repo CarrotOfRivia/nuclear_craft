@@ -64,10 +64,14 @@ public class IncendiaryRocketEntity extends FireworkRocketEntity {
         }
     }
 
-    public static void fireExplode(World world, double x, double y, double z){
+    public static void fireExplode(World world, double x, double y, double z) {
+        fireExplode(world, x, y, z, N_FIRE_BALLS);
+    }
+
+    public static void fireExplode(World world, double x, double y, double z, int maxBalls){
         Random random = new Random();
         world.playSound(null, x, y, z, SoundEvents.ENTITY_BLAZE_SHOOT, SoundCategory.BLOCKS, 10f, 0.3f);
-        for(int i=0; i<N_FIRE_BALLS; i++){
+        for(int i=0; i<maxBalls; i++){
             double r = random.nextDouble() + 5;
             double theta = random.nextDouble() * 3.14 * 2;
             double phi = random.nextDouble() * 1.36 + 1.76;

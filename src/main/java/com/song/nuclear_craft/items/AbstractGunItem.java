@@ -2,8 +2,8 @@ package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.entities.AbstractAmmoEntity;
-import com.song.nuclear_craft.entities.AmmoEntities.AmmoNormalEntity;
-import com.song.nuclear_craft.entities.AmmoEntities.TestAmmoEntity;
+import com.song.nuclear_craft.entities.AmmoEntities.*;
+import com.song.nuclear_craft.misc.SoundEventList;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,6 +24,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class AbstractGunItem extends Item {
     protected int coolDown;
@@ -43,27 +44,26 @@ public abstract class AbstractGunItem extends Item {
                 if(gunItem.getCoolDown()>0){
                     playerIn.getCooldownTracker().setCooldown(heldItemStack.getItem(), gunItem.getCoolDown());
                 }
-                ItemStack toBeFired = new ItemStack(gunItem.getAmmoItem(ammoType, ammoSize));
+                AbstractAmmo ammoItem = gunItem.getAmmoItem(ammoType, ammoSize);
+                ItemStack toBeFired = new ItemStack(ammoItem);
                 AbstractAmmoEntity entity = gunItem.getAmmoEntity(playerIn.getPosX(), playerIn.getPosYEye() - (double)0.15F, playerIn.getPosZ(), worldIn, toBeFired, playerIn, ammoType, ammoSize);
                 worldIn.playSound(null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), getSoundEvent(), SoundCategory.PLAYERS, 0.1f, 1f);
                 entity.setSilent(true);
                 // handle it myself
                 entity.setNoGravity(true);
-                entity.setGravity(getGravity(ammoType, ammoSize));
+                entity.setGravity(ammoItem.getGravity());
                 Vector3d vec3d = playerIn.getLookVec();
-                entity.shoot(vec3d.x, vec3d.y, vec3d.z, gunItem.getAmmoVelocity(ammoType, ammoSize)*getSpeedModifier(), 0);
+                entity.shoot(vec3d.x, vec3d.y, vec3d.z, ammoItem.getBaseSpeed()*getSpeedModifier(), 0);
                 entity.setBaseDamage(getDamageModifier()*entity.getBaseDamage());
                 worldIn.addEntity(entity);
                 shrinkAmmoNBT(heldItemStack);
                 return ActionResult.func_233538_a_(heldItemStack, worldIn.isRemote());
             }
-            else{
-                return super.onItemRightClick(worldIn, playerIn, handIn);
+            else if(! worldIn.isRemote){
+                worldIn.playSound(null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), SoundEventList.NO_AMMO, SoundCategory.PLAYERS, 1f, 1f);
             }
         }
-        else {
-            return super.onItemRightClick(worldIn, playerIn, handIn);
-        }
+        return super.onItemRightClick(worldIn, playerIn, handIn);
     }
 
     public static boolean hasAmmo(ItemStack itemStack){
@@ -135,7 +135,7 @@ public abstract class AbstractGunItem extends Item {
         return type == null ? "none" : type;
     }
 
-    public Item getAmmoItem(String ammoType, String ammoSize) {
+    public AbstractAmmo getAmmoItem(String ammoType, String ammoSize) {
         // get Ammo Item instance from type and size
         // TODO add size
         switch (ammoType){
@@ -160,22 +160,6 @@ public abstract class AbstractGunItem extends Item {
 
     }
 
-    public double getGravity(String ammoType, String ammoSize) {
-        // TODO
-        switch (ammoType){
-            case "test":
-            case "anti_gravity":
-                return 0.f;
-            case "normal":
-            case "explosive":
-            case "incendiary":
-            case "nuke":
-            case "silver":
-            case "tungsten":
-            default:
-                return 0.03f;
-        }
-    }
 
     public int getCoolDown(){
         return this.coolDown;
@@ -186,28 +170,24 @@ public abstract class AbstractGunItem extends Item {
         switch (ammoType){
             case "test":
                 return new TestAmmoEntity(x, y, z, world, toBeFired, shooter);
+            case "anti_gravity":
+                return new AmmoAntiGravityEntity(x, y, z, world, toBeFired, shooter);
+            case "explosive":
+                return new AmmoExplosiveEntity(x, y, z, world, toBeFired, shooter);
+            case "incendiary":
+                return new AmmoIncendiaryEntity(x, y, z, world, toBeFired, shooter);
+            case "nuke":
+                return new AmmoNukeEntity(x, y, z, world, toBeFired, shooter);
+            case "silver":
+                return new AmmoSilverEntity(x, y, z, world, toBeFired, shooter);
+            case "tungsten":
+                return new AmmoTungstenEntity(x, y, z, world, toBeFired, shooter);
             case "normal":
             default:
                 return new AmmoNormalEntity(x, y, z, world, toBeFired, shooter);
         }
     }
 
-    public float getAmmoVelocity(String ammoType, String ammoSize) {
-        // TODO
-        switch (ammoType){
-            case "test":
-                return 0.5f;
-            case "normal":
-            case "anti_gravity":
-            case "explosive":
-            case "incendiary":
-            case "nuke":
-            case "silver":
-            case "tungsten":
-            default:
-                return 7f;
-        }
-    }
 
     public void addAmmo(ItemStack offhand, ItemStack mainHand, int slot, PlayerEntity entity) {
         if(offhand.getItem() instanceof AbstractAmmo){
@@ -218,6 +198,9 @@ public abstract class AbstractGunItem extends Item {
                     offhand.shrink(n_load);
                     addAmmoNBT(mainHand, n_load, ammo.getType());
                     entity.getCooldownTracker().setCooldown(mainHand.getItem(), getLoadTime());
+                    if(!entity.world.isRemote){
+                        entity.world.playSound(null, entity.getPosX(), entity.getPosY(), entity.getPosZ(), getReloadSound(), SoundCategory.PLAYERS, 1f, 1f);
+                    }
                 }
             }
         }
@@ -236,6 +219,8 @@ public abstract class AbstractGunItem extends Item {
 
     public abstract double getDamageModifier();
 
+    public abstract SoundEvent getReloadSound();
+
     @Override
     public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         // loading ammo
@@ -251,10 +236,15 @@ public abstract class AbstractGunItem extends Item {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        int n_ammo = getAmmoCount(stack);
-        tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.ammo_left", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).
-                append(new StringTextComponent(" "+n_ammo).mergeStyle(TextFormatting.GOLD)));
-        tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.ammo_type", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).
-                append(new StringTextComponent(getAmmoShowType(stack)).mergeStyle(TextFormatting.GOLD)));
+        if(hasAmmo(stack)){
+            int n_ammo = getAmmoCount(stack);
+            AbstractAmmo ammo = getAmmoItem(Objects.requireNonNull(getAmmoType(stack)), compatibleSize());
+            tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.ammo_left", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).
+                    append(new StringTextComponent(" "+n_ammo).mergeStyle(TextFormatting.GOLD)));
+            tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.ammo_type", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).
+                    append(new TranslationTextComponent(String.format("item.%s.%s", NuclearCraft.MODID, Objects.requireNonNull(ammo.getRegistryName()).getPath())).mergeStyle(TextFormatting.GOLD)));
+        }
+        tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.damage_modifier", NuclearCraft.MODID)).append(new StringTextComponent(" "+getDamageModifier())));
+        tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.speed_modifier", NuclearCraft.MODID)).append(new StringTextComponent(" "+getSpeedModifier())));
     }
 }

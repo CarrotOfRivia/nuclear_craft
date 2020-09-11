@@ -32,6 +32,21 @@ public class DesertEagle extends AbstractGunItem{
         return SoundEventList.DESERT_EAGLE;
     }
 
+    @Override
+    public float getSpeedModifier() {
+        return 1.4f;
+    }
+
+    @Override
+    public double getDamageModifier() {
+        return 1.4;
+    }
+
+    @Override
+    public SoundEvent getReloadSound() {
+        return SoundEventList.DE_RELOAD_EMPTY;
+    }
+
     @Nonnull
     @Override
     public String compatibleSize() {

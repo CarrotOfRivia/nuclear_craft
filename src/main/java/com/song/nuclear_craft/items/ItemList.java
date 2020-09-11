@@ -41,7 +41,7 @@ public class ItemList {
 
     // Guns and bullets
     public static final DesertEagle DESERT_EAGLE = new DesertEagle();
-    public static final Ammo9mm AMMO_9MM = new Ammo9mm();
+    public static final Ammo9mmNormal AMMO_9MM = new Ammo9mmNormal();
     public static final AmmoTest AMMO_TEST = new AmmoTest();
     public static final Ammo9mmAntiGravity AMMO_9MM_ANTI_GRAVITY = new Ammo9mmAntiGravity();
     public static final Ammo9mmExplosive AMMO_9MM_EXPLOSIVE = new Ammo9mmExplosive();

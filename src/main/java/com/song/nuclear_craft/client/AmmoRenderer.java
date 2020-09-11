@@ -2,6 +2,7 @@ package com.song.nuclear_craft.client;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.song.nuclear_craft.entities.AbstractAmmoEntity;
+import com.song.nuclear_craft.items.AbstractAmmo;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;

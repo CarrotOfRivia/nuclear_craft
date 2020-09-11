@@ -9,4 +9,6 @@ public class SoundEventList {
     public static SoundEvent C4_BEEP = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "c4_beep"));
     public static SoundEvent LOADING = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "loading"));
     public static SoundEvent DESERT_EAGLE = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "desert_eagle"));
+    public static SoundEvent NO_AMMO = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "no_ammo"));
+    public static SoundEvent DE_RELOAD_EMPTY = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "de_reload_empty"));
 }

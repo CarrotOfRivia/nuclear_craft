@@ -24,4 +24,14 @@ public class Ammo9mmSilver extends AbstractAmmo {
     public double getBaseDamage() {
         return 40;
     }
+
+    @Override
+    public float getBaseSpeed() {
+        return 7;
+    }
+
+    @Override
+    public double getGravity() {
+        return 0.03;
+    }
 }

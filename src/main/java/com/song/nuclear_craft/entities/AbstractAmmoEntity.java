@@ -1,12 +1,15 @@
 package com.song.nuclear_craft.entities;
 
 import com.song.nuclear_craft.NuclearCraft;
+import com.song.nuclear_craft.items.AbstractAmmo;
 import com.song.nuclear_craft.items.ItemList;
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -35,11 +38,15 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
     private double gravity = 0.03f;
     protected double baseDamage = 30;
     private int age = 0;
+    private double bulletSize;
+    private final IntOpenHashSet piercedEntities=new IntOpenHashSet(100);;
+    private boolean isMyImpact=false;
     private double initEnergy;
     // BlockPos to store init motion
     private static final DataParameter<Float> CURRENT_MOTION_X = EntityDataManager.createKey(ProjectileItemEntity.class, DataSerializers.FLOAT);
     private static final DataParameter<Float> CURRENT_MOTION_Y = EntityDataManager.createKey(ProjectileItemEntity.class, DataSerializers.FLOAT);
     private static final DataParameter<Float> CURRENT_MOTION_Z = EntityDataManager.createKey(ProjectileItemEntity.class, DataSerializers.FLOAT);
+    private static final DataParameter<Float> BULLET_SIZE = EntityDataManager.createKey(ProjectileItemEntity.class, DataSerializers.FLOAT);
 
     @Override
     protected void registerData() {
@@ -47,6 +54,7 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
         this.dataManager.register(CURRENT_MOTION_X, 0.f);
         this.dataManager.register(CURRENT_MOTION_Y, 0.f);
         this.dataManager.register(CURRENT_MOTION_Z, 0.f);
+        this.dataManager.register(BULLET_SIZE, 0.f);
     }
 
     public AbstractAmmoEntity(EntityType<? extends AbstractAmmoEntity> type, World world){
@@ -65,6 +73,9 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
         super(EntityList.BULLET_ENTITY, x, y, z, world);
         this.setItem(itemStack);
         this.setShooter(shooter);
+        this.bulletSize = getSizeFromString(((AbstractAmmo)itemStack.getItem()).getSize());
+        this.dataManager.set(BULLET_SIZE, (float) bulletSize);
+        this.setBaseDamage(((AbstractAmmo)itemStack.getItem()).getBaseDamage());
     }
 
     public void setGravity(double gravity){
@@ -86,12 +97,11 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
         if (age == 0){
             // init: speed small-> big for better performance
             initSpeed = this.getMotion().length();
+            this.bulletSize = this.dataManager.get(BULLET_SIZE);
 //            initVec = this.getMotion();
             this.energy = getEnergy(initSpeed);
-            this.initEnergy = this.energy;
+            initEnergy = this.energy;
 //                this.setMotion(initVec.mul(0.01, 0.01, 0.01));
-        }else {
-            kEBefore = this.energy;
         }
 
         // Syn motion, default forge won't work for high speed objects
@@ -105,17 +115,37 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
             this.dataManager.set(CURRENT_MOTION_Z, (float)vector3d.z);
         }
 
+        isMyImpact=true;
+        if (!world.isRemote){
+            RayTraceResult raytraceresult = ProjectileHelper.func_234618_a_(this, this::func_230298_a_);
+            while (!this.removed&&raytraceresult!=null){
+                raytraceresult = ProjectileHelper.func_234618_a_(this, this::func_230298_a_);
+
+                if (raytraceresult != null && raytraceresult.getType() == RayTraceResult.Type.ENTITY) {
+                    Entity entity = ((EntityRayTraceResult)raytraceresult).getEntity();
+                    Entity indirect = this.func_234616_v_();
+                    if (entity instanceof PlayerEntity && indirect instanceof PlayerEntity && !((PlayerEntity)indirect).canAttackPlayer((PlayerEntity)entity)) {
+                        raytraceresult = null;
+                    }
+                }
+
+                if (raytraceresult != null && raytraceresult.getType() != RayTraceResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
+                    this.onImpact(raytraceresult);
+                }
+                if(raytraceresult != null && raytraceresult.getType() == RayTraceResult.Type.MISS){
+                    break;
+                }
+            }
+        }
+        isMyImpact=false;
+
         super.tick();
 
         if(this.energy <= 0){
             this.remove();
         }
+        this.setMotion(this.getMotion().add(0, -gravity, 0));
 
-        if (this.age > 5){
-            double factor = Math.sqrt(this.energy /kEBefore);
-            this.setMotion(this.getMotion().mul(factor, factor, factor));
-            this.setMotion(this.getMotion().add(0, -gravity, 0));
-        }
         this.age++;
         Vector3d vector3d = this.getMotion();
         float f = MathHelper.sqrt(horizontalMag(vector3d));
@@ -131,12 +161,14 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
     @Override
     protected void onEntityHit(EntityRayTraceResult entityRayTraceResult) {
         Entity entity = entityRayTraceResult.getEntity();
+        this.piercedEntities.add(entity.getEntityId());
+
         if (entity instanceof LivingEntity){
             double damage = this.baseDamage * this.getMotion().length() / this.initSpeed;
             // get shooter
             DamageSource damageSource = new IndirectEntityDamageSource(new ResourceLocation(NuclearCraft.MODID, "bullet").toString(), this, this.func_234616_v_()).setProjectile();
             entity.attackEntityFrom(damageSource, (float) damage);
-            this.energy -= 2;
+            this.energy -= 30;
         }
         else {
             this.energy -= 1;
@@ -145,31 +177,45 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
 
     @Override
     protected void onImpact(RayTraceResult result) {
-        super.onImpact(result);
+        double kEBefore = this.energy;
+        // do hack to remove impact in super.tick()
+        if(isMyImpact&&!world.isRemote){
+            super.onImpact(result);
+        }
+        if(this.energy<=0){
+            this.remove();
+        }
+        double factor = Math.sqrt(this.energy / kEBefore);
+        this.setMotion(this.getMotion().mul(factor, factor, factor));
+    }
+
+    @Override
+    protected boolean func_230298_a_(Entity p_230298_1_) {
+        return super.func_230298_a_(p_230298_1_)||((this.piercedEntities == null || !this.piercedEntities.contains(p_230298_1_.getEntityId())));
     }
 
     @Override
     protected void func_230299_a_(@Nonnull BlockRayTraceResult blockRayTraceResult) {
-        if(! world.isRemote){
+        if(true){
             Block block = world.getBlockState(blockRayTraceResult.getPos()).getBlock();
             double blastResist = block.getExplosionResistance();
             if(blastResist>3){
                 // ricochet
                 Direction blockDirection = blockRayTraceResult.getFace();
                 this.ricochet(blockDirection);
-                this.energy -= 1;
+                this.energy -= 15;
             }
             else if(blastResist >=2){
                 // destroy
                 world.destroyBlock(blockRayTraceResult.getPos(), true);
-                this.energy -= 3;
+                this.energy -= 20;
             }
             else {
                 // destroy
                 world.destroyBlock(blockRayTraceResult.getPos(), true);
-                this.energy -= 1;
+                this.energy -= 10;
             }
-
+            this.piercedEntities.clear();
         }
     }
 
@@ -191,8 +237,8 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
         }
     }
 
-    protected double getEnergy(double initSpeed){
-        return 0.1*initSpeed*initSpeed;
+    protected double getEnergy(double initSpeed) {
+        return 0.5*initSpeed*initSpeed*(this.bulletSize/9);
     }
 
     @Override
@@ -203,5 +249,19 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
     @Override
     public IPacket<?> createSpawnPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
+    }
+
+    public static double getSizeFromString(String size){
+        switch (size){
+            case "12.7mm":
+                return 12.7;
+            case "5.56mm":
+                return 5.56;
+            case "7.62mm":
+                return 7.62;
+            case "9mm":
+            default:
+                return 9;
+        }
     }
 }

@@ -26,4 +26,14 @@ public class AmmoTest extends AbstractAmmo {
     public double getBaseDamage() {
         return 30;
     }
+
+    @Override
+    public float getBaseSpeed() {
+        return 0.5f;
+    }
+
+    @Override
+    public double getGravity() {
+        return 0.0;
+    }
 }

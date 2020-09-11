@@ -25,4 +25,14 @@ public class Ammo9mmIncendiary extends AbstractAmmo {
     public double getBaseDamage() {
         return 20;
     }
+
+    @Override
+    public float getBaseSpeed() {
+        return 5;
+    }
+
+    @Override
+    public double getGravity() {
+        return 0.03;
+    }
 }

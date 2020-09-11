@@ -5,8 +5,8 @@ import com.song.nuclear_craft.items.AbstractAmmo;
 
 import javax.annotation.Nonnull;
 
-public class Ammo9mm extends AbstractAmmo {
-    public Ammo9mm() {
+public class Ammo9mmNormal extends AbstractAmmo {
+    public Ammo9mmNormal() {
         super(new Properties().group(NuclearCraft.ITEM_GROUP));
     }
 
@@ -24,5 +24,15 @@ public class Ammo9mm extends AbstractAmmo {
     @Override
     public double getBaseDamage() {
         return 30;
+    }
+
+    @Override
+    public float getBaseSpeed() {
+        return 5;
+    }
+
+    @Override
+    public double getGravity() {
+        return 0.03;
     }
 }

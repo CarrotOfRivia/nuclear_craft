@@ -4,7 +4,6 @@ import com.song.nuclear_craft.blocks.BlockList;
 import com.song.nuclear_craft.blocks.tileentity.TileEntityList;
 import com.song.nuclear_craft.blocks.container.ContainerTypeList;
 import com.song.nuclear_craft.entities.EntityList;
-import com.song.nuclear_craft.entities.renderers.AtomicBombRenderer;
 import com.song.nuclear_craft.items.ItemList;
 import com.song.nuclear_craft.misc.Config;
 import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
@@ -29,7 +28,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -130,7 +128,7 @@ public class NuclearCraft
                     ItemList.SMOKE_ROCKET, ItemList.ROCKET_LAUNCHER_INCENDIARY, ItemList.ROCKET_LAUNCHER_SMOKE, ItemList.HIGH_EXPLOSIVE_ROCKET,
                     ItemList.ROCKET_LAUNCHER_HIGH_EXPLOSIVE, ItemList.C4_ATOMIC_BOMB, ItemList.C4_HIGH_EXPLOSIVE, ItemList.C4_INCENDIARY,
                     ItemList.C4_SMOKE, ItemList.DESERT_EAGLE, ItemList.AMMO_9MM, ItemList.AMMO_TEST, ItemList.AMMO_9MM_ANTI_GRAVITY, ItemList.AMMO_9MM_INCENDIARY,
-                    ItemList.AMMO_9MM_NUKE, ItemList.AMMO_9MM_SILVER, ItemList.AMMO_9MM_TUNGSTEN);
+                    ItemList.AMMO_9MM_NUKE, ItemList.AMMO_9MM_SILVER, ItemList.AMMO_9MM_TUNGSTEN, ItemList.AMMO_9MM_EXPLOSIVE);
         }
 
         @SubscribeEvent

@@ -18,5 +18,15 @@
     "category": "player",
     "subtitle": "nuclear_craft.subtitle.desert_eagle",
     "sounds": ["nuclear_craft:desert_eagle"]
+  },
+  "no_ammo": {
+    "category": "player",
+    "subtitle": "nuclear_craft.subtitle.no_ammo",
+    "sounds": ["nuclear_craft:no_ammo"]
+  },
+  "de_reload_empty": {
+    "category": "player",
+    "subtitle": "nuclear_craft.subtitle.de_reload_empty",
+    "sounds": ["nuclear_craft:de_reload_empty"]
   }
 }

@@ -26,4 +26,14 @@ public class Ammo9mmNuke extends AbstractAmmo {
     public double getBaseDamage() {
         return 30;
     }
+
+    @Override
+    public float getBaseSpeed() {
+        return 6;
+    }
+
+    @Override
+    public double getGravity() {
+        return 0.03;
+    }
 }
