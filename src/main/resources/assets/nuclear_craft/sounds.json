@@ -28,5 +28,20 @@
     "category": "player",
     "subtitle": "nuclear_craft.subtitle.de_reload_empty",
     "sounds": ["nuclear_craft:de_reload_empty"]
+  },
+  "usp": {
+    "category": "player",
+    "subtitle": "nuclear_craft.subtitle.usp",
+    "sounds": ["nuclear_craft:usp"]
+  },
+  "glock": {
+  "category": "player",
+  "subtitle": "nuclear_craft.subtitle.glock",
+  "sounds": ["nuclear_craft:glock"]
+  },
+  "ak47": {
+    "category": "player",
+    "subtitle": "nuclear_craft.subtitle.ak47",
+    "sounds": ["nuclear_craft:ak47"]
   }
 }

@@ -89,7 +89,7 @@ public abstract class RocketLauncherWithAmmo extends Item {
     public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         // loading ammo
         super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
-        if(isSelected && !worldIn.isRemote && NuclearCraft.keyBinding.isPressed() && (entityIn instanceof PlayerEntity)){
+        if(isSelected && !worldIn.isRemote && NuclearCraft.gunReload.isPressed() && (entityIn instanceof PlayerEntity)){
             ItemStack itemStackMain = ((PlayerEntity) entityIn).getHeldItemMainhand();
             if (itemStackMain.getItem() instanceof RocketLauncherWithAmmo){
                 ItemStack itemStackOff = ((PlayerEntity) entityIn).getHeldItemOffhand();

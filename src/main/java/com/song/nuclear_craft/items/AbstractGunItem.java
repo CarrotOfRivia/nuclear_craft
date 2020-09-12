@@ -47,7 +47,7 @@ public abstract class AbstractGunItem extends Item {
                 AbstractAmmo ammoItem = gunItem.getAmmoItem(ammoType, ammoSize);
                 ItemStack toBeFired = new ItemStack(ammoItem);
                 AbstractAmmoEntity entity = gunItem.getAmmoEntity(playerIn.getPosX(), playerIn.getPosYEye() - (double)0.15F, playerIn.getPosZ(), worldIn, toBeFired, playerIn, ammoType, ammoSize);
-                worldIn.playSound(null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), getSoundEvent(), SoundCategory.PLAYERS, 0.1f, 1f);
+                worldIn.playSound(null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), getSoundEvent(), SoundCategory.PLAYERS, getSoundVolume(), 1f);
                 entity.setSilent(true);
                 // handle it myself
                 entity.setNoGravity(true);
@@ -81,6 +81,10 @@ public abstract class AbstractGunItem extends Item {
                 return false;
             }
         }
+    }
+
+    public float getSoundVolume(){
+        return 0.2f;
     }
 
     public static void clearAmmoNBT(ItemStack itemStack){
@@ -161,9 +165,7 @@ public abstract class AbstractGunItem extends Item {
     }
 
 
-    public int getCoolDown(){
-        return this.coolDown;
-    }
+    public abstract int getCoolDown();
 
     public AbstractAmmoEntity getAmmoEntity(double x, double y, double z, World world, ItemStack toBeFired, PlayerEntity shooter, String ammoType, String ammoSize) {
         // TODO
@@ -225,7 +227,7 @@ public abstract class AbstractGunItem extends Item {
     public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         // loading ammo
         super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
-        if(isSelected && !worldIn.isRemote && NuclearCraft.keyBinding.isPressed() && (entityIn instanceof PlayerEntity)){
+        if(isSelected && !worldIn.isRemote && NuclearCraft.gunReload.isPressed() && (entityIn instanceof PlayerEntity)){
             ItemStack itemStackMain = ((PlayerEntity) entityIn).getHeldItemMainhand();
             if (itemStackMain.getItem() instanceof AbstractGunItem){
                 ItemStack itemStackOff = ((PlayerEntity) entityIn).getHeldItemOffhand();
@@ -244,7 +246,8 @@ public abstract class AbstractGunItem extends Item {
             tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.ammo_type", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).
                     append(new TranslationTextComponent(String.format("item.%s.%s", NuclearCraft.MODID, Objects.requireNonNull(ammo.getRegistryName()).getPath())).mergeStyle(TextFormatting.GOLD)));
         }
-        tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.damage_modifier", NuclearCraft.MODID)).append(new StringTextComponent(" "+getDamageModifier())));
-        tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.speed_modifier", NuclearCraft.MODID)).append(new StringTextComponent(" "+getSpeedModifier())));
+        tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.compatible_ammo_size", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).append(new StringTextComponent(" "+compatibleSize())));
+        tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.damage_modifier", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).append(new StringTextComponent(" "+getDamageModifier())));
+        tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.speed_modifier", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).append(new StringTextComponent(" "+getSpeedModifier())));
     }
 }

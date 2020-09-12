@@ -18,7 +18,6 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleType;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -52,10 +51,11 @@ public class NuclearCraft
     public static final ItemGroup ITEM_GROUP = new ItemGroup(ItemGroup.GROUPS.length, "nuclear_craft") {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(Items.TNT);
+            return new ItemStack(ItemList.ATOMIC_BOMB_ROCKET);
         }
     };
-    public static KeyBinding keyBinding;
+    public static KeyBinding gunReload;
+    public static KeyBinding zoom;
 
     public NuclearCraft() {
         // Register the setup method for modloading
@@ -84,8 +84,9 @@ public class NuclearCraft
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
         LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
-        keyBinding  = new KeyBinding("key.load_ammo", GLFW.GLFW_KEY_R, "key.categories.weapons"); // keyBinding is a static variable
-        ClientRegistry.registerKeyBinding(keyBinding);
+        gunReload = new KeyBinding("key."+MODID+".load_ammo", GLFW.GLFW_KEY_R, "key."+MODID+".categories"); // keyBinding is a static variable
+        zoom = new KeyBinding("key."+MODID+".zoom", GLFW.GLFW_KEY_Z, "key."+MODID+".categories");
+        ClientRegistry.registerKeyBinding(gunReload);
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
@@ -128,7 +129,9 @@ public class NuclearCraft
                     ItemList.SMOKE_ROCKET, ItemList.ROCKET_LAUNCHER_INCENDIARY, ItemList.ROCKET_LAUNCHER_SMOKE, ItemList.HIGH_EXPLOSIVE_ROCKET,
                     ItemList.ROCKET_LAUNCHER_HIGH_EXPLOSIVE, ItemList.C4_ATOMIC_BOMB, ItemList.C4_HIGH_EXPLOSIVE, ItemList.C4_INCENDIARY,
                     ItemList.C4_SMOKE, ItemList.DESERT_EAGLE, ItemList.AMMO_9MM, ItemList.AMMO_TEST, ItemList.AMMO_9MM_ANTI_GRAVITY, ItemList.AMMO_9MM_INCENDIARY,
-                    ItemList.AMMO_9MM_NUKE, ItemList.AMMO_9MM_SILVER, ItemList.AMMO_9MM_TUNGSTEN, ItemList.AMMO_9MM_EXPLOSIVE);
+                    ItemList.AMMO_9MM_NUKE, ItemList.AMMO_9MM_SILVER, ItemList.AMMO_9MM_TUNGSTEN, ItemList.AMMO_9MM_EXPLOSIVE, ItemList.GLOCK, ItemList.USP, ItemList.AK47,
+                    ItemList.AMMO_762_ANTI_GRAVITY, ItemList.AMMO_762_EXPLOSIVE, ItemList.AMMO_762_INCENDIARY, ItemList.AMMO_762_NORMAL, ItemList.AMMO_762_NUKE,
+                    ItemList.AMMO_762_SILVER, ItemList.AMMO_762_TUNGSTEN);
         }
 
         @SubscribeEvent

@@ -4,6 +4,7 @@ import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.items.AbstractAmmo;
 import com.song.nuclear_craft.items.ItemList;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -199,24 +200,27 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
         if(true){
             Block block = world.getBlockState(blockRayTraceResult.getPos()).getBlock();
             double blastResist = block.getExplosionResistance();
-            if(blastResist>3){
+            if(blastResist>getBlockBreakThreshold()+1e-3){
                 // ricochet
                 Direction blockDirection = blockRayTraceResult.getFace();
                 this.ricochet(blockDirection);
                 this.energy -= 15;
             }
-            else if(blastResist >=2){
-                // destroy
-                world.destroyBlock(blockRayTraceResult.getPos(), true);
-                this.energy -= 20;
-            }
             else {
                 // destroy
                 world.destroyBlock(blockRayTraceResult.getPos(), true);
-                this.energy -= 10;
+                this.energy -= getEnergyLoss(blastResist);
             }
             this.piercedEntities.clear();
         }
+    }
+
+    public double getBlockBreakThreshold(){
+        return 3d;
+    }
+
+    public double getEnergyLoss(double blastResist){
+        return 25 + 10 * (blastResist-2);
     }
 
     private void ricochet(Direction direction){
@@ -260,8 +264,9 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
             case "7.62mm":
                 return 7.62;
             case "9mm":
-            default:
                 return 9;
+            default:
+                throw new ValueException("Unrecognized size: "+size);
         }
     }
 }

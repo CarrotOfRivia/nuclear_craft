@@ -13,13 +13,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class Ammo9mmSilver extends AbstractAmmo {
-    public Ammo9mmSilver() {
+public class Ammo762Silver extends AbstractAmmo {
+    public Ammo762Silver() {
         super(new Properties().group(NuclearCraft.ITEM_GROUP));
     }
     @Override
     public String getSize() {
-        return "9mm";
+        return "7.62mm";
     }
 
     @Nonnull
@@ -30,12 +30,12 @@ public class Ammo9mmSilver extends AbstractAmmo {
 
     @Override
     public double getBaseDamage() {
-        return 40;
+        return 33;
     }
 
     @Override
     public float getBaseSpeed() {
-        return 7;
+        return 11;
     }
 
     @Override

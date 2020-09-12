@@ -20,4 +20,9 @@ public class AmmoSilverEntity extends AbstractAmmoEntity {
     public AmmoSilverEntity(double x, double y, double z, World world, ItemStack itemStack, PlayerEntity shooter) {
         super(x, y, z, world, itemStack, shooter);
     }
+
+    @Override
+    public double getBlockBreakThreshold() {
+        return 6d;
+    }
 }

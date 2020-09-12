@@ -41,6 +41,9 @@ public class ItemList {
 
     // Guns and bullets
     public static final DesertEagle DESERT_EAGLE = new DesertEagle();
+    public static final Glock GLOCK = new Glock();
+    public static final USP USP = new USP();
+    public static final Ak47 AK47 = new Ak47();
     public static final Ammo9mmNormal AMMO_9MM = new Ammo9mmNormal();
     public static final AmmoTest AMMO_TEST = new AmmoTest();
     public static final Ammo9mmAntiGravity AMMO_9MM_ANTI_GRAVITY = new Ammo9mmAntiGravity();
@@ -49,6 +52,13 @@ public class ItemList {
     public static final Ammo9mmNuke AMMO_9MM_NUKE = new Ammo9mmNuke();
     public static final Ammo9mmSilver AMMO_9MM_SILVER = new Ammo9mmSilver();
     public static final Ammo9mmTungsten AMMO_9MM_TUNGSTEN = new Ammo9mmTungsten();
+    public static final Ammo762Normal AMMO_762_NORMAL = new Ammo762Normal();
+    public static final Ammo762AntiGravity AMMO_762_ANTI_GRAVITY = new Ammo762AntiGravity();
+    public static final Ammo762Explosive AMMO_762_EXPLOSIVE = new Ammo762Explosive();
+    public static final Ammo762Incendiary AMMO_762_INCENDIARY = new Ammo762Incendiary();
+    public static final Ammo762Nuke AMMO_762_NUKE = new Ammo762Nuke();
+    public static final Ammo762Silver AMMO_762_SILVER = new Ammo762Silver();
+    public static final Ammo762Tungsten AMMO_762_TUNGSTEN = new Ammo762Tungsten();
     static {
         C4_ATOMIC_BOMB.setRegistryName(Objects.requireNonNull(BlockList.C4_ATOMIC_BOMB.getRegistryName()));
         C4_HIGH_EXPLOSIVE.setRegistryName(Objects.requireNonNull(BlockList.C4_HIGH_EXPLOSIVE.getRegistryName()));
@@ -56,6 +66,10 @@ public class ItemList {
         C4_SMOKE.setRegistryName(Objects.requireNonNull(BlockList.C4_SMOKE.getRegistryName()));
 
         DESERT_EAGLE.setRegistryName(NuclearCraft.MODID, "desert_eagle");
+        GLOCK.setRegistryName(NuclearCraft.MODID, "glock");
+        USP.setRegistryName(NuclearCraft.MODID, "usp");
+        AK47.setRegistryName(NuclearCraft.MODID, "ak47");
+        // 9mm
         AMMO_9MM.setRegistryName(NuclearCraft.MODID, "ammo_9mm");
         AMMO_TEST.setRegistryName(NuclearCraft.MODID, "ammo_test");
         AMMO_9MM_ANTI_GRAVITY.setRegistryName(NuclearCraft.MODID, "ammo_9mm_anti_gravity");
@@ -64,5 +78,13 @@ public class ItemList {
         AMMO_9MM_NUKE.setRegistryName(NuclearCraft.MODID, "ammo_9mm_nuke");
         AMMO_9MM_SILVER.setRegistryName(NuclearCraft.MODID, "ammo_9mm_silver");
         AMMO_9MM_TUNGSTEN.setRegistryName(NuclearCraft.MODID, "ammo_9mm_tungsten");
+        // 7.62mm
+        AMMO_762_NORMAL.setRegistryName(NuclearCraft.MODID, "ammo_762_normal");
+        AMMO_762_ANTI_GRAVITY.setRegistryName(NuclearCraft.MODID, "ammo_762_anti_gravity");
+        AMMO_762_EXPLOSIVE.setRegistryName(NuclearCraft.MODID, "ammo_762_explosive");
+        AMMO_762_INCENDIARY.setRegistryName(NuclearCraft.MODID, "ammo_762_incendiary");
+        AMMO_762_NUKE.setRegistryName(NuclearCraft.MODID, "ammo_762_nuke");
+        AMMO_762_SILVER.setRegistryName(NuclearCraft.MODID, "ammo_762_silver");
+        AMMO_762_TUNGSTEN.setRegistryName(NuclearCraft.MODID, "ammo_762_tungsten");
     }
 }
