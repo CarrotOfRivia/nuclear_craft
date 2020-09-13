@@ -3,22 +3,31 @@ package com.song.nuclear_craft.misc;
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.blocks.container.C4BombContainer;
 import com.song.nuclear_craft.blocks.container.C4BombContainerScreen;
+import com.song.nuclear_craft.client.ScopeZoomGui;
+import com.song.nuclear_craft.items.AbstractGunItem;
 import com.song.nuclear_craft.items.ItemList;
 import com.song.nuclear_craft.network.C4BombSettingPacket;
 import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.IngameGui;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.widget.button.ImageButton;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.gui.screen.ModListScreen;
 import net.minecraftforge.fml.common.Mod;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Mod.EventBusSubscriber(modid = NuclearCraft.MODID, value = Dist.CLIENT)
 public class ClientEventForgeSubscriber {
@@ -70,12 +79,14 @@ public class ClientEventForgeSubscriber {
     @SubscribeEvent
     public static void onFovUpdate(final FOVUpdateEvent event){
         PlayerEntity entity = event.getEntity();
-        if(entity.getHeldItemMainhand().getItem() == ItemList.AK47){
-            if(NuclearCraft.zoom.isPressed()){
+        Item item = entity.getHeldItemMainhand().getItem();
+        if(NuclearCraft.zoom.isPressed()){
+            if(item instanceof AbstractGunItem && (((AbstractGunItem) item).canUseScope())) {
                 zoomState = (zoomState+1)%3;
+                entity.playSound(SoundEventList.ZOOM, 1f, 1f);
             }
         }
-        else {
+        else if(!(item instanceof AbstractGunItem && (((AbstractGunItem) item).canUseScope()))){
             zoomState = 0;
         }
 
@@ -95,6 +106,14 @@ public class ClientEventForgeSubscriber {
                 break;
         }
 
+    }
+
+    @SubscribeEvent
+    public static void onOverlayRender(final RenderGameOverlayEvent event){
+        if(zoomState>0){
+            MainWindow window = event.getWindow();
+            new ScopeZoomGui(Minecraft.getInstance()).drawGuiContainerBackgroundLayer(event.getMatrixStack(), window.getWindowX(), window.getWindowY(), window.getScaledWidth(), window.getScaledHeight());
+        }
     }
 
 }

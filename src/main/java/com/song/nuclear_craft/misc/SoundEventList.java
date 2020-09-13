@@ -14,4 +14,9 @@ public class SoundEventList {
     public static SoundEvent GLOCK = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "glock"));
     public static SoundEvent USP = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "usp"));
     public static SoundEvent AK47 = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "ak47"));
+    public static SoundEvent AK47_RELOAD = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "ak47_reload"));
+    public static SoundEvent AWP = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "awp"));
+    public static SoundEvent AWP_RELOAD = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "awp_reload"));
+    public static SoundEvent ZOOM = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "zoom"));
+    public static SoundEvent BARRETT = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "barrett"));
 }

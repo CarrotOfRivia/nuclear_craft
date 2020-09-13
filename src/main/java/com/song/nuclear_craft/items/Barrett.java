@@ -6,19 +6,19 @@ import net.minecraft.util.SoundEvent;
 
 import javax.annotation.Nonnull;
 
-public class Ak47 extends AbstractGunItem{
-    public Ak47() {
+public class Barrett extends AbstractGunItem{
+    public Barrett(){
         super(new Properties().maxStackSize(1).group(NuclearCraft.ITEM_GROUP));
     }
 
     @Override
     public int getCoolDown() {
-        return 0;
+        return 40;
     }
 
     @Override
     public int maxAmmo() {
-        return 30;
+        return 5;
     }
 
     @Override
@@ -29,27 +29,31 @@ public class Ak47 extends AbstractGunItem{
     @Nonnull
     @Override
     public String compatibleSize() {
-        return "7.62mm";
+        return "12.7mm";
     }
 
     @Override
     public SoundEvent getSoundEvent() {
-        return SoundEventList.AK47;
+        return SoundEventList.BARRETT;
     }
 
     @Override
     public float getSpeedModifier() {
-        return 1.5f;
+        return 4.0f;
     }
 
     @Override
     public double getDamageModifier() {
-        return 1.7d;
+        return 4.0f;
     }
 
     @Override
     public SoundEvent getReloadSound() {
-        return SoundEventList.AK47_RELOAD;
+        return SoundEventList.AWP_RELOAD;
     }
 
+    @Override
+    public boolean canUseScope() {
+        return true;
+    }
 }

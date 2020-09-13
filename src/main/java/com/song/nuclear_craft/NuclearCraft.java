@@ -87,6 +87,7 @@ public class NuclearCraft
         gunReload = new KeyBinding("key."+MODID+".load_ammo", GLFW.GLFW_KEY_R, "key."+MODID+".categories"); // keyBinding is a static variable
         zoom = new KeyBinding("key."+MODID+".zoom", GLFW.GLFW_KEY_Z, "key."+MODID+".categories");
         ClientRegistry.registerKeyBinding(gunReload);
+        ClientRegistry.registerKeyBinding(zoom);
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
@@ -131,7 +132,7 @@ public class NuclearCraft
                     ItemList.C4_SMOKE, ItemList.DESERT_EAGLE, ItemList.AMMO_9MM, ItemList.AMMO_TEST, ItemList.AMMO_9MM_ANTI_GRAVITY, ItemList.AMMO_9MM_INCENDIARY,
                     ItemList.AMMO_9MM_NUKE, ItemList.AMMO_9MM_SILVER, ItemList.AMMO_9MM_TUNGSTEN, ItemList.AMMO_9MM_EXPLOSIVE, ItemList.GLOCK, ItemList.USP, ItemList.AK47,
                     ItemList.AMMO_762_ANTI_GRAVITY, ItemList.AMMO_762_EXPLOSIVE, ItemList.AMMO_762_INCENDIARY, ItemList.AMMO_762_NORMAL, ItemList.AMMO_762_NUKE,
-                    ItemList.AMMO_762_SILVER, ItemList.AMMO_762_TUNGSTEN);
+                    ItemList.AMMO_762_SILVER, ItemList.AMMO_762_TUNGSTEN, ItemList.AWP, ItemList.BARRETT);
         }
 
         @SubscribeEvent

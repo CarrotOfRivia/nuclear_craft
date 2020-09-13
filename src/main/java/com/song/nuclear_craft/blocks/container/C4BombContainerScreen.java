@@ -22,7 +22,7 @@ public class C4BombContainerScreen extends ContainerScreen<C4BombContainer> {
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float p_230450_2_, int mouse_x, int mouse_y) {
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouse_x, int mouse_y) {
         i = (this.width - this.xSize) / 2;
         j = (this.height - this.ySize) / 2;
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);

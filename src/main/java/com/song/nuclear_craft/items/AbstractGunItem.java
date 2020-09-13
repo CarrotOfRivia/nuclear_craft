@@ -1,9 +1,11 @@
 package com.song.nuclear_craft.items;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.entities.AbstractAmmoEntity;
 import com.song.nuclear_craft.entities.AmmoEntities.*;
 import com.song.nuclear_craft.misc.SoundEventList;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -227,13 +229,20 @@ public abstract class AbstractGunItem extends Item {
     public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         // loading ammo
         super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
-        if(isSelected && !worldIn.isRemote && NuclearCraft.gunReload.isPressed() && (entityIn instanceof PlayerEntity)){
-            ItemStack itemStackMain = ((PlayerEntity) entityIn).getHeldItemMainhand();
-            if (itemStackMain.getItem() instanceof AbstractGunItem){
-                ItemStack itemStackOff = ((PlayerEntity) entityIn).getHeldItemOffhand();
-                ((AbstractGunItem) itemStackMain.getItem()).addAmmo(itemStackOff, itemStackMain, itemSlot, (PlayerEntity) entityIn);
+        if(isSelected){
+            if(!worldIn.isRemote && NuclearCraft.gunReload.isPressed() && (entityIn instanceof PlayerEntity)){
+                ItemStack itemStackMain = ((PlayerEntity) entityIn).getHeldItemMainhand();
+                if (itemStackMain.getItem() instanceof AbstractGunItem){
+                    ItemStack itemStackOff = ((PlayerEntity) entityIn).getHeldItemOffhand();
+                    ((AbstractGunItem) itemStackMain.getItem()).addAmmo(itemStackOff, itemStackMain, itemSlot, (PlayerEntity) entityIn);
+                }
+            }
+            if (worldIn.isRemote&&((getCoolDown()<=0)||(Minecraft.getInstance().ingameGUI.getTicks()%getCoolDown()==0))){
+                Minecraft.getInstance().ingameGUI.setOverlayMessage(new TranslationTextComponent(String.format("item.%s.guns.ammo_left", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).
+                        append(new StringTextComponent(" "+getAmmoCount(stack)).mergeStyle(TextFormatting.GOLD)), false);
             }
         }
+
     }
 
     @Override
@@ -249,5 +258,9 @@ public abstract class AbstractGunItem extends Item {
         tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.compatible_ammo_size", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).append(new StringTextComponent(" "+compatibleSize())));
         tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.damage_modifier", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).append(new StringTextComponent(" "+getDamageModifier())));
         tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.speed_modifier", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).append(new StringTextComponent(" "+getSpeedModifier())));
+    }
+
+    public boolean canUseScope(){
+        return false;
     }
 }

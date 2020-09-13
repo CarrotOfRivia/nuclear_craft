@@ -43,5 +43,30 @@
     "category": "player",
     "subtitle": "nuclear_craft.subtitle.ak47",
     "sounds": ["nuclear_craft:ak47"]
+  },
+  "awp": {
+    "category": "player",
+    "subtitle": "nuclear_craft.subtitle.awp",
+    "sounds": ["nuclear_craft:awp"]
+  },
+  "awp_reload": {
+    "category": "player",
+    "subtitle": "nuclear_craft.subtitle.awp_reload",
+    "sounds": ["nuclear_craft:awp_reload"]
+  },
+  "zoom": {
+    "category": "player",
+    "subtitle": "nuclear_craft.subtitle.zoom",
+    "sounds": ["nuclear_craft:zoom"]
+  },
+  "ak47_reload": {
+    "category": "player",
+    "subtitle": "nuclear_craft.subtitle.ak47_reload",
+    "sounds": ["nuclear_craft:ak47_reload"]
+  },
+  "barrett": {
+    "category": "player",
+    "subtitle": "nuclear_craft.subtitle.barrett",
+    "sounds": ["nuclear_craft:barrett"]
   }
 }

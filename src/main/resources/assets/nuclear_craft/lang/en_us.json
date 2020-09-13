@@ -1,4 +1,8 @@
 {
+  "key.nuclear_craft.zoom": "Use Scope",
+  "key.nuclear_craft.load_ammo": "Reload",
+  "key.nuclear_craft.categories": "Atomic Explosion Keybindings",
+
   "itemGroup.nuclear_craft": "Atomic Explosion",
   "item.nuclear_craft.atomic_bomb_rocket": "Atomic Bomb Rocket",
   "item.nuclear_craft.incendiary_rocket": "Incendiary Rocket",
@@ -33,6 +37,7 @@
   "item.nuclear_craft.glock": "Glock",
   "item.nuclear_craft.usp": "USP",
   "item.nuclear_craft.ak47": "AK47",
+  "item.nuclear_craft.awp": "AWP",
   "item.nuclear_craft.ammo_9mm": "9mm Normal Bullet",
   "item.nuclear_craft.ammo_test": "9mm Test Bullet",
   "item.nuclear_craft.ammo_9mm_anti_gravity": "9mm Anti-Gravity Bullet",

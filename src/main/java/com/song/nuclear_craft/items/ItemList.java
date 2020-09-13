@@ -44,6 +44,8 @@ public class ItemList {
     public static final Glock GLOCK = new Glock();
     public static final USP USP = new USP();
     public static final Ak47 AK47 = new Ak47();
+    public static final Awp AWP = new Awp();
+    public static final Barrett BARRETT = new Barrett();
     public static final Ammo9mmNormal AMMO_9MM = new Ammo9mmNormal();
     public static final AmmoTest AMMO_TEST = new AmmoTest();
     public static final Ammo9mmAntiGravity AMMO_9MM_ANTI_GRAVITY = new Ammo9mmAntiGravity();
@@ -69,6 +71,8 @@ public class ItemList {
         GLOCK.setRegistryName(NuclearCraft.MODID, "glock");
         USP.setRegistryName(NuclearCraft.MODID, "usp");
         AK47.setRegistryName(NuclearCraft.MODID, "ak47");
+        AWP.setRegistryName(NuclearCraft.MODID, "awp");
+        BARRETT.setRegistryName(NuclearCraft.MODID, "barrett");
         // 9mm
         AMMO_9MM.setRegistryName(NuclearCraft.MODID, "ammo_9mm");
         AMMO_TEST.setRegistryName(NuclearCraft.MODID, "ammo_test");
