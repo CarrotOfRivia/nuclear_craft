@@ -1,4 +1,4 @@
-package com.song.nuclear_craft.items.Ammo9mm;
+package com.song.nuclear_craft.items.Ammo;
 
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.items.AbstractAmmo;

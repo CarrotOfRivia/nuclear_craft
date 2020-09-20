@@ -44,7 +44,7 @@ public class Barrett extends AbstractGunItem{
 
     @Override
     public double getDamageModifier() {
-        return 4.0f;
+        return 5.0f;
     }
 
     @Override
@@ -55,5 +55,10 @@ public class Barrett extends AbstractGunItem{
     @Override
     public boolean canUseScope() {
         return true;
+    }
+
+    @Override
+    public float getSoundVolume() {
+        return 0.5f;
     }
 }

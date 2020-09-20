@@ -48,7 +48,7 @@ public class NuclearCraft
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
     public static final String MODID = "nuclear_craft";
-    public static final ItemGroup ITEM_GROUP = new ItemGroup(ItemGroup.GROUPS.length, "nuclear_craft") {
+    public static final ItemGroup ITEM_GROUP = new ItemGroup(ItemGroup.GROUPS.length, MODID) {
         @Override
         public ItemStack createIcon() {
             return new ItemStack(ItemList.ATOMIC_BOMB_ROCKET);
@@ -125,14 +125,14 @@ public class NuclearCraft
         public static void onItemsRegistry(final RegistryEvent.Register<Item> event) {
             // register items
             LOGGER.info("HELLO from Register Item");
-            event.getRegistry().registerAll(ItemList.ATOMIC_BOMB_ROCKET, ItemList.ROCKET_LAUNCHER, ItemList.ROCKET_LAUNCHER_ATOMIC_BOMB,
-                    ItemList.ROCKET_CONTROL_UNIT, ItemList.URANIUM_235, ItemList.URANIUM_238, ItemList.INCENDIARY_ROCKET,
+            event.getRegistry().registerAll(ItemList.ATOMIC_BOMB_ROCKET, ItemList.ROCKET_LAUNCHER, ItemList.ROCKET_LAUNCHER_ATOMIC_BOMB, ItemList.INCENDIARY_ROCKET,
                     ItemList.SMOKE_ROCKET, ItemList.ROCKET_LAUNCHER_INCENDIARY, ItemList.ROCKET_LAUNCHER_SMOKE, ItemList.HIGH_EXPLOSIVE_ROCKET,
                     ItemList.ROCKET_LAUNCHER_HIGH_EXPLOSIVE, ItemList.C4_ATOMIC_BOMB, ItemList.C4_HIGH_EXPLOSIVE, ItemList.C4_INCENDIARY,
                     ItemList.C4_SMOKE, ItemList.DESERT_EAGLE, ItemList.AMMO_9MM, ItemList.AMMO_TEST, ItemList.AMMO_9MM_ANTI_GRAVITY, ItemList.AMMO_9MM_INCENDIARY,
                     ItemList.AMMO_9MM_NUKE, ItemList.AMMO_9MM_SILVER, ItemList.AMMO_9MM_TUNGSTEN, ItemList.AMMO_9MM_EXPLOSIVE, ItemList.GLOCK, ItemList.USP, ItemList.AK47,
                     ItemList.AMMO_762_ANTI_GRAVITY, ItemList.AMMO_762_EXPLOSIVE, ItemList.AMMO_762_INCENDIARY, ItemList.AMMO_762_NORMAL, ItemList.AMMO_762_NUKE,
-                    ItemList.AMMO_762_SILVER, ItemList.AMMO_762_TUNGSTEN, ItemList.AWP, ItemList.BARRETT);
+                    ItemList.AMMO_762_SILVER, ItemList.AMMO_762_TUNGSTEN, ItemList.AWP, ItemList.BARRETT, ItemList.AMMO_127_ANTI_GRAVITY, ItemList.AMMO_127_EXPLOSIVE,
+                    ItemList.AMMO_127_INCENDIARY, ItemList.AMMO_127_NORMAL, ItemList.AMMO_127_NUKE, ItemList.AMMO_127_SILVER, ItemList.AMMO_127_TUNGSTEN);
         }
 
         @SubscribeEvent

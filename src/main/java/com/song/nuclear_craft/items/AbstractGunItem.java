@@ -232,7 +232,7 @@ public abstract class AbstractGunItem extends Item {
         if(isSelected){
             if(!worldIn.isRemote && NuclearCraft.gunReload.isPressed() && (entityIn instanceof PlayerEntity)){
                 ItemStack itemStackMain = ((PlayerEntity) entityIn).getHeldItemMainhand();
-                if (itemStackMain.getItem() instanceof AbstractGunItem){
+                if ((itemStackMain.getItem() instanceof AbstractGunItem)&&!(((PlayerEntity) entityIn).getCooldownTracker().hasCooldown(itemStackMain.getItem()))){
                     ItemStack itemStackOff = ((PlayerEntity) entityIn).getHeldItemOffhand();
                     ((AbstractGunItem) itemStackMain.getItem()).addAmmo(itemStackOff, itemStackMain, itemSlot, (PlayerEntity) entityIn);
                 }
@@ -258,6 +258,9 @@ public abstract class AbstractGunItem extends Item {
         tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.compatible_ammo_size", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).append(new StringTextComponent(" "+compatibleSize())));
         tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.damage_modifier", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).append(new StringTextComponent(" "+getDamageModifier())));
         tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.speed_modifier", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).append(new StringTextComponent(" "+getSpeedModifier())));
+        if(canUseScope()){
+            tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.use_scope", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).append(new StringTextComponent(" Z")));
+        }
     }
 
     public boolean canUseScope(){

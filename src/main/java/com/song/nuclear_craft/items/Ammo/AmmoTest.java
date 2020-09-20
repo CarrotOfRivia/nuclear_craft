@@ -1,38 +1,39 @@
-package com.song.nuclear_craft.items.Ammo9mm;
+package com.song.nuclear_craft.items.Ammo;
 
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.items.AbstractAmmo;
 
 import javax.annotation.Nonnull;
 
-public class Ammo762Incendiary extends AbstractAmmo {
-    public Ammo762Incendiary() {
+public class AmmoTest extends AbstractAmmo {
+
+    public AmmoTest() {
         super(new Properties().group(NuclearCraft.ITEM_GROUP));
     }
 
     @Override
     public String getSize() {
-        return "7.62mm";
+        return "9mm";
     }
 
     @Nonnull
     @Override
     public String getType() {
-        return "incendiary";
+        return "test";
     }
 
     @Override
     public double getBaseDamage() {
-        return 15;
+        return 30;
     }
 
     @Override
     public float getBaseSpeed() {
-        return 7;
+        return 0.5f;
     }
 
     @Override
     public double getGravity() {
-        return 0.03;
+        return 0.0;
     }
 }

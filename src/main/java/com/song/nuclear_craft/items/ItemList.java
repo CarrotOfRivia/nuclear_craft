@@ -2,7 +2,7 @@ package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.blocks.BlockList;
 import com.song.nuclear_craft.NuclearCraft;
-import com.song.nuclear_craft.items.Ammo9mm.*;
+import com.song.nuclear_craft.items.Ammo.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 
@@ -46,6 +46,7 @@ public class ItemList {
     public static final Ak47 AK47 = new Ak47();
     public static final Awp AWP = new Awp();
     public static final Barrett BARRETT = new Barrett();
+
     public static final Ammo9mmNormal AMMO_9MM = new Ammo9mmNormal();
     public static final AmmoTest AMMO_TEST = new AmmoTest();
     public static final Ammo9mmAntiGravity AMMO_9MM_ANTI_GRAVITY = new Ammo9mmAntiGravity();
@@ -54,6 +55,7 @@ public class ItemList {
     public static final Ammo9mmNuke AMMO_9MM_NUKE = new Ammo9mmNuke();
     public static final Ammo9mmSilver AMMO_9MM_SILVER = new Ammo9mmSilver();
     public static final Ammo9mmTungsten AMMO_9MM_TUNGSTEN = new Ammo9mmTungsten();
+
     public static final Ammo762Normal AMMO_762_NORMAL = new Ammo762Normal();
     public static final Ammo762AntiGravity AMMO_762_ANTI_GRAVITY = new Ammo762AntiGravity();
     public static final Ammo762Explosive AMMO_762_EXPLOSIVE = new Ammo762Explosive();
@@ -61,6 +63,14 @@ public class ItemList {
     public static final Ammo762Nuke AMMO_762_NUKE = new Ammo762Nuke();
     public static final Ammo762Silver AMMO_762_SILVER = new Ammo762Silver();
     public static final Ammo762Tungsten AMMO_762_TUNGSTEN = new Ammo762Tungsten();
+
+    public static final Ammo127Normal AMMO_127_NORMAL = new Ammo127Normal();
+    public static final Ammo127AntiGravity AMMO_127_ANTI_GRAVITY = new Ammo127AntiGravity();
+    public static final Ammo127Explosive AMMO_127_EXPLOSIVE = new Ammo127Explosive();
+    public static final Ammo127Incendiary AMMO_127_INCENDIARY = new Ammo127Incendiary();
+    public static final Ammo127Nuke AMMO_127_NUKE = new Ammo127Nuke();
+    public static final Ammo127Silver AMMO_127_SILVER = new Ammo127Silver();
+    public static final Ammo127Tungsten AMMO_127_TUNGSTEN = new Ammo127Tungsten();
     static {
         C4_ATOMIC_BOMB.setRegistryName(Objects.requireNonNull(BlockList.C4_ATOMIC_BOMB.getRegistryName()));
         C4_HIGH_EXPLOSIVE.setRegistryName(Objects.requireNonNull(BlockList.C4_HIGH_EXPLOSIVE.getRegistryName()));
@@ -90,5 +100,14 @@ public class ItemList {
         AMMO_762_NUKE.setRegistryName(NuclearCraft.MODID, "ammo_762_nuke");
         AMMO_762_SILVER.setRegistryName(NuclearCraft.MODID, "ammo_762_silver");
         AMMO_762_TUNGSTEN.setRegistryName(NuclearCraft.MODID, "ammo_762_tungsten");
+
+        // 12.7mm
+        AMMO_127_NORMAL.setRegistryName(NuclearCraft.MODID, "ammo_127_normal");
+        AMMO_127_ANTI_GRAVITY.setRegistryName(NuclearCraft.MODID, "ammo_127_anti_gravity");
+        AMMO_127_EXPLOSIVE.setRegistryName(NuclearCraft.MODID, "ammo_127_explosive");
+        AMMO_127_INCENDIARY.setRegistryName(NuclearCraft.MODID, "ammo_127_incendiary");
+        AMMO_127_NUKE.setRegistryName(NuclearCraft.MODID, "ammo_127_nuke");
+        AMMO_127_SILVER.setRegistryName(NuclearCraft.MODID, "ammo_127_silver");
+        AMMO_127_TUNGSTEN.setRegistryName(NuclearCraft.MODID, "ammo_127_tungsten");
     }
 }

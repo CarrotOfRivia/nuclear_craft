@@ -9,6 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
@@ -164,15 +165,20 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
         Entity entity = entityRayTraceResult.getEntity();
         this.piercedEntities.add(entity.getEntityId());
 
+        if(entity instanceof ItemEntity){
+            // bullets do not destroy item
+            return;
+        }
+        double damage = this.baseDamage * this.getMotion().length() / this.initSpeed;
+        // get shooter
+        DamageSource damageSource = new IndirectEntityDamageSource(new ResourceLocation(NuclearCraft.MODID, "bullet").toString(), this, this.func_234616_v_()).setProjectile();
+        entity.attackEntityFrom(damageSource, (float) damage);
+
         if (entity instanceof LivingEntity){
-            double damage = this.baseDamage * this.getMotion().length() / this.initSpeed;
-            // get shooter
-            DamageSource damageSource = new IndirectEntityDamageSource(new ResourceLocation(NuclearCraft.MODID, "bullet").toString(), this, this.func_234616_v_()).setProjectile();
-            entity.attackEntityFrom(damageSource, (float) damage);
             this.energy -= 30;
         }
         else {
-            this.energy -= 1;
+            this.energy -= 10;
         }
     }
 
@@ -203,7 +209,9 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
             if(blastResist>getBlockBreakThreshold()+1e-3){
                 // ricochet
                 Direction blockDirection = blockRayTraceResult.getFace();
-                this.ricochet(blockDirection);
+                this.ricochetSpeed(blockDirection);
+                Vector3d hitResult = blockRayTraceResult.getHitVec();
+                this.setPosition(hitResult.x, hitResult.y, hitResult.z);
                 this.energy -= 15;
             }
             else {
@@ -223,7 +231,7 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
         return 25 + 10 * (blastResist-2);
     }
 
-    private void ricochet(Direction direction){
+    private void ricochetSpeed(Direction direction){
         switch (direction){
             case UP:
             case DOWN:
