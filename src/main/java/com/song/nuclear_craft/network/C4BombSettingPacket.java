@@ -7,6 +7,8 @@ import net.minecraft.network.play.ServerPlayNetHandler;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -28,7 +30,7 @@ public class C4BombSettingPacket {
         this.x = packetBuffer.readDouble();
         this.y = packetBuffer.readDouble();
         this.z = packetBuffer.readDouble();
-        this.action = packetBuffer.readString();
+        this.action = packetBuffer.readString(32767);
     }
 
     public void encode(final PacketBuffer packetBuffer){
@@ -39,7 +41,8 @@ public class C4BombSettingPacket {
     }
 
     public static void handle(C4BombSettingPacket packet, Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(() -> {
+        //TODO
+        ctx.get().enqueueWork(()-> {
             NetworkEvent.Context context = ctx.get();
             INetHandler handler = context.getNetworkManager().getNetHandler();
             if (handler instanceof ServerPlayNetHandler){
@@ -61,7 +64,7 @@ public class C4BombSettingPacket {
                         throw new IllegalArgumentException("not recognized argument: "+packet.action);
                 }
             }
+            ctx.get().setPacketHandled(true);
         });
-        ctx.get().setPacketHandled(true);
     }
 }

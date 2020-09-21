@@ -6,6 +6,7 @@ import com.song.nuclear_craft.misc.NukeExplosion;
 import com.song.nuclear_craft.network.MySExplosionPacket;
 import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
 import com.song.nuclear_craft.particles.ParticleList;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -15,6 +16,7 @@ import net.minecraft.entity.item.TNTEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.play.server.SExplosionPacket;
+import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -124,7 +126,8 @@ public class AtomicBombEntity extends TNTEntity {
 //        this.world.createExplosion(this, this.getPosX(), this.getPosYHeight(0.0625D), this.getPosZ(), NUKE_RADIUS, Explosion.Mode.BREAK);
     }
 
-    public static void mushroomCloud(ClientWorld world, double x, double y, double z, double radius){
+    public static void mushroomCloud(double x, double y, double z, double radius){
+        ClientWorld world = Minecraft.getInstance().world;
         if(world.isRemote){
             int MAX_STEP_Y = (int)Math.ceil(1.25*radius);
             double step_y = 2.986 * (radius) / MAX_STEP_Y;
@@ -147,10 +150,10 @@ public class AtomicBombEntity extends TNTEntity {
                     double delta_x = this_r * Math.cos(theta);
                     double delta_z = this_r * Math.sin(theta);
                     if (delta_y > radius){
-                        world.addParticle(ParticleList.NUKE_PARTICLE_FIRE, true, x+delta_x, y+delta_y, z+delta_z, 0d, 0.07d, 0d);
+                        world.addParticle((IParticleData) ParticleList.NUKE_PARTICLE_FIRE.get(), true, x+delta_x, y+delta_y, z+delta_z, 0d, 0.07d, 0d);
                     }
                     else {
-                        world.addParticle(ParticleList.NUKE_PARTICLE_SMOKE, true, x+delta_x, y+delta_y, z+delta_z, 0d, 0.07d, 0d);
+                        world.addParticle((IParticleData) ParticleList.NUKE_PARTICLE_SMOKE.get(), true, x+delta_x, y+delta_y, z+delta_z, 0d, 0.07d, 0d);
                     }
                 }
             }

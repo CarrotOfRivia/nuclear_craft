@@ -5,8 +5,9 @@ import com.song.nuclear_craft.blocks.tileentity.TileEntityList;
 import com.song.nuclear_craft.blocks.container.ContainerTypeList;
 import com.song.nuclear_craft.entities.EntityList;
 import com.song.nuclear_craft.items.ItemList;
+import com.song.nuclear_craft.misc.ClientEventForgeSubscriber;
 import com.song.nuclear_craft.misc.Config;
-import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
+import com.song.nuclear_craft.network.*;
 import com.song.nuclear_craft.particles.NukeParticle;
 import com.song.nuclear_craft.particles.ParticleList;
 import net.minecraft.block.Block;
@@ -54,8 +55,6 @@ public class NuclearCraft
             return new ItemStack(ItemList.ATOMIC_BOMB_ROCKET);
         }
     };
-    public static KeyBinding gunReload;
-    public static KeyBinding zoom;
 
     public NuclearCraft() {
         // Register the setup method for modloading
@@ -69,11 +68,12 @@ public class NuclearCraft
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
-        NuclearCraftPacketHandler.register();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.CONFIG);
-    }
 
+        EntityList.ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ParticleList.PARTICLES.register(FMLJavaModLoadingContext.get().getModEventBus());
+    }
     private void setup(final FMLCommonSetupEvent event)
     {
         // some preinit code
@@ -84,10 +84,10 @@ public class NuclearCraft
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
         LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
-        gunReload = new KeyBinding("key."+MODID+".load_ammo", GLFW.GLFW_KEY_R, "key."+MODID+".categories"); // keyBinding is a static variable
-        zoom = new KeyBinding("key."+MODID+".zoom", GLFW.GLFW_KEY_Z, "key."+MODID+".categories");
-        ClientRegistry.registerKeyBinding(gunReload);
-        ClientRegistry.registerKeyBinding(zoom);
+        ClientEventForgeSubscriber.gunReload = new KeyBinding("key."+MODID+".load_ammo", GLFW.GLFW_KEY_R, "key."+MODID+".categories"); // keyBinding is a static variable
+        ClientEventForgeSubscriber.zoom = new KeyBinding("key."+MODID+".zoom", GLFW.GLFW_KEY_Z, "key."+MODID+".categories");
+        ClientRegistry.registerKeyBinding(ClientEventForgeSubscriber.gunReload);
+        ClientRegistry.registerKeyBinding(ClientEventForgeSubscriber.zoom);
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
@@ -138,7 +138,6 @@ public class NuclearCraft
         @SubscribeEvent
         public static void onEntityRegistry(final RegistryEvent.Register<EntityType<?>> event){
             // register entities
-            event.getRegistry().registerAll(EntityList.ATOMIC_BOMB_ENTITY, EntityList.BULLET_ENTITY);
         }
 
         @SubscribeEvent
@@ -151,19 +150,24 @@ public class NuclearCraft
         @SubscribeEvent
         public static void onParticleRegistry(final RegistryEvent.Register<ParticleType<?>> event){
             // Register Particles
-            event.getRegistry().registerAll(ParticleList.NUKE_PARTICLE_SMOKE, ParticleList.NUKE_PARTICLE_FIRE, ParticleList.BIG_SMOKE);
+//            event.getRegistry().registerAll(ParticleList.NUKE_PARTICLE_SMOKE, ParticleList.NUKE_PARTICLE_FIRE, ParticleList.BIG_SMOKE);
         }
 
         @SubscribeEvent
         public static void onParticleFactoryRegistry(final ParticleFactoryRegisterEvent event){
-            Minecraft.getInstance().particles.registerFactory(ParticleList.NUKE_PARTICLE_SMOKE, NukeParticle.NukeParticleFactory::new);
-            Minecraft.getInstance().particles.registerFactory(ParticleList.NUKE_PARTICLE_FIRE, NukeParticle.NukeParticleFactory::new);
-            Minecraft.getInstance().particles.registerFactory(ParticleList.BIG_SMOKE, NukeParticle.BigSmokeFactory::new);
+            Minecraft.getInstance().particles.registerFactory(ParticleList.NUKE_PARTICLE_SMOKE.get(), NukeParticle.NukeParticleFactory::new);
+            Minecraft.getInstance().particles.registerFactory(ParticleList.NUKE_PARTICLE_FIRE.get(), NukeParticle.NukeParticleFactory::new);
+            Minecraft.getInstance().particles.registerFactory(ParticleList.BIG_SMOKE.get(), NukeParticle.BigSmokeFactory::new);
         }
 
         @SubscribeEvent
         public static void onContainerTypeRegistry(final RegistryEvent.Register<ContainerType<?>> event){
             event.getRegistry().registerAll(ContainerTypeList.C4_BOMB_CONTAINER_TYPE);
+        }
+
+        @SubscribeEvent
+        public static void doBothStuff(final FMLCommonSetupEvent event){
+            NuclearCraftPacketHandler.register();
         }
     }
 }
