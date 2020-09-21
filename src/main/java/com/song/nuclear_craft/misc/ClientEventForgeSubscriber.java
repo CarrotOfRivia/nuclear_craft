@@ -1,19 +1,17 @@
 package com.song.nuclear_craft.misc;
 
 import com.song.nuclear_craft.NuclearCraft;
-import com.song.nuclear_craft.blocks.container.C4BombContainer;
 import com.song.nuclear_craft.blocks.container.C4BombContainerScreen;
 import com.song.nuclear_craft.client.ScopeZoomGui;
 import com.song.nuclear_craft.items.AbstractGunItem;
-import com.song.nuclear_craft.items.ItemList;
 import com.song.nuclear_craft.network.C4BombSettingPacket;
 import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.IngameGui;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.widget.button.ImageButton;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -23,17 +21,15 @@ import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.client.gui.screen.ModListScreen;
 import net.minecraftforge.fml.common.Mod;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Mod.EventBusSubscriber(modid = NuclearCraft.MODID, value = Dist.CLIENT)
 public class ClientEventForgeSubscriber {
 
     private static final ResourceLocation BUTTON_X = new ResourceLocation(NuclearCraft.MODID, "textures/gui/button/button_x.png");
     private static final ResourceLocation BUTTON_SKELETON = new ResourceLocation(NuclearCraft.MODID, "textures/gui/button/button_skeleton.png");
+    public static KeyBinding gunReload;
+    public static KeyBinding zoom;
 
     private static int zoomState = 0;
     private static final double mouseSensitivityBefore = 0.5d;;
@@ -80,7 +76,7 @@ public class ClientEventForgeSubscriber {
     public static void onFovUpdate(final FOVUpdateEvent event){
         PlayerEntity entity = event.getEntity();
         Item item = entity.getHeldItemMainhand().getItem();
-        if(NuclearCraft.zoom.isPressed()){
+        if(zoom.isPressed()){
             if(item instanceof AbstractGunItem && (((AbstractGunItem) item).canUseScope())) {
                 zoomState = (zoomState+1)%3;
                 entity.playSound(SoundEventList.ZOOM, 1f, 1f);

@@ -1,11 +1,12 @@
 package com.song.nuclear_craft.entities;
 
 import com.song.nuclear_craft.misc.Config;
-import com.song.nuclear_craft.network.MySExplosionPacket;
 import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
 import com.song.nuclear_craft.network.SmokeBombPacket;
 import com.song.nuclear_craft.particles.ParticleList;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -13,8 +14,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particles.IParticleData;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -76,14 +77,15 @@ public class SmokeRocketEntity extends FireworkRocketEntity {
         }
     }
 
-    public static void generateSmoke(World world, double x, double y, double z){
+    public static void generateSmoke(double x, double y, double z){
         // client side
+        ClientWorld world = Minecraft.getInstance().world;
         Random random = new Random();
         for(double deltaX = -SMOKE_RADIUS; deltaX <= SMOKE_RADIUS; deltaX +=3){
             for(double deltaY = -SMOKE_RADIUS; deltaY <= SMOKE_RADIUS; deltaY +=3){
                 for(double deltaZ = -SMOKE_RADIUS; deltaZ <= SMOKE_RADIUS; deltaZ +=3){
                     if ((deltaX*deltaX+deltaY*deltaY+deltaZ*deltaZ < SMOKE_RADIUS*SMOKE_RADIUS)&&(random.nextDouble()>0.7)&&(world.getBlockState(new BlockPos(x+deltaX, y+deltaY, z+deltaZ)))== Blocks.AIR.getDefaultState()){
-                        world.addParticle(ParticleList.BIG_SMOKE, x+deltaX, y+deltaY, z+deltaZ, 0.03*(random.nextDouble()-0.5), 0.03*(random.nextDouble()-0.5), 0.03*(random.nextDouble()-0.5));
+                        world.addParticle((IParticleData) ParticleList.BIG_SMOKE.get(), x+deltaX, y+deltaY, z+deltaZ, 0.03*(random.nextDouble()-0.5), 0.03*(random.nextDouble()-0.5), 0.03*(random.nextDouble()-0.5));
                     }
                 }
             }
