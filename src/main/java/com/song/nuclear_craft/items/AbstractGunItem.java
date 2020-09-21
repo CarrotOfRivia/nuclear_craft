@@ -1,10 +1,12 @@
 package com.song.nuclear_craft.items;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.entities.AbstractAmmoEntity;
 import com.song.nuclear_craft.entities.AmmoEntities.*;
+import com.song.nuclear_craft.misc.ClientEventForgeSubscriber;
 import com.song.nuclear_craft.misc.SoundEventList;
+import com.song.nuclear_craft.network.GunLoadingPacket;
+import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -22,6 +24,8 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.client.event.GuiScreenEvent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -228,21 +232,30 @@ public abstract class AbstractGunItem extends Item {
     @Override
     public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         // loading ammo
+        // Client side
         super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
-        if(isSelected){
-            if(!worldIn.isRemote && NuclearCraft.gunReload.isPressed() && (entityIn instanceof PlayerEntity)){
-                ItemStack itemStackMain = ((PlayerEntity) entityIn).getHeldItemMainhand();
-                if ((itemStackMain.getItem() instanceof AbstractGunItem)&&!(((PlayerEntity) entityIn).getCooldownTracker().hasCooldown(itemStackMain.getItem()))){
-                    ItemStack itemStackOff = ((PlayerEntity) entityIn).getHeldItemOffhand();
-                    ((AbstractGunItem) itemStackMain.getItem()).addAmmo(itemStackOff, itemStackMain, itemSlot, (PlayerEntity) entityIn);
+        if(isSelected&&worldIn.isRemote){
+            if(ClientEventForgeSubscriber.gunReload.isPressed() && (entityIn instanceof PlayerEntity)){
+                NuclearCraftPacketHandler.KEY_BIND.sendToServer(new GunLoadingPacket(itemSlot));
                 }
-            }
-            if (worldIn.isRemote&&((getCoolDown()<=0)||(Minecraft.getInstance().ingameGUI.getTicks()%getCoolDown()==0))){
+            if (((getCoolDown()<=0)||(Minecraft.getInstance().ingameGUI.getTicks()%getCoolDown()==0))){
                 Minecraft.getInstance().ingameGUI.setOverlayMessage(new TranslationTextComponent(String.format("item.%s.guns.ammo_left", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).
                         append(new StringTextComponent(" "+getAmmoCount(stack)).mergeStyle(TextFormatting.GOLD)), false);
             }
         }
 
+    }
+
+    public static void tryLoadAmmo(ServerWorld world, PlayerEntity entity, int itemSlot){
+        ItemStack itemStackMain = entity.getHeldItemMainhand();
+        if ((itemStackMain.getItem() instanceof AbstractGunItem)&&!(entity.getCooldownTracker().hasCooldown(itemStackMain.getItem()))){
+            ItemStack itemStackOff = entity.getHeldItemOffhand();
+            ((AbstractGunItem) itemStackMain.getItem()).addAmmo(itemStackOff, itemStackMain, itemSlot, entity);
+        }
+        else if (itemStackMain.getItem() instanceof RocketLauncherWithAmmo){
+            ItemStack itemStackOff = entity.getHeldItemOffhand();
+            ((RocketLauncherWithAmmo) itemStackMain.getItem()).addAmmo(itemStackOff, itemStackMain, itemSlot, entity);
+        }
     }
 
     @Override

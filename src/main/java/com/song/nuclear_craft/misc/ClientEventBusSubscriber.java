@@ -23,11 +23,11 @@ public class ClientEventBusSubscriber {
     public static void clientSetup(FMLClientSetupEvent event){
         ScreenManager.registerFactory(ContainerTypeList.C4_BOMB_CONTAINER_TYPE, C4BombContainerScreen::new);
 
-        RenderingRegistry.registerEntityRenderingHandler(EntityList.BULLET_ENTITY,
+        RenderingRegistry.registerEntityRenderingHandler(EntityList.BULLET_ENTITY.get(),
                 renderManager -> new SpriteRenderer<>(renderManager,  Minecraft.getInstance().getItemRenderer())
                 );
 
-        RenderingRegistry.registerEntityRenderingHandler(EntityList.ATOMIC_BOMB_ENTITY, AtomicBombRenderer::new);
+//        RenderingRegistry.registerEntityRenderingHandler(EntityList.ATOMIC_BOMB_ENTITY, AtomicBombRenderer::new);
     }
 
 }

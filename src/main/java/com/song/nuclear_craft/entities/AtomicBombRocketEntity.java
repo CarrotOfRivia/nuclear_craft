@@ -18,6 +18,8 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 
 import javax.annotation.Nullable;
 
@@ -61,6 +63,7 @@ public class AtomicBombRocketEntity extends FireworkRocketEntity {
     private void explode(){
         this.remove();
         if (! this.world.isRemote) {
+//            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()->()->AtomicBombEntity.nukeExplode(world, this.boostedEntity, this.getPosX(), this.getPosY(), this.getPosZ(), AtomicBombEntity.NUKE_RADIUS, true));
             AtomicBombEntity.nukeExplode(world, this.boostedEntity, this.getPosX(), this.getPosY(), this.getPosZ(), AtomicBombEntity.NUKE_RADIUS, true);
         }
     }

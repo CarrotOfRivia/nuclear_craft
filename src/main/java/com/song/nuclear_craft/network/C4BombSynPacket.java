@@ -1,13 +1,12 @@
 package com.song.nuclear_craft.network;
 
 import com.song.nuclear_craft.blocks.tileentity.C4BombTileEntity;
-import net.minecraft.client.network.play.ClientPlayNetHandler;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.network.INetHandler;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -52,17 +51,15 @@ public class C4BombSynPacket {
     }
 
     public static void handle(C4BombSynPacket packet, Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(() -> {
-            NetworkEvent.Context context = ctx.get();
-            INetHandler handler = context.getNetworkManager().getNetHandler();
-            if (handler instanceof ClientPlayNetHandler){
-                ClientWorld world = ((ClientPlayNetHandler) handler).getWorld();
-                TileEntity entity = world.getTileEntity(new BlockPos(packet.x, packet.y, packet.z));
-                if (entity instanceof C4BombTileEntity){
-                    ((C4BombTileEntity) entity).setAttr(packet.inputPanel, packet.fuse_age, packet.explode_time, packet.is_active);
-                }
+        ctx.get().enqueueWork(()-> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+//            NetworkEvent.Context context = ctx.get();
+//            INetHandler handler = context.getNetworkManager().getNetHandler();
+            TileEntity entity = Minecraft.getInstance().world.getTileEntity(new BlockPos(packet.x, packet.y, packet.z));
+            if (entity instanceof C4BombTileEntity){
+                ((C4BombTileEntity) entity).setAttr(packet.inputPanel, packet.fuse_age, packet.explode_time, packet.is_active);
             }
-        });
+
+        }));
         ctx.get().setPacketHandled(true);
     }
 }
