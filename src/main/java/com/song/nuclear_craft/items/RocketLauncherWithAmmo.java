@@ -1,7 +1,10 @@
 package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
+import com.song.nuclear_craft.misc.ClientEventForgeSubscriber;
 import com.song.nuclear_craft.misc.SoundEventList;
+import com.song.nuclear_craft.network.GunLoadingPacket;
+import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -89,13 +92,18 @@ public abstract class RocketLauncherWithAmmo extends Item {
     public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         // loading ammo
         super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
-        if(isSelected && !worldIn.isRemote && NuclearCraft.gunReload.isPressed() && (entityIn instanceof PlayerEntity)){
-            ItemStack itemStackMain = ((PlayerEntity) entityIn).getHeldItemMainhand();
-            if (itemStackMain.getItem() instanceof RocketLauncherWithAmmo){
-                ItemStack itemStackOff = ((PlayerEntity) entityIn).getHeldItemOffhand();
-                addAmmo(itemStackOff, itemStackMain, itemSlot, entityIn);
+        if(isSelected && worldIn.isRemote){
+            if(ClientEventForgeSubscriber.gunReload.isPressed() && (entityIn instanceof PlayerEntity)){
+                NuclearCraftPacketHandler.KEY_BIND.sendToServer(new GunLoadingPacket(itemSlot));
             }
         }
+//        if(isSelected && !worldIn.isRemote && ClientEventForgeSubscriber.gunReload.isPressed() && (entityIn instanceof PlayerEntity)){
+//            ItemStack itemStackMain = ((PlayerEntity) entityIn).getHeldItemMainhand();
+//            if (itemStackMain.getItem() instanceof RocketLauncherWithAmmo){
+//                ItemStack itemStackOff = ((PlayerEntity) entityIn).getHeldItemOffhand();
+//                addAmmo(itemStackOff, itemStackMain, itemSlot, entityIn);
+//            }
+//        }
     }
 
     protected void enterCD(PlayerEntity playerEntity){

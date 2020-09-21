@@ -63,16 +63,16 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
         super(type, world);
     }
 
-    @OnlyIn(Dist.CLIENT)
+//    @OnlyIn(Dist.CLIENT)
     public AbstractAmmoEntity(FMLPlayMessages.SpawnEntity entity, World world){
-        this(EntityList.BULLET_ENTITY, world);
+        this(EntityList.BULLET_ENTITY.get(), world);
         this.setMotion(entity.getVelX(), entity.getVelY(), entity.getVelZ());
         this.setHeadRotation(entity.getYaw(), entity.getPitch());
         this.setPosition(entity.getPosX(), entity.getPosY(), entity.getPosZ());
     }
 
     public AbstractAmmoEntity(double x, double y, double z, World world, ItemStack itemStack, PlayerEntity shooter){
-        super(EntityList.BULLET_ENTITY, x, y, z, world);
+        super(EntityList.BULLET_ENTITY.get(), x, y, z, world);
         this.setItem(itemStack);
         this.setShooter(shooter);
         this.bulletSize = getSizeFromString(((AbstractAmmo)itemStack.getItem()).getSize());

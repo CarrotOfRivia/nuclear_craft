@@ -1,11 +1,9 @@
 package com.song.nuclear_craft.network;
 
-import com.song.nuclear_craft.entities.AtomicBombEntity;
 import com.song.nuclear_craft.entities.SmokeRocketEntity;
-import net.minecraft.client.network.play.ClientPlayNetHandler;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.network.INetHandler;
 import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -34,14 +32,12 @@ public class SmokeBombPacket {
     }
 
     public static void handle(SmokeBombPacket packet, Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(() -> {
-            NetworkEvent.Context context = ctx.get();
-            INetHandler handler = context.getNetworkManager().getNetHandler();
-            if (handler instanceof ClientPlayNetHandler){
-                ClientWorld world = ((ClientPlayNetHandler) handler).getWorld();
-                SmokeRocketEntity.generateSmoke(world, packet.x, packet.y, packet.z);
-            }
-        });
+        ctx.get().enqueueWork(()->DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+//            NetworkEvent.Context context = ctx.get();
+//            INetHandler handler = context.getNetworkManager().getNetHandler();
+            SmokeRocketEntity.generateSmoke(packet.x, packet.y, packet.z);
+
+        }));
         ctx.get().setPacketHandled(true);
     }
 
