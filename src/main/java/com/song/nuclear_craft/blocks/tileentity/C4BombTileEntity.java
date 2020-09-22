@@ -6,7 +6,9 @@ import com.song.nuclear_craft.blocks.container.C4BombContainer;
 import com.song.nuclear_craft.misc.SoundEventList;
 import com.song.nuclear_craft.network.C4BombSynPacket;
 import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
+import com.song.nuclear_craft.network.SoundPacket;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -72,7 +74,8 @@ public class C4BombTileEntity extends TileEntity implements ITickableTileEntity,
                 this.markDirty();
 
                 if (fuse_age % getBeepInterval() == 0) {
-                    world.playSound(null, this.getPos(), SoundEventList.C4_BEEP, SoundCategory.BLOCKS, 2f, 1.0f);
+                    NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(this.pos.getX(), this.pos.getY(), this.pos.getZ(), 20, this.world.func_234923_W_())),
+                            new SoundPacket(this.pos, "c4_beep"));
                     synToClient();
                 }
 
@@ -92,7 +95,8 @@ public class C4BombTileEntity extends TileEntity implements ITickableTileEntity,
         this.is_active = true;
         assert world != null;
         if (! world.isRemote){
-            world.playSound(null, pos, SoundEventList.BOMB_PLANTED, SoundCategory.PLAYERS, 1f, 1.0f);
+            NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(this.pos.getX(), this.pos.getY(), this.pos.getZ(), 7, this.world.func_234923_W_())),
+                    new SoundPacket(this.pos, "c4_activate"));
         }
     }
 

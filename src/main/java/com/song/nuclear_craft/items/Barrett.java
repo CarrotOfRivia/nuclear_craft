@@ -2,7 +2,6 @@ package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.misc.SoundEventList;
-import net.minecraft.util.SoundEvent;
 
 import javax.annotation.Nonnull;
 
@@ -33,8 +32,8 @@ public class Barrett extends AbstractGunItem{
     }
 
     @Override
-    public SoundEvent getSoundEvent() {
-        return SoundEventList.BARRETT;
+    public String getShootActionString() {
+        return "barrett";
     }
 
     @Override
@@ -48,8 +47,8 @@ public class Barrett extends AbstractGunItem{
     }
 
     @Override
-    public SoundEvent getReloadSound() {
-        return SoundEventList.AWP_RELOAD;
+    public String getReloadSound() {
+        return "awp_reload";
     }
 
     @Override
@@ -60,5 +59,10 @@ public class Barrett extends AbstractGunItem{
     @Override
     public float getSoundVolume() {
         return 0.5f;
+    }
+
+    @Override
+    protected double getGunSoundDist() {
+        return 70;
     }
 }
