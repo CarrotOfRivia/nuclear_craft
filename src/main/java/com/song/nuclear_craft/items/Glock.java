@@ -2,7 +2,6 @@ package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.misc.SoundEventList;
-import net.minecraft.util.SoundEvent;
 
 import javax.annotation.Nonnull;
 
@@ -33,8 +32,8 @@ public class Glock extends AbstractGunItem{
     }
 
     @Override
-    public SoundEvent getSoundEvent() {
-        return SoundEventList.GLOCK;
+    public String getShootActionString() {
+        return "glock";
     }
 
     @Override
@@ -48,7 +47,7 @@ public class Glock extends AbstractGunItem{
     }
 
     @Override
-    public SoundEvent getReloadSound() {
-        return SoundEventList.DE_RELOAD_EMPTY;
+    public String getReloadSound() {
+        return "de_reload_empty";
     }
 }

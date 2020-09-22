@@ -4,9 +4,9 @@ import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.entities.AbstractAmmoEntity;
 import com.song.nuclear_craft.entities.AmmoEntities.*;
 import com.song.nuclear_craft.misc.ClientEventForgeSubscriber;
-import com.song.nuclear_craft.misc.SoundEventList;
 import com.song.nuclear_craft.network.GunLoadingPacket;
 import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
+import com.song.nuclear_craft.network.SoundPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -16,8 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -25,7 +24,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -53,7 +52,9 @@ public abstract class AbstractGunItem extends Item {
                 AbstractAmmo ammoItem = gunItem.getAmmoItem(ammoType, ammoSize);
                 ItemStack toBeFired = new ItemStack(ammoItem);
                 AbstractAmmoEntity entity = gunItem.getAmmoEntity(playerIn.getPosX(), playerIn.getPosYEye() - (double)0.15F, playerIn.getPosZ(), worldIn, toBeFired, playerIn, ammoType, ammoSize);
-                worldIn.playSound(null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), getSoundEvent(), SoundCategory.PLAYERS, getSoundVolume(), 1f);
+                BlockPos pos = playerIn.getPosition();
+                NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), getGunSoundDist(), playerIn.world.func_234923_W_())),
+                        new SoundPacket(pos, getShootActionString()));
                 entity.setSilent(true);
                 // handle it myself
                 entity.setNoGravity(true);
@@ -66,10 +67,16 @@ public abstract class AbstractGunItem extends Item {
                 return ActionResult.func_233538_a_(heldItemStack, worldIn.isRemote());
             }
             else if(! worldIn.isRemote){
-                worldIn.playSound(null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), SoundEventList.NO_AMMO, SoundCategory.PLAYERS, 1f, 1f);
+                BlockPos pos = playerIn.getPosition();
+                NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), 4, playerIn.world.func_234923_W_())),
+                        new SoundPacket(pos, "no_ammo"));
             }
         }
         return super.onItemRightClick(worldIn, playerIn, handIn);
+    }
+
+    protected double getGunSoundDist(){
+        return 20;
     }
 
     public static boolean hasAmmo(ItemStack itemStack){
@@ -207,12 +214,16 @@ public abstract class AbstractGunItem extends Item {
                     addAmmoNBT(mainHand, n_load, ammo.getType());
                     entity.getCooldownTracker().setCooldown(mainHand.getItem(), getLoadTime());
                     if(!entity.world.isRemote){
-                        entity.world.playSound(null, entity.getPosX(), entity.getPosY(), entity.getPosZ(), getReloadSound(), SoundCategory.PLAYERS, 1f, 1f);
+                        BlockPos pos = entity.getPosition();
+                        NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), 10, entity.world.func_234923_W_())),
+                                new SoundPacket(pos, getReloadSound()));
                     }
                 }
             }
         }
     }
+
+    public abstract String getShootActionString();
 
     public abstract int maxAmmo();
 
@@ -221,13 +232,11 @@ public abstract class AbstractGunItem extends Item {
     @Nonnull
     public abstract String compatibleSize();
 
-    public abstract SoundEvent getSoundEvent();
-
     public abstract float getSpeedModifier();
 
     public abstract double getDamageModifier();
 
-    public abstract SoundEvent getReloadSound();
+    public abstract String getReloadSound();
 
     @Override
     public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {

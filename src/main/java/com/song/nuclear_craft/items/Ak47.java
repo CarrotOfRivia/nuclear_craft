@@ -2,7 +2,6 @@ package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.misc.SoundEventList;
-import net.minecraft.util.SoundEvent;
 
 import javax.annotation.Nonnull;
 
@@ -33,8 +32,8 @@ public class Ak47 extends AbstractGunItem{
     }
 
     @Override
-    public SoundEvent getSoundEvent() {
-        return SoundEventList.AK47;
+    public String getShootActionString() {
+        return "ak47";
     }
 
     @Override
@@ -48,8 +47,12 @@ public class Ak47 extends AbstractGunItem{
     }
 
     @Override
-    public SoundEvent getReloadSound() {
-        return SoundEventList.AK47_RELOAD;
+    public String getReloadSound() {
+        return "ak47_reload";
     }
 
+    @Override
+    protected double getGunSoundDist() {
+        return 30;
+    }
 }

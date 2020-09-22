@@ -2,7 +2,6 @@ package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.misc.SoundEventList;
-import net.minecraft.util.SoundEvent;
 
 import javax.annotation.Nonnull;
 
@@ -28,8 +27,8 @@ public class DesertEagle extends AbstractGunItem{
     }
 
     @Override
-    public SoundEvent getSoundEvent() {
-        return SoundEventList.DESERT_EAGLE;
+    public String getShootActionString() {
+        return "desert_eagle";
     }
 
     @Override
@@ -43,13 +42,18 @@ public class DesertEagle extends AbstractGunItem{
     }
 
     @Override
-    public SoundEvent getReloadSound() {
-        return SoundEventList.DE_RELOAD_EMPTY;
+    public String getReloadSound() {
+        return "de_reload_empty";
     }
 
     @Nonnull
     @Override
     public String compatibleSize() {
         return "9mm";
+    }
+
+    @Override
+    protected double getGunSoundDist() {
+        return 45;
     }
 }

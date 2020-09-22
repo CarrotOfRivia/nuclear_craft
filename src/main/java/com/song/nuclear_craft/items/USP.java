@@ -2,7 +2,6 @@ package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.misc.SoundEventList;
-import net.minecraft.util.SoundEvent;
 
 import javax.annotation.Nonnull;
 
@@ -29,8 +28,8 @@ public class USP extends AbstractGunItem{
     }
 
     @Override
-    public SoundEvent getSoundEvent() {
-        return SoundEventList.USP;
+    public String getShootActionString() {
+        return "usp";
     }
 
     @Override
@@ -44,8 +43,8 @@ public class USP extends AbstractGunItem{
     }
 
     @Override
-    public SoundEvent getReloadSound() {
-        return SoundEventList.DE_RELOAD_EMPTY;
+    public String getReloadSound() {
+        return "de_reload_empty";
     }
 
     @Override
@@ -56,5 +55,10 @@ public class USP extends AbstractGunItem{
     @Override
     public int getCoolDown() {
         return 7;
+    }
+
+    @Override
+    protected double getGunSoundDist() {
+        return 10;
     }
 }
