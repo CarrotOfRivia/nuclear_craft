@@ -74,7 +74,7 @@ public class C4BombTileEntity extends TileEntity implements ITickableTileEntity,
                 this.markDirty();
 
                 if (fuse_age % getBeepInterval() == 0) {
-                    NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(this.pos.getX(), this.pos.getY(), this.pos.getZ(), 20, this.world.func_234923_W_())),
+                    NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(this.pos.getX(), this.pos.getY(), this.pos.getZ(), 20, this.world.getDimensionKey())),
                             new SoundPacket(this.pos, "c4_beep"));
                     synToClient();
                 }
@@ -95,7 +95,7 @@ public class C4BombTileEntity extends TileEntity implements ITickableTileEntity,
         this.is_active = true;
         assert world != null;
         if (! world.isRemote){
-            NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(this.pos.getX(), this.pos.getY(), this.pos.getZ(), 7, this.world.func_234923_W_())),
+            NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(this.pos.getX(), this.pos.getY(), this.pos.getZ(), 7, this.world.getDimensionKey())),
                     new SoundPacket(this.pos, "c4_activate"));
         }
     }

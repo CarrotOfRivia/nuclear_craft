@@ -86,7 +86,7 @@ public abstract class RocketLauncherWithAmmo extends Item {
                     ammo.shrink(n_loaded);
                     addAmmoCount(rocket, n_loaded);
                     BlockPos pos = entityIn.getPosition();
-                    NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), 20, entityIn.world.func_234923_W_())),
+                    NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), 20, entityIn.world.getDimensionKey())),
                             new SoundPacket(pos, "rocket_load"));
                     ((PlayerEntity) entityIn).getCooldownTracker().setCooldown(rocket.getItem(), 20);
                 }

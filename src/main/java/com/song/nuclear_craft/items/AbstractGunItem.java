@@ -53,7 +53,7 @@ public abstract class AbstractGunItem extends Item {
                 ItemStack toBeFired = new ItemStack(ammoItem);
                 AbstractAmmoEntity entity = gunItem.getAmmoEntity(playerIn.getPosX(), playerIn.getPosYEye() - (double)0.15F, playerIn.getPosZ(), worldIn, toBeFired, playerIn, ammoType, ammoSize);
                 BlockPos pos = playerIn.getPosition();
-                NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), getGunSoundDist(), playerIn.world.func_234923_W_())),
+                NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), getGunSoundDist(), playerIn.world.getDimensionKey())),
                         new SoundPacket(pos, getShootActionString()));
                 entity.setSilent(true);
                 // handle it myself
@@ -68,7 +68,7 @@ public abstract class AbstractGunItem extends Item {
             }
             else if(! worldIn.isRemote){
                 BlockPos pos = playerIn.getPosition();
-                NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), 4, playerIn.world.func_234923_W_())),
+                NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), 4, playerIn.world.getDimensionKey())),
                         new SoundPacket(pos, "no_ammo"));
             }
         }
@@ -215,7 +215,7 @@ public abstract class AbstractGunItem extends Item {
                     entity.getCooldownTracker().setCooldown(mainHand.getItem(), getLoadTime());
                     if(!entity.world.isRemote){
                         BlockPos pos = entity.getPosition();
-                        NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), 10, entity.world.func_234923_W_())),
+                        NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), 10, entity.world.getDimensionKey())),
                                 new SoundPacket(pos, getReloadSound()));
                     }
                 }
