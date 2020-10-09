@@ -16,10 +16,7 @@ import java.util.List;
 public class Ammo9mmSilver extends AbstractAmmo {
     public Ammo9mmSilver() {
         super(new Properties().group(NuclearCraft.ITEM_GROUP));
-    }
-    @Override
-    public String getSize() {
-        return "9mm";
+        setSize("9mm");
     }
 
     @Nonnull

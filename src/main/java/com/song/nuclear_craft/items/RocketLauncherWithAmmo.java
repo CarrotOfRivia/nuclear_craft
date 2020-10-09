@@ -27,17 +27,21 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public abstract class RocketLauncherWithAmmo extends Item {
-    protected int MAX_AMMO = 10;
+    private static final int MAX_AMMO = 10;
     protected Item BONDED_AMMO=null;
     protected int coolDown = 0;
     public RocketLauncherWithAmmo(Properties properties) {
         super(properties);
     }
 
+    protected int getMAX_AMMO(){
+        return MAX_AMMO;
+    }
+
     protected int getAmmoCount(ItemStack itemStack){
         CompoundNBT compoundnbt = itemStack.getOrCreateTag();
         if(! compoundnbt.contains("ammo")){
-            compoundnbt.putInt("ammo", this.MAX_AMMO);
+            compoundnbt.putInt("ammo", this.getMAX_AMMO());
         }
         return compoundnbt.getInt("ammo");
     }
@@ -55,7 +59,7 @@ public abstract class RocketLauncherWithAmmo extends Item {
     protected ActionResult<ItemStack>  afterFire(World worldIn, ItemStack thisItemStack){
         CompoundNBT compoundnbt = thisItemStack.getOrCreateTag();
         if(! compoundnbt.contains("ammo")){
-            compoundnbt.putInt("ammo", this.MAX_AMMO);
+            compoundnbt.putInt("ammo", this.getMAX_AMMO());
         }
         if(!worldIn.isRemote){
             int n_ammo = compoundnbt.getInt("ammo");
@@ -81,8 +85,8 @@ public abstract class RocketLauncherWithAmmo extends Item {
         if (BONDED_AMMO != null){
             if(ammo.getItem().getRegistryName().equals(BONDED_AMMO.getRegistryName())){
                 int n_ammo = getAmmoCount(rocket);
-                if (n_ammo<MAX_AMMO){
-                    int n_loaded = Math.min(MAX_AMMO-n_ammo, ammo.getCount());
+                if (n_ammo<getMAX_AMMO()){
+                    int n_loaded = Math.min(getMAX_AMMO()-n_ammo, ammo.getCount());
                     ammo.shrink(n_loaded);
                     addAmmoCount(rocket, n_loaded);
                     BlockPos pos = entityIn.getPosition();

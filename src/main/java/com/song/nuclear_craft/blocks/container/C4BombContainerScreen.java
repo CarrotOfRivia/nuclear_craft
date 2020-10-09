@@ -40,4 +40,10 @@ public class C4BombContainerScreen extends ContainerScreen<C4BombContainer> {
             this.font.drawString(matrixStack, new TranslationTextComponent("menu."+NuclearCraft.MODID+".c4_bomb.counter").getString()+this.container.tileEntity.getCounter()+" s", 33f, 33f, 4210752);
         }
     }
+
+    @Override
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(matrixStack);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+    }
 }

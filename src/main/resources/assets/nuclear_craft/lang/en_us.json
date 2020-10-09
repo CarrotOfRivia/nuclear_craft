@@ -47,9 +47,6 @@
   "item.nuclear_craft.ammo_9mm_nuke": "9mm Micro-Atomic Bomb Bullet",
   "item.nuclear_craft.ammo_9mm_silver": "9mm Silver Piercing Bullet",
   "item.nuclear_craft.ammo_9mm_tungsten": "9mm Tungsten Piercing Bullet",
-  "item.nuclear_craft.ammo.base_damage": "Base Damage: ",
-  "item.nuclear_craft.ammo.base_speed": "Base Speed(m/tick): ",
-  "item.nuclear_craft.ammo.gravity": "Gravity(m/tick^2): ",
   "item.nuclear_craft.ammo.penetrate_stone": "Can Penetrate Stone!",
   "item.nuclear_craft.ammo_762_normal": "7.62mm Normal Bullet",
   "item.nuclear_craft.ammo_762_anti_gravity": "7.62mm Anti-Gravity Bullet",
@@ -66,5 +63,11 @@
   "item.nuclear_craft.ammo_127_silver": "12.7mm Silver Piercing Bullet",
   "item.nuclear_craft.ammo_127_tungsten": "12.7mm Tungsten Piercing Bullet",
   "item.nuclear_craft.guns.compatible_ammo_size": "Compatible Ammo Size:",
-  "item.nuclear_craft.guns.use_scope": "Use scope to zoom in, press:"
+  "item.nuclear_craft.guns.use_scope": "Use scope to zoom in, press:",
+
+  "tooltip.nuclear_craft.ammo.desc1": "Bullets will ricochet on hard surfaces",
+  "tooltip.nuclear_craft.ammo.desc2": "and destroy fragile blocks.",
+  "tooltip.nuclear_craft.ammo.base_damage": "Base Damage: ",
+  "tooltip.nuclear_craft.ammo.base_speed": "Base Speed(m/tick): ",
+  "tooltip.nuclear_craft.ammo.gravity": "Gravity(m/tick^2): "
 }

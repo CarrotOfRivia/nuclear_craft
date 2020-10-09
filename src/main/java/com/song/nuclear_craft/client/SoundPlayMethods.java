@@ -32,25 +32,25 @@ public class SoundPlayMethods {
         assert world != null;
         switch (name){
             case "desert_eagle":
-                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.DESERT_EAGLE, SoundCategory.PLAYERS, 0.25f, 1.0f, true); break;
+                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.DESERT_EAGLE, SoundCategory.PLAYERS, 0.25f, 1.0f, false); break;
             case "no_ammo":
-                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.NO_AMMO, SoundCategory.PLAYERS, 1f, 1.0f, true); break;
+                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.NO_AMMO, SoundCategory.PLAYERS, 1f, 1.0f, false); break;
             case "de_reload_empty":
-                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.DE_RELOAD_EMPTY, SoundCategory.PLAYERS, 1f, 1.0f, true); break;
+                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.DE_RELOAD_EMPTY, SoundCategory.PLAYERS, 1f, 1.0f, false); break;
             case "glock":
-                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.GLOCK, SoundCategory.PLAYERS, 0.25f, 1.0f, true); break;
+                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.GLOCK, SoundCategory.PLAYERS, 0.25f, 1.0f, false); break;
             case "usp":
-                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.USP, SoundCategory.PLAYERS, 0.25f, 1.0f, true); break;
+                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.USP, SoundCategory.PLAYERS, 0.25f, 1.0f, false); break;
             case "ak47":
-                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.AK47, SoundCategory.PLAYERS, 0.25f, 1.0f, true); break;
+                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.AK47, SoundCategory.PLAYERS, 0.25f, 1.0f, false); break;
             case "ak47_reload":
-                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.AK47_RELOAD, SoundCategory.PLAYERS, 1f, 1.0f, true); break;
+                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.AK47_RELOAD, SoundCategory.PLAYERS, 1f, 1.0f, false); break;
             case "awp":
-                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.AWP, SoundCategory.PLAYERS, 0.25f, 1.0f, true); break;
+                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.AWP, SoundCategory.PLAYERS, 0.25f, 1.0f, false); break;
             case "awp_reload":
-                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.AWP_RELOAD, SoundCategory.PLAYERS, 1f, 1.0f, true); break;
+                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.AWP_RELOAD, SoundCategory.PLAYERS, 1f, 1.0f, false); break;
             case "barrett":
-                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.BARRETT, SoundCategory.PLAYERS, 1f, 1.0f, true); break;
+                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.BARRETT, SoundCategory.PLAYERS, 1f, 1.0f, false); break;
         }
     }
 }

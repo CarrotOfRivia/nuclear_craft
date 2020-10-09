@@ -28,11 +28,16 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class RocketLauncherAtomicBomb extends RocketLauncherWithAmmo {
+    private static final int MAX_AMMO=1;
     public RocketLauncherAtomicBomb() {
         super(new Item.Properties().maxStackSize(1).group(NuclearCraft.ITEM_GROUP));
-        this.MAX_AMMO=1;
         this.BONDED_AMMO = ItemList.ATOMIC_BOMB_ROCKET;
         this.coolDown = 5;
+    }
+
+    @Override
+    protected int getMAX_AMMO() {
+        return MAX_AMMO;
     }
 
     @Override

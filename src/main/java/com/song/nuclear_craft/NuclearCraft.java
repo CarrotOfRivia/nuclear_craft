@@ -73,6 +73,7 @@ public class NuclearCraft
 
         EntityList.ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
         ParticleList.PARTICLES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ItemList.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
     private void setup(final FMLCommonSetupEvent event)
     {
