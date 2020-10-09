@@ -26,12 +26,17 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class RocketLauncherHighExplosive extends RocketLauncherWithAmmo {
+    private final int MAX_AMMO = Config.HIGH_EXPLOSIVE_MAX_AMMO.get();
 
     public RocketLauncherHighExplosive() {
         super(new Item.Properties().maxStackSize(1).group(NuclearCraft.ITEM_GROUP));
-        this.MAX_AMMO = Config.HIGH_EXPLOSIVE_MAX_AMMO.get();
         this.BONDED_AMMO = ItemList.HIGH_EXPLOSIVE_ROCKET;
         this.coolDown = 5;
+    }
+
+    @Override
+    protected int getMAX_AMMO() {
+        return Config.HIGH_EXPLOSIVE_MAX_AMMO.get();
     }
 
     @Override

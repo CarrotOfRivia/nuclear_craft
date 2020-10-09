@@ -41,6 +41,7 @@ public class NuclearCraftPacketHandler {
         EXPLOSION_CHANNEL.registerMessage(channel_id++, MySExplosionPacket.class, MySExplosionPacket::encode, MySExplosionPacket::new, MySExplosionPacket::handle);
         System.out.println("channel id: -------"+channel_id);
         C4_SETTING_CHANNEL.registerMessage(channel_id++, C4BombSynPacket.class, C4BombSynPacket::encode, C4BombSynPacket::new, C4BombSynPacket::handle);
+        C4_SETTING_CHANNEL.registerMessage(channel_id++, SoundPacket.class, SoundPacket::encode, SoundPacket::new, SoundPacket::handle);
         System.out.println("channel id: -------"+channel_id);
         SMOKE_BOMB_CHANNEL.registerMessage(channel_id++, SmokeBombPacket.class, SmokeBombPacket::encode, SmokeBombPacket::new, SmokeBombPacket::handle);
         System.out.println("channel id: -------"+channel_id);

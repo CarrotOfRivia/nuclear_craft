@@ -169,7 +169,7 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
             // bullets do not destroy item
             return;
         }
-        double damage = this.baseDamage * this.getMotion().length() / this.initSpeed;
+        double damage = this.baseDamage * getEnergy(this.getMotion().length()) / this.initEnergy;
         // get shooter
         DamageSource damageSource = new IndirectEntityDamageSource(new ResourceLocation(NuclearCraft.MODID, "bullet").toString(), this, this.func_234616_v_()).setProjectile();
         entity.attackEntityFrom(damageSource, (float) damage);
@@ -212,7 +212,7 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
                 this.ricochetSpeed(blockDirection);
                 Vector3d hitResult = blockRayTraceResult.getHitVec();
                 this.setPosition(hitResult.x, hitResult.y, hitResult.z);
-                this.energy -= 15;
+                this.energy -= this.initEnergy * getRicochetEnergyLoss();
             }
             else {
                 // destroy
@@ -221,6 +221,10 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
             }
             this.piercedEntities.clear();
         }
+    }
+
+    public double getRicochetEnergyLoss(){
+        return 0.5d;
     }
 
     public double getBlockBreakThreshold(){
@@ -249,8 +253,8 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
         }
     }
 
-    protected double getEnergy(double initSpeed) {
-        return 0.5*initSpeed*initSpeed*(this.bulletSize/9);
+    protected double getEnergy(double speed) {
+        return 0.5*speed*speed*(this.bulletSize/9);
     }
 
     @Override

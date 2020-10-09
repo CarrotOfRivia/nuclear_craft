@@ -25,7 +25,7 @@ public class TestAmmoEntity extends AbstractAmmoEntity {
     }
 
     @Override
-    protected double getEnergy(double initSpeed) {
+    protected double getEnergy(double speed) {
         return 20f;
     }
 }

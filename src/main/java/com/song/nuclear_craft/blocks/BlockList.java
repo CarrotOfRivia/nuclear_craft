@@ -4,9 +4,6 @@ import com.song.nuclear_craft.NuclearCraft;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.event.RegistryEvent;
 
 public class BlockList {
     // TO be removed:

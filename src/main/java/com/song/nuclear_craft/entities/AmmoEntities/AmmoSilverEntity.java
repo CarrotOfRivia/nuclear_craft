@@ -1,6 +1,7 @@
 package com.song.nuclear_craft.entities.AmmoEntities;
 
 import com.song.nuclear_craft.entities.AbstractAmmoEntity;
+import com.song.nuclear_craft.misc.Config;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -24,5 +25,10 @@ public class AmmoSilverEntity extends AbstractAmmoEntity {
     @Override
     public double getBlockBreakThreshold() {
         return 6d;
+    }
+
+    @Override
+    public double getRicochetEnergyLoss() {
+        return Config.AMMO_SILVER_RICOCHET_LOSS.get();
     }
 }

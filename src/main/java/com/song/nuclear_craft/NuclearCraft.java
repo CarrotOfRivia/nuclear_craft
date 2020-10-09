@@ -49,7 +49,7 @@ public class NuclearCraft
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
     public static final String MODID = "nuclear_craft";
-    public static final ItemGroup ITEM_GROUP = new ItemGroup(ItemGroup.GROUPS.length, MODID) {
+    public static final ItemGroup ITEM_GROUP = new ItemGroup(MODID) {
         @Override
         public ItemStack createIcon() {
             return new ItemStack(ItemList.ATOMIC_BOMB_ROCKET);
@@ -73,6 +73,7 @@ public class NuclearCraft
 
         EntityList.ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
         ParticleList.PARTICLES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ItemList.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
     private void setup(final FMLCommonSetupEvent event)
     {

@@ -17,10 +17,7 @@ public class Ammo9mmTungsten extends AbstractAmmo {
 
     public Ammo9mmTungsten() {
         super(new Properties().group(NuclearCraft.ITEM_GROUP));
-    }
-    @Override
-    public String getSize() {
-        return "9mm";
+        setSize("9mm");
     }
 
     @Nonnull

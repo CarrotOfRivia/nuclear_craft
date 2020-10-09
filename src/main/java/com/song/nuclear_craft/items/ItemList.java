@@ -5,14 +5,18 @@ import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.items.Ammo.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Objects;
 
 public class ItemList {
-    // deprecated:
-    public static final Item ATOMIC_BOMB = new BlockItem(BlockList.ATOMIC_BOMB, new Item.Properties().group(NuclearCraft.ITEM_GROUP)).setRegistryName(BlockList.ATOMIC_BOMB.getRegistryName());
-    public static final Item URANIUM_ORE = new BlockItem(BlockList.URANIUM_ORE, new Item.Properties().group(NuclearCraft.ITEM_GROUP)).setRegistryName(BlockList.URANIUM_ORE.getRegistryName());
-    public static final Item URANIUM_CENTRIFUGE = new BlockItem(BlockList.URANIUM_CENTRIFUGE, new Item.Properties().group(NuclearCraft.ITEM_GROUP)).setRegistryName(BlockList.URANIUM_CENTRIFUGE.getRegistryName());
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, NuclearCraft.MODID);
+
+//    public static final RegistryObject<Item> BLUEPRINT_AMMO_9MM = ITEMS.register("blueprint_ammo_9mm", ()->new Item(new Item.Properties().group(NuclearCraft.ITEM_GROUP)));
+//    public static final RegistryObject<Item> BLUEPRINT_AMMO_762 = ITEMS.register("blueprint_ammo_762", ()->new Item(new Item.Properties().group(NuclearCraft.ITEM_GROUP)));
+//    public static final RegistryObject<Item> BLUEPRINT_AMMO_127 = ITEMS.register("blueprint_ammo_127", ()->new Item(new Item.Properties().group(NuclearCraft.ITEM_GROUP)));
 
     // active:
     // Rockets
@@ -27,11 +31,6 @@ public class ItemList {
     public static final Item ROCKET_LAUNCHER_SMOKE = new RocketLauncherSmoke().setRegistryName("rocket_launcher_smoke");
     public static final Item ROCKET_LAUNCHER_INCENDIARY = new RocketLauncherIncendiary().setRegistryName("rocket_launcher_incendiary");
     public static final Item ROCKET_LAUNCHER_HIGH_EXPLOSIVE = new RocketLauncherHighExplosive().setRegistryName("rocket_launcher_high_explosive");
-
-    // Random items
-    public static final Item ROCKET_CONTROL_UNIT = new Item(new Item.Properties().group(NuclearCraft.ITEM_GROUP)).setRegistryName("rocket_control_unit");
-    public static final Item URANIUM_238 = new Item(new Item.Properties().group(NuclearCraft.ITEM_GROUP)).setRegistryName("uranium_238");
-    public static final Item URANIUM_235 = new Item(new Item.Properties().group(NuclearCraft.ITEM_GROUP)).setRegistryName("uranium_235");
 
     // C4 Bombs
     public static final Item C4_ATOMIC_BOMB = new C4BombItem(BlockList.C4_ATOMIC_BOMB, new Item.Properties().group(NuclearCraft.ITEM_GROUP));

@@ -5,6 +5,8 @@ import com.song.nuclear_craft.misc.ClientEventForgeSubscriber;
 import com.song.nuclear_craft.misc.SoundEventList;
 import com.song.nuclear_craft.network.GunLoadingPacket;
 import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
+import com.song.nuclear_craft.network.SoundPacket;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,27 +15,33 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public abstract class RocketLauncherWithAmmo extends Item {
-    protected int MAX_AMMO = 10;
+    private static final int MAX_AMMO = 10;
     protected Item BONDED_AMMO=null;
     protected int coolDown = 0;
     public RocketLauncherWithAmmo(Properties properties) {
         super(properties);
     }
 
+    protected int getMAX_AMMO(){
+        return MAX_AMMO;
+    }
+
     protected int getAmmoCount(ItemStack itemStack){
         CompoundNBT compoundnbt = itemStack.getOrCreateTag();
         if(! compoundnbt.contains("ammo")){
-            compoundnbt.putInt("ammo", this.MAX_AMMO);
+            compoundnbt.putInt("ammo", this.getMAX_AMMO());
         }
         return compoundnbt.getInt("ammo");
     }
@@ -51,7 +59,7 @@ public abstract class RocketLauncherWithAmmo extends Item {
     protected ActionResult<ItemStack>  afterFire(World worldIn, ItemStack thisItemStack){
         CompoundNBT compoundnbt = thisItemStack.getOrCreateTag();
         if(! compoundnbt.contains("ammo")){
-            compoundnbt.putInt("ammo", this.MAX_AMMO);
+            compoundnbt.putInt("ammo", this.getMAX_AMMO());
         }
         if(!worldIn.isRemote){
             int n_ammo = compoundnbt.getInt("ammo");
@@ -77,11 +85,13 @@ public abstract class RocketLauncherWithAmmo extends Item {
         if (BONDED_AMMO != null){
             if(ammo.getItem().getRegistryName().equals(BONDED_AMMO.getRegistryName())){
                 int n_ammo = getAmmoCount(rocket);
-                if (n_ammo<MAX_AMMO){
-                    int n_loaded = Math.min(MAX_AMMO-n_ammo, ammo.getCount());
+                if (n_ammo<getMAX_AMMO()){
+                    int n_loaded = Math.min(getMAX_AMMO()-n_ammo, ammo.getCount());
                     ammo.shrink(n_loaded);
                     addAmmoCount(rocket, n_loaded);
-                    entityIn.world.playSound(null, entityIn.getPosX(), entityIn.getPosY(), entityIn.getPosZ(), SoundEventList.LOADING, SoundCategory.PLAYERS, 0.3f, 1f);
+                    BlockPos pos = entityIn.getPosition();
+                    NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), 20, entityIn.world.getDimensionKey())),
+                            new SoundPacket(pos, "rocket_load"));
                     ((PlayerEntity) entityIn).getCooldownTracker().setCooldown(rocket.getItem(), 20);
                 }
             }

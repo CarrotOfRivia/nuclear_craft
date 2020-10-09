@@ -8,11 +8,7 @@ import javax.annotation.Nonnull;
 public class Ammo9mmAntiGravity extends AbstractAmmo {
     public Ammo9mmAntiGravity() {
         super(new Properties().group(NuclearCraft.ITEM_GROUP));
-    }
-
-    @Override
-    public String getSize() {
-        return "9mm";
+        setSize("9mm");
     }
 
     @Nonnull

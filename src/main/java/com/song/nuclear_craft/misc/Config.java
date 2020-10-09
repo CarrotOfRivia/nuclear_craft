@@ -21,6 +21,11 @@ public class Config {
     public static ForgeConfigSpec.DoubleValue NUKE_BLAST_POWER;
     public static ForgeConfigSpec.DoubleValue HIGH_EXPLOSIVE_BLAST_POWER;
 
+    public static ForgeConfigSpec.DoubleValue AMMO_ANTI_GRAVITY_RICOCHET_LOSS;
+    public static ForgeConfigSpec.DoubleValue AMMO_NORMAL_RICOCHET_LOSS;
+    public static ForgeConfigSpec.DoubleValue AMMO_SILVER_RICOCHET_LOSS;
+    public static ForgeConfigSpec.DoubleValue AMMO_TUNGSTEN_RICOCHET_LOSS;
+
     static {
         ForgeConfigSpec.Builder CONFIG_BUILDER = new ForgeConfigSpec.Builder();
         CONFIG_BUILDER.comment("atomic bomb settings").push("nuclear_craft");
@@ -36,6 +41,15 @@ public class Config {
 
         NUKE_BLAST_POWER = CONFIG_BUILDER.comment("Atomic bomb explosion power(i.e. max blast resistance block to break) 3,600,000 for bedrock, 1200 for obsidian, 100 for water").defineInRange("nuke_blast_power", 1500d, 0d, 999999999d);
         HIGH_EXPLOSIVE_BLAST_POWER = CONFIG_BUILDER.comment("High explosive bomb explosion power(i.e. max blast resistance block to break) 3,600,000 for bedrock, 1200 for obsidian, 100 for water").defineInRange("high_explosive_blast_power", 101d, 0d, 999999999d);
+
+        AMMO_ANTI_GRAVITY_RICOCHET_LOSS = CONFIG_BUILDER.comment("Energy loss of ammo (Anti-Gravity) after ricochet (bouncing on hard surfaces)")
+                .defineInRange("ammo_anti_gravity_ricochet_loss",0.5d, 0d, 1d);
+        AMMO_NORMAL_RICOCHET_LOSS = CONFIG_BUILDER.comment("Energy loss of ammo (Normal) after ricochet (bouncing on hard surfaces)")
+                .defineInRange("ammo_normal_ricochet_loss",0.5d, 0d, 1d);
+        AMMO_SILVER_RICOCHET_LOSS = CONFIG_BUILDER.comment("Energy loss of ammo (SILVER) after ricochet (bouncing on hard surfaces)")
+                .defineInRange("ammo_silver_ricochet_loss",0.5d, 0d, 1d);
+        AMMO_TUNGSTEN_RICOCHET_LOSS = CONFIG_BUILDER.comment("Energy loss of ammo (TUNGSTEN) after ricochet (bouncing on hard surfaces)")
+                .defineInRange("ammo_tungsten_ricochet_loss",0.5d, 0d, 1d);
 
         CONFIG_BUILDER.pop();
 

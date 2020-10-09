@@ -16,7 +16,7 @@ public class EntityList {
     // Bullets
 
     public static final RegistryObject<EntityType<AbstractAmmoEntity>> BULLET_ENTITY = ENTITIES.register("anti_gravity_ammo", ()->EntityType.Builder.<AbstractAmmoEntity>create(AbstractAmmoEntity::new, EntityClassification.MISC).
-            size(0.1f, 0.1f).func_233606_a_(4).func_233608_b_(10).setCustomClientFactory(AbstractAmmoEntity::new).build(new ResourceLocation(NuclearCraft.MODID, "anti_gravity_ammo").toString()));
+            size(0.1f, 0.1f).setCustomClientFactory(AbstractAmmoEntity::new).build(new ResourceLocation(NuclearCraft.MODID, "anti_gravity_ammo").toString()));
 //    public static final EntityType<? extends AbstractAmmoEntity> BULLET_ENTITY = EntityType.Builder.<AbstractAmmoEntity>create(AbstractAmmoEntity::new, EntityClassification.MISC).
 //            size(0.1f, 0.1f).func_233606_a_(4).func_233608_b_(10).setCustomClientFactory(AbstractAmmoEntity::new).build(null);
 

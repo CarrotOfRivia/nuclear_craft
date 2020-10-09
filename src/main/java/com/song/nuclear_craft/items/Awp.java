@@ -2,7 +2,6 @@ package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.misc.SoundEventList;
-import net.minecraft.util.SoundEvent;
 
 import javax.annotation.Nonnull;
 
@@ -14,6 +13,11 @@ public class Awp extends AbstractGunItem{
     @Override
     public int getCoolDown() {
         return 40;
+    }
+
+    @Override
+    public String getShootActionString() {
+        return "awp";
     }
 
     @Override
@@ -33,11 +37,6 @@ public class Awp extends AbstractGunItem{
     }
 
     @Override
-    public SoundEvent getSoundEvent() {
-        return SoundEventList.AWP;
-    }
-
-    @Override
     public float getSpeedModifier() {
         return 2.0f;
     }
@@ -48,12 +47,17 @@ public class Awp extends AbstractGunItem{
     }
 
     @Override
-    public SoundEvent getReloadSound() {
-        return SoundEventList.AWP_RELOAD;
+    public String getReloadSound() {
+        return "awp_reload";
     }
 
     @Override
     public boolean canUseScope() {
         return true;
+    }
+
+    @Override
+    protected double getGunSoundDist() {
+        return 50;
     }
 }
