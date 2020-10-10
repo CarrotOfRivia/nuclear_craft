@@ -790,7 +790,7 @@
 			"translation": [0, 14.5, -5]
 		},
 		"fixed": {
-			"rotation": [0, 90, 0],
+			"rotation": [0, -90, 0],
 			"translation": [0, 0, -1.75]
 		}
 	},

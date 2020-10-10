@@ -5,34 +5,30 @@ import com.song.nuclear_craft.items.AbstractAmmo;
 
 import javax.annotation.Nonnull;
 
-public class Ammo9mmNormal extends AbstractAmmo {
-    public Ammo9mmNormal() {
+public class Ammo556Explosive extends AbstractAmmo {
+    public Ammo556Explosive() {
         super(new Properties().group(NuclearCraft.ITEM_GROUP));
-    }
-
-    public Ammo9mmNormal(String size) {
-        super(new Properties().group(NuclearCraft.ITEM_GROUP), size);
     }
 
     @Override
     public String getSize() {
-        return "9mm";
+        return "5.56mm";
     }
 
     @Nonnull
     @Override
     public String getType() {
-        return "normal";
+        return "explosive";
     }
 
     @Override
     public double getBaseDamage() {
-        return 30;
+        return 15;
     }
 
     @Override
     public float getBaseSpeed() {
-        return 5;
+        return 7.5f;
     }
 
     @Override

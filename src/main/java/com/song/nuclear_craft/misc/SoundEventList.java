@@ -19,4 +19,6 @@ public class SoundEventList {
     public static SoundEvent AWP_RELOAD = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "awp_reload"));
     public static SoundEvent ZOOM = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "zoom"));
     public static SoundEvent BARRETT = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "barrett"));
+    public static SoundEvent M4A4 = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "m4a4"));
+    public static SoundEvent M4A4_RELOAD = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "m4a4_reload"));
 }

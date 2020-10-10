@@ -51,6 +51,10 @@ public class SoundPlayMethods {
                 world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.AWP_RELOAD, SoundCategory.PLAYERS, 1f, 1.0f, false); break;
             case "barrett":
                 world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.BARRETT, SoundCategory.PLAYERS, 1f, 1.0f, false); break;
+            case "m4a4":
+                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.M4A4, SoundCategory.PLAYERS, 1f, 1.0f, false); break;
+            case "m4a4_reload":
+                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.M4A4_RELOAD, SoundCategory.PLAYERS, 1f, 1.0f, false); break;
         }
     }
 }

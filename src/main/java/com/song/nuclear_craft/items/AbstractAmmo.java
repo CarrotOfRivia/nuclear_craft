@@ -28,6 +28,7 @@ public abstract class AbstractAmmo extends Item {
         return size;
     }
 
+    @Deprecated
     public void setSize(String size){
         this.size = size;
     }

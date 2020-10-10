@@ -13,25 +13,20 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class Ammo9mmSilver extends AbstractAmmo {
-    public Ammo9mmSilver() {
+public class Ammo556Tungsten extends AbstractAmmo {
+
+    public Ammo556Tungsten() {
         super(new Properties().group(NuclearCraft.ITEM_GROUP));
     }
-
-    public Ammo9mmSilver(String size) {
-        super(new Properties().group(NuclearCraft.ITEM_GROUP), size);
-    }
-
     @Override
     public String getSize() {
-        return "9mm";
+        return "5.56mm";
     }
-
 
     @Nonnull
     @Override
     public String getType() {
-        return "silver";
+        return "tungsten";
     }
 
     @Override
@@ -41,7 +36,7 @@ public class Ammo9mmSilver extends AbstractAmmo {
 
     @Override
     public float getBaseSpeed() {
-        return 7;
+        return 13.5f;
     }
 
     @Override

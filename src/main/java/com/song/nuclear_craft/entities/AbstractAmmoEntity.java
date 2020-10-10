@@ -259,7 +259,7 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
 
     @Override
     protected Item getDefaultItem() {
-        return ItemList.AMMO_9MM;
+        return ItemList.AMMO_9MM.get();
     }
 
     @Override

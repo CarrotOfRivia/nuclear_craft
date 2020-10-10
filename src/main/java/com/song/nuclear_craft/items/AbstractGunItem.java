@@ -157,22 +157,22 @@ public abstract class AbstractGunItem extends Item {
         // get Ammo Item instance from type and size
         switch (ammoType){
             case "test":
-                return ItemList.AMMO_TEST;
+                return ItemList.AMMO_TEST.get();
             case "anti_gravity":
-                return ItemList.AMMO_9MM_ANTI_GRAVITY;
+                return ItemList.AMMO_9MM_ANTI_GRAVITY.get();
             case "explosive":
-                return ItemList.AMMO_9MM_EXPLOSIVE;
+                return ItemList.AMMO_9MM_EXPLOSIVE.get();
             case "incendiary":
-                return ItemList.AMMO_9MM_INCENDIARY;
+                return ItemList.AMMO_9MM_INCENDIARY.get();
             case "nuke":
-                return ItemList.AMMO_9MM_NUKE;
+                return ItemList.AMMO_9MM_NUKE.get();
             case "silver":
-                return ItemList.AMMO_9MM_SILVER;
+                return ItemList.AMMO_9MM_SILVER.get();
             case "tungsten":
-                return ItemList.AMMO_9MM_TUNGSTEN;
+                return ItemList.AMMO_9MM_TUNGSTEN.get();
             case "normal":
             default:
-                return ItemList.AMMO_9MM;
+                return ItemList.AMMO_9MM.get();
         }
 
     }

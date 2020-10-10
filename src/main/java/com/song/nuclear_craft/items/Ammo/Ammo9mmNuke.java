@@ -9,8 +9,17 @@ public class Ammo9mmNuke extends AbstractAmmo {
 
     public Ammo9mmNuke() {
         super(new Properties().group(NuclearCraft.ITEM_GROUP));
-        setSize("9mm");
     }
+
+    public Ammo9mmNuke(String size) {
+        super(new Properties().group(NuclearCraft.ITEM_GROUP), size);
+    }
+
+    @Override
+    public String getSize() {
+        return "9mm";
+    }
+
 
     @Nonnull
     @Override
