@@ -1,6 +1,8 @@
 package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
+import com.song.nuclear_craft.items.Ammo.AmmoSize;
+import com.song.nuclear_craft.misc.Config;
 import com.song.nuclear_craft.misc.SoundEventList;
 
 import javax.annotation.Nonnull;
@@ -23,23 +25,22 @@ public class USP extends AbstractGunItem{
 
     @Nonnull
     @Override
-    public String compatibleSize() {
-        return "9mm";
+    public AmmoSize compatibleSize() {
+        return AmmoSize.SIZE_9MM;
     }
 
     @Override
     public String getShootActionString() {
         return "usp";
     }
-
     @Override
     public float getSpeedModifier() {
-        return 1.0f;
+        return Config.USP_CONFIG.getSpeedModify().get().floatValue();
     }
 
     @Override
     public double getDamageModifier() {
-        return 1.0f;
+        return Config.USP_CONFIG.getDamageModify().get();
     }
 
     @Override

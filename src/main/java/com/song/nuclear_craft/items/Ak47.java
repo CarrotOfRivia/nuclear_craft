@@ -1,6 +1,8 @@
 package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
+import com.song.nuclear_craft.items.Ammo.AmmoSize;
+import com.song.nuclear_craft.misc.Config;
 import com.song.nuclear_craft.misc.SoundEventList;
 
 import javax.annotation.Nonnull;
@@ -27,8 +29,8 @@ public class Ak47 extends AbstractGunItem{
 
     @Nonnull
     @Override
-    public String compatibleSize() {
-        return "7.62mm";
+    public AmmoSize compatibleSize() {
+        return AmmoSize.SIZE_762;
     }
 
     @Override
@@ -38,12 +40,12 @@ public class Ak47 extends AbstractGunItem{
 
     @Override
     public float getSpeedModifier() {
-        return 1.5f;
+        return Config.AK47_CONFIG.getSpeedModify().get().floatValue();
     }
 
     @Override
     public double getDamageModifier() {
-        return 1.7d;
+        return Config.AK47_CONFIG.getDamageModify().get();
     }
 
     @Override

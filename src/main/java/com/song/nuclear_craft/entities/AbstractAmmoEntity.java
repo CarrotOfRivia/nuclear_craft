@@ -2,6 +2,8 @@ package com.song.nuclear_craft.entities;
 
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.items.AbstractAmmo;
+import com.song.nuclear_craft.items.Ammo.AmmoSize;
+import com.song.nuclear_craft.items.Ammo.AmmoType;
 import com.song.nuclear_craft.items.ItemList;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
@@ -32,6 +34,7 @@ import net.minecraftforge.fml.network.FMLPlayMessages;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
+import java.util.HashMap;
 
 public class AbstractAmmoEntity extends ProjectileItemEntity {
     private double energy;
@@ -75,7 +78,7 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
         super(EntityList.BULLET_ENTITY.get(), x, y, z, world);
         this.setItem(itemStack);
         this.setShooter(shooter);
-        this.bulletSize = getSizeFromString(((AbstractAmmo)itemStack.getItem()).getSize());
+        this.bulletSize = ((AbstractAmmo)itemStack.getItem()).getSize().getSize();
         this.dataManager.set(BULLET_SIZE, (float) bulletSize);
         this.setBaseDamage(((AbstractAmmo)itemStack.getItem()).getBaseDamage());
     }
@@ -203,24 +206,26 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
 
     @Override
     protected void func_230299_a_(@Nonnull BlockRayTraceResult blockRayTraceResult) {
-        if(true){
-            Block block = world.getBlockState(blockRayTraceResult.getPos()).getBlock();
-            double blastResist = block.getExplosionResistance();
-            if(blastResist>getBlockBreakThreshold()+1e-3){
-                // ricochet
-                Direction blockDirection = blockRayTraceResult.getFace();
-                this.ricochetSpeed(blockDirection);
-                Vector3d hitResult = blockRayTraceResult.getHitVec();
-                this.setPosition(hitResult.x, hitResult.y, hitResult.z);
-                this.energy -= this.initEnergy * getRicochetEnergyLoss();
-            }
-            else {
-                // destroy
-                world.destroyBlock(blockRayTraceResult.getPos(), true);
-                this.energy -= getEnergyLoss(blastResist);
-            }
-            this.piercedEntities.clear();
+        Block block = world.getBlockState(blockRayTraceResult.getPos()).getBlock();
+        double blastResist = block.getExplosionResistance();
+        if(blastResist>getBlockBreakThreshold()+1e-3){
+            // ricochet
+            Direction blockDirection = blockRayTraceResult.getFace();
+            this.ricochetSpeed(blockDirection);
+            teleportToHitPoint(blockRayTraceResult);
+            this.energy -= this.initEnergy * getRicochetEnergyLoss();
         }
+        else {
+            // destroy
+            world.destroyBlock(blockRayTraceResult.getPos(), true);
+            this.energy -= getEnergyLoss(blastResist);
+        }
+        this.piercedEntities.clear();
+    }
+
+    protected void teleportToHitPoint(RayTraceResult rayTraceResult){
+        Vector3d hitResult = rayTraceResult.getHitVec();
+        this.setPosition(hitResult.x, hitResult.y, hitResult.z);
     }
 
     public double getRicochetEnergyLoss(){
@@ -259,7 +264,7 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
 
     @Override
     protected Item getDefaultItem() {
-        return ItemList.AMMO_9MM.get();
+        return ItemList.AMMO_REGISTRIES_TYPE.get(AmmoSize.SIZE_9MM).get(AmmoType.NORMAL).get();
     }
 
     @Override
@@ -267,18 +272,4 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
-    public static double getSizeFromString(String size){
-        switch (size){
-            case "12.7mm":
-                return 12.7;
-            case "5.56mm":
-                return 5.56;
-            case "7.62mm":
-                return 7.62;
-            case "9mm":
-                return 9;
-            default:
-                throw new ValueException("Unrecognized size: "+size);
-        }
-    }
 }

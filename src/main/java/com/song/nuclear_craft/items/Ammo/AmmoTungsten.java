@@ -13,31 +13,30 @@
 //import javax.annotation.Nullable;
 //import java.util.List;
 //
-//public class Ammo127Tungsten extends AbstractAmmo {
+//public class AmmoTungsten extends AbstractAmmo {
 //
-//    public Ammo127Tungsten() {
+//    public AmmoTungsten() {
 //        super(new Properties().group(NuclearCraft.ITEM_GROUP));
 //    }
 //
-//    @Override
-//    public String getSize() {
-//        return "12.7mm";
+//    public AmmoTungsten(String size) {
+//        super(new Properties().group(NuclearCraft.ITEM_GROUP), size);
 //    }
 //
 //    @Nonnull
 //    @Override
-//    public String getType() {
-//        return "tungsten";
+//    public AmmoType getType() {
+//        return AmmoType.TUNGSTEN;
 //    }
 //
 //    @Override
 //    public double getBaseDamage() {
-//        return 86;
+//        return 50;
 //    }
 //
 //    @Override
 //    public float getBaseSpeed() {
-//        return 13;
+//        return 10;
 //    }
 //
 //    @Override

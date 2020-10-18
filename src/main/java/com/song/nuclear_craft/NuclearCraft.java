@@ -4,6 +4,8 @@ import com.song.nuclear_craft.blocks.BlockList;
 import com.song.nuclear_craft.blocks.tileentity.TileEntityList;
 import com.song.nuclear_craft.blocks.container.ContainerTypeList;
 import com.song.nuclear_craft.entities.EntityList;
+import com.song.nuclear_craft.items.Ammo.AmmoSize;
+import com.song.nuclear_craft.items.Ammo.AmmoType;
 import com.song.nuclear_craft.items.ItemList;
 import com.song.nuclear_craft.misc.ClientEventForgeSubscriber;
 import com.song.nuclear_craft.misc.Config;
@@ -49,10 +51,16 @@ public class NuclearCraft
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
     public static final String MODID = "nuclear_craft";
-    public static final ItemGroup ITEM_GROUP = new ItemGroup(MODID) {
+    public static final ItemGroup ITEM_GROUP = new ItemGroup("weapons") {
         @Override
         public ItemStack createIcon() {
             return new ItemStack(ItemList.ATOMIC_BOMB_ROCKET);
+        }
+    };
+    public static final ItemGroup AMMO_ITEM_GROUP = new ItemGroup("bullets") {
+        @Override
+        public ItemStack createIcon() {
+            return new ItemStack(ItemList.AMMO_REGISTRIES_TYPE.get(AmmoSize.SIZE_127).get(AmmoType.NORMAL).get());
         }
     };
 

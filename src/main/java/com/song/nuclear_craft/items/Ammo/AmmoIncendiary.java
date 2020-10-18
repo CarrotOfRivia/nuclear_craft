@@ -5,30 +5,29 @@
 //
 //import javax.annotation.Nonnull;
 //
-//public class Ammo556Normal extends AbstractAmmo {
-//    public Ammo556Normal() {
+//public class AmmoIncendiary extends AbstractAmmo {
+//    public AmmoIncendiary() {
 //        super(new Properties().group(NuclearCraft.ITEM_GROUP));
 //    }
 //
-//    @Override
-//    public String getSize() {
-//        return "5.56mm";
+//    public AmmoIncendiary(String size) {
+//        super(new Properties().group(NuclearCraft.ITEM_GROUP), size);
 //    }
 //
 //    @Nonnull
 //    @Override
-//    public String getType() {
-//        return "normal";
+//    public AmmoType getType() {
+//        return AmmoType.INCENDIARY;
 //    }
 //
 //    @Override
 //    public double getBaseDamage() {
-//        return 22;
+//        return 20;
 //    }
 //
 //    @Override
 //    public float getBaseSpeed() {
-//        return 8.5f;
+//        return 5;
 //    }
 //
 //    @Override

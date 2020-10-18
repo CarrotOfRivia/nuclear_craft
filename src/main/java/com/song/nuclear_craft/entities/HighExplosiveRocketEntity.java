@@ -11,6 +11,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class HighExplosiveRocketEntity extends FireworkRocketEntity {
@@ -44,12 +45,12 @@ public class HighExplosiveRocketEntity extends FireworkRocketEntity {
     }
 
     @Override
-    protected void onEntityHit(EntityRayTraceResult p_213868_1_) {
+    protected void onEntityHit(@Nonnull EntityRayTraceResult entityRayTraceResult) {
         this.explode();
     }
 
     @Override
-    protected void func_230299_a_(BlockRayTraceResult blockRayTraceResult) {
+    protected void func_230299_a_(@Nonnull BlockRayTraceResult blockRayTraceResult) {
         this.explode();
     }
 

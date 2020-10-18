@@ -3,12 +3,13 @@ package com.song.nuclear_craft.items;
 import com.song.nuclear_craft.blocks.BlockList;
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.items.Ammo.*;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class ItemList {
@@ -47,38 +48,17 @@ public class ItemList {
     public static final RegistryObject<Barrett> BARRETT = ITEMS.register("barrett", Barrett::new);
     public static final RegistryObject<M4A4> M4A4 = ITEMS.register("m4a4", M4A4::new);
 
-    public static final RegistryObject<AbstractAmmo> AMMO_9MM = ITEMS.register("ammo_9mm", Ammo9mmNormal::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_9MM_ANTI_GRAVITY = ITEMS.register("ammo_9mm_anti_gravity", Ammo9mmAntiGravity::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_TEST = ITEMS.register("ammo_test", AmmoTest::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_9MM_EXPLOSIVE = ITEMS.register("ammo_9mm_explosive", Ammo9mmExplosive::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_9MM_INCENDIARY = ITEMS.register("ammo_9mm_incendiary", Ammo9mmIncendiary::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_9MM_NUKE = ITEMS.register("ammo_9mm_nuke", Ammo9mmNuke::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_9MM_SILVER = ITEMS.register("ammo_9mm_silver", Ammo9mmSilver::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_9MM_TUNGSTEN = ITEMS.register("ammo_9mm_tungsten", Ammo9mmTungsten::new);
+    public static final HashMap<AmmoSize, HashMap<AmmoType, RegistryObject<AbstractAmmo>>> AMMO_REGISTRIES_TYPE = new HashMap<>();
 
-    public static final RegistryObject<AbstractAmmo> AMMO_762_NORMAL = ITEMS.register("ammo_762_normal", Ammo762Normal::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_762_ANTI_GRAVITY = ITEMS.register("ammo_762_anti_gravity", Ammo762AntiGravity::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_762_EXPLOSIVE = ITEMS.register("ammo_762_explosive", Ammo762Explosive::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_762_INCENDIARY = ITEMS.register("ammo_762_incendiary", Ammo762Incendiary::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_762_NUKE = ITEMS.register("ammo_762_nuke", Ammo762Nuke::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_762_SILVER = ITEMS.register("ammo_762_silver", Ammo762Silver::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_762_TUNGSTEN = ITEMS.register("ammo_762_tungsten", Ammo762Tungsten::new);
-
-    public static final RegistryObject<AbstractAmmo> AMMO_127_NORMAL = ITEMS.register("ammo_127_normal", Ammo127Normal::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_127_ANTI_GRAVITY = ITEMS.register("ammo_127_anti_gravity", Ammo127AntiGravity::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_127_EXPLOSIVE = ITEMS.register("ammo_127_explosive", Ammo127Explosive::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_127_INCENDIARY = ITEMS.register("ammo_127_incendiary", Ammo127Incendiary::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_127_NUKE = ITEMS.register("ammo_127_nuke", Ammo127Nuke::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_127_SILVER = ITEMS.register("ammo_127_silver", Ammo127Silver::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_127_TUNGSTEN = ITEMS.register("ammo_127_tungsten", Ammo127Tungsten::new);
-
-    public static final RegistryObject<AbstractAmmo> AMMO_556_NORMAL = ITEMS.register("ammo_556_normal", Ammo556Normal::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_556_ANTI_GRAVITY = ITEMS.register("ammo_556_anti_gravity", Ammo556AntiGravity::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_556_EXPLOSIVE = ITEMS.register("ammo_556_explosive", Ammo556Explosive::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_556_INCENDIARY = ITEMS.register("ammo_556_incendiary", Ammo556Incendiary::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_556_NUKE = ITEMS.register("ammo_556_nuke", Ammo556Nuke::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_556_SILVER = ITEMS.register("ammo_556_silver", Ammo556Silver::new);
-    public static final RegistryObject<AbstractAmmo> AMMO_556_TUNGSTEN = ITEMS.register("ammo_556_tungsten", Ammo556Tungsten::new);
+    static {
+        for (AmmoSize ammoSize : AmmoSize.values()) {
+            HashMap<AmmoType, RegistryObject<AbstractAmmo>> tmp = new HashMap<>();
+            for (AmmoType ammoType: AmmoType.values()){
+                tmp.put(ammoType, ITEMS.register("ammo_"+ammoSize.getRegisterString()+"_"+ammoType.getRegisterString(), ()->new AbstractAmmo(new Item.Properties().group(NuclearCraft.AMMO_ITEM_GROUP), ammoSize, ammoType)));
+            }
+            AMMO_REGISTRIES_TYPE.put(ammoSize, tmp);
+        }
+    }
 
     static {
         C4_ATOMIC_BOMB.setRegistryName(Objects.requireNonNull(BlockList.C4_ATOMIC_BOMB.getRegistryName()));

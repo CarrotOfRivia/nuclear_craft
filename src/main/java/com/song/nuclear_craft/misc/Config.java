@@ -1,9 +1,14 @@
 package com.song.nuclear_craft.misc;
 
+import com.song.nuclear_craft.items.Ammo.AmmoSize;
+import com.song.nuclear_craft.items.Ammo.AmmoType;
+import com.song.nuclear_craft.items.GunConfigurable;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+
+import java.util.HashMap;
 
 @Mod.EventBusSubscriber
 public class Config {
@@ -25,6 +30,18 @@ public class Config {
     public static ForgeConfigSpec.DoubleValue AMMO_NORMAL_RICOCHET_LOSS;
     public static ForgeConfigSpec.DoubleValue AMMO_SILVER_RICOCHET_LOSS;
     public static ForgeConfigSpec.DoubleValue AMMO_TUNGSTEN_RICOCHET_LOSS;
+
+    public static final HashMap<AmmoSize, HashMap<AmmoType, ForgeConfigSpec.DoubleValue>> DAMAGE_MAP = new HashMap<>();
+    public static final HashMap<AmmoSize, HashMap<AmmoType, ForgeConfigSpec.DoubleValue>> SPEED_MAP = new HashMap<>();
+    public static final HashMap<AmmoSize, HashMap<AmmoType, ForgeConfigSpec.DoubleValue>> GRAVITY_MAP = new HashMap<>();
+
+    public static final GunConfigurable AK47_CONFIG = new GunConfigurable();
+    public static final GunConfigurable DESERT_EAGLE_CONFIG = new GunConfigurable();
+    public static final GunConfigurable GLOCK_CONFIG = new GunConfigurable();
+    public static final GunConfigurable USP_CONFIG = new GunConfigurable();
+    public static final GunConfigurable AWP_CONFIG = new GunConfigurable();
+    public static final GunConfigurable BARRETT_CONFIG = new GunConfigurable();
+    public static final GunConfigurable M4A4_CONFIG = new GunConfigurable();
 
     static {
         ForgeConfigSpec.Builder CONFIG_BUILDER = new ForgeConfigSpec.Builder();
@@ -50,6 +67,38 @@ public class Config {
                 .defineInRange("ammo_silver_ricochet_loss",0.5d, 0d, 1d);
         AMMO_TUNGSTEN_RICOCHET_LOSS = CONFIG_BUILDER.comment("Energy loss of ammo (TUNGSTEN) after ricochet (bouncing on hard surfaces)")
                 .defineInRange("ammo_tungsten_ricochet_loss",0.5d, 0d, 1d);
+
+        // ------------------------ Ammo Speed and Damage -------------------------- //
+        for (AmmoSize ammoSize: AmmoSize.values()){
+            HashMap<AmmoType, ForgeConfigSpec.DoubleValue> thisDamageMap = new HashMap<>();
+            HashMap<AmmoType, ForgeConfigSpec.DoubleValue> thisSpeedMap = new HashMap<>();
+            HashMap<AmmoType, ForgeConfigSpec.DoubleValue> thisGravityMap = new HashMap<>();
+            for (AmmoType ammoType: AmmoType.values()){
+                thisDamageMap.put(ammoType, CONFIG_BUILDER.comment("Base damage, base speed(m/tick) and gravity(m/tick^2) of ammo: "+ammoType.getDescription()+" "+ammoSize.getDescription())
+                        .defineInRange("damage_"+ammoType.getRegisterString()+"_"+ammoSize.getRegisterString(), ammoType.getDamage()*ammoSize.getDamageModify(), 0, 999999));
+                thisSpeedMap.put(ammoType, CONFIG_BUILDER.defineInRange("speed_"+ammoType.getRegisterString()+"_"+ammoSize.getRegisterString(), ammoType.getSpeed()*ammoSize.getSpeedModify(), 0, 999999));
+                thisGravityMap.put(ammoType, CONFIG_BUILDER.defineInRange("gravity_"+ammoType.getRegisterString()+"_"+ammoSize.getRegisterString(), ammoType.getGravity(), 0, 999999));
+            }
+            DAMAGE_MAP.put(ammoSize, thisDamageMap);
+            SPEED_MAP.put(ammoSize, thisSpeedMap);
+            GRAVITY_MAP.put(ammoSize, thisGravityMap);
+        }
+
+        // -------------------- Gun Modifiers -----------------------------//
+        AK47_CONFIG.setDamageModify(CONFIG_BUILDER.comment("AK47 damage modify").defineInRange("ak47_damage_modify", 1.7, 0, 999999));
+        AK47_CONFIG.setSpeedModify(CONFIG_BUILDER.comment("AK47 speed modify").defineInRange("ak47_speed_modify", 1.5, 0, 999999));
+        DESERT_EAGLE_CONFIG.setDamageModify(CONFIG_BUILDER.comment("DESERT_EAGLE damage modify").defineInRange("desert_eagle_damage_modify", 1.4, 0, 999999));
+        DESERT_EAGLE_CONFIG.setSpeedModify(CONFIG_BUILDER.comment("DESERT_EAGLE speed modify").defineInRange("desert_eagle_speed_modify", 1.4, 0, 999999));
+        GLOCK_CONFIG.setDamageModify(CONFIG_BUILDER.comment("GLOCK damage modify").defineInRange("glock_damage_modify", 1.1, 0, 999999));
+        GLOCK_CONFIG.setSpeedModify(CONFIG_BUILDER.comment("GLOCK speed modify").defineInRange("glock_speed_modify", 1.0, 0, 999999));
+        USP_CONFIG.setDamageModify(CONFIG_BUILDER.comment("USP damage modify").defineInRange("usp_damage_modify", 1.0, 0, 999999));
+        USP_CONFIG.setSpeedModify(CONFIG_BUILDER.comment("USP speed modify").defineInRange("usp_speed_modify", 1.0, 0, 999999));
+        AWP_CONFIG.setDamageModify(CONFIG_BUILDER.comment("AWP damage modify").defineInRange("awp_damage_modify", 3.0, 0, 999999));
+        AWP_CONFIG.setSpeedModify(CONFIG_BUILDER.comment("AWP speed modify").defineInRange("awp_speed_modify", 2.0, 0, 999999));
+        BARRETT_CONFIG.setDamageModify(CONFIG_BUILDER.comment("BARRETT damage modify").defineInRange("barrett_damage_modify", 5.0, 0, 999999));
+        BARRETT_CONFIG.setSpeedModify(CONFIG_BUILDER.comment("BARRETT speed modify").defineInRange("barrett_speed_modify", 4.0, 0, 999999));
+        M4A4_CONFIG.setDamageModify(CONFIG_BUILDER.comment("M4A4 damage modify").defineInRange("m4a4_damage_modify", 1.3, 0, 999999));
+        M4A4_CONFIG.setSpeedModify(CONFIG_BUILDER.comment("M4A4 speed modify").defineInRange("m4a4_speed_modify", 1.35, 0, 999999));
 
         CONFIG_BUILDER.pop();
 

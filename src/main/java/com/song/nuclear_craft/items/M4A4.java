@@ -1,6 +1,8 @@
 package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
+import com.song.nuclear_craft.items.Ammo.AmmoSize;
+import com.song.nuclear_craft.misc.Config;
 
 import javax.annotation.Nonnull;
 
@@ -26,23 +28,23 @@ public class M4A4 extends AbstractGunItem{
 
     @Override
     public int getLoadTime() {
-        return 0;
+        return 60;
     }
 
     @Nonnull
     @Override
-    public String compatibleSize() {
-        return "5.56mm";
+    public AmmoSize compatibleSize() {
+        return AmmoSize.SIZE_556;
     }
 
     @Override
     public float getSpeedModifier() {
-        return 1.35f;
+        return Config.M4A4_CONFIG.getSpeedModify().get().floatValue();
     }
 
     @Override
     public double getDamageModifier() {
-        return 1.3f;
+        return Config.M4A4_CONFIG.getDamageModify().get();
     }
 
     @Override

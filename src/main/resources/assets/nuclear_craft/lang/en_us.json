@@ -3,7 +3,8 @@
   "key.nuclear_craft.load_ammo": "Reload",
   "key.nuclear_craft.categories": "Atomic Explosion Keybindings",
 
-  "itemGroup.nuclear_craft": "Atomic Explosion",
+  "itemGroup.weapons": "Guns, Rockets and Atomic Explosions: Weapons",
+  "itemGroup.bullets": "Guns, Rockets and Atomic Explosions: Bullets",
   "item.nuclear_craft.atomic_bomb_rocket": "Atomic Bomb Rocket",
   "item.nuclear_craft.incendiary_rocket": "Incendiary Rocket",
   "item.nuclear_craft.smoke_rocket": "Smoke Rocket",
@@ -72,11 +73,11 @@
   "item.nuclear_craft.ammo_556_tungsten": "5.56mm Tungsten Piercing Bullet",
 
   "item.nuclear_craft.guns.compatible_ammo_size": "Compatible Ammo Size:",
-  "item.nuclear_craft.guns.use_scope": "Use scope to zoom in, press:",
+  "item.nuclear_craft.guns.use_scope": "Use scope to zoom in, default key is:",
 
   "tooltip.nuclear_craft.ammo.desc1": "Bullets will ricochet on hard surfaces",
   "tooltip.nuclear_craft.ammo.desc2": "and destroy fragile blocks.",
   "tooltip.nuclear_craft.ammo.base_damage": "Base Damage: ",
-  "tooltip.nuclear_craft.ammo.base_speed": "Base Speed(m/tick): ",
-  "tooltip.nuclear_craft.ammo.gravity": "Gravity(m/tick^2): "
+  "tooltip.nuclear_craft.ammo.base_speed": "Base Speed: ",
+  "tooltip.nuclear_craft.ammo.gravity": "Gravity: "
 }
