@@ -15,10 +15,6 @@ import java.util.Objects;
 public class ItemList {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, NuclearCraft.MODID);
 
-//    public static final RegistryObject<Item> BLUEPRINT_AMMO_9MM = ITEMS.register("blueprint_ammo_9mm", ()->new Item(new Item.Properties().group(NuclearCraft.ITEM_GROUP)));
-//    public static final RegistryObject<Item> BLUEPRINT_AMMO_762 = ITEMS.register("blueprint_ammo_762", ()->new Item(new Item.Properties().group(NuclearCraft.ITEM_GROUP)));
-//    public static final RegistryObject<Item> BLUEPRINT_AMMO_127 = ITEMS.register("blueprint_ammo_127", ()->new Item(new Item.Properties().group(NuclearCraft.ITEM_GROUP)));
-
     // active:
     // Rockets
     public static final Item ATOMIC_BOMB_ROCKET = new Item(new Item.Properties().group(NuclearCraft.ITEM_GROUP).maxStackSize(1)).setRegistryName("atomic_bomb_rocket");
@@ -47,13 +43,21 @@ public class ItemList {
     public static final RegistryObject<Awp> AWP = ITEMS.register("awp", Awp::new);
     public static final RegistryObject<Barrett> BARRETT = ITEMS.register("barrett", Barrett::new);
     public static final RegistryObject<M4A4> M4A4 = ITEMS.register("m4a4", M4A4::new);
+    public static final RegistryObject<XM1014> XM1014 = ITEMS.register("xm1014", XM1014::new);
 
     public static final HashMap<AmmoSize, HashMap<AmmoType, RegistryObject<AbstractAmmo>>> AMMO_REGISTRIES_TYPE = new HashMap<>();
-
+    public static final RegistryObject<AbstractAmmo> AMMO_12_GA_SHOOT = ITEMS.register("bird_shot_12_ga", ()->new AbstractAmmo(new Item.Properties(), AmmoSize.SIZE_12_GA, AmmoType.SHORT_GUN_NORMAL));
     static {
-        for (AmmoSize ammoSize : AmmoSize.values()) {
+        for (AmmoSize ammoSize : AmmoPossibleCombination.RIFLE_AMMO.getAmmoSizes()) {
             HashMap<AmmoType, RegistryObject<AbstractAmmo>> tmp = new HashMap<>();
-            for (AmmoType ammoType: AmmoType.values()){
+            for (AmmoType ammoType: AmmoPossibleCombination.RIFLE_AMMO.getAmmoTypes()){
+                tmp.put(ammoType, ITEMS.register("ammo_"+ammoSize.getRegisterString()+"_"+ammoType.getRegisterString(), ()->new AbstractAmmo(new Item.Properties().group(NuclearCraft.AMMO_ITEM_GROUP), ammoSize, ammoType)));
+            }
+            AMMO_REGISTRIES_TYPE.put(ammoSize, tmp);
+        }
+        for (AmmoSize ammoSize : AmmoPossibleCombination.SHORT_GUN_AMMO.getAmmoSizes()) {
+            HashMap<AmmoType, RegistryObject<AbstractAmmo>> tmp = new HashMap<>();
+            for (AmmoType ammoType: AmmoPossibleCombination.SHORT_GUN_AMMO.getAmmoTypes()){
                 tmp.put(ammoType, ITEMS.register("ammo_"+ammoSize.getRegisterString()+"_"+ammoType.getRegisterString(), ()->new AbstractAmmo(new Item.Properties().group(NuclearCraft.AMMO_ITEM_GROUP), ammoSize, ammoType)));
             }
             AMMO_REGISTRIES_TYPE.put(ammoSize, tmp);

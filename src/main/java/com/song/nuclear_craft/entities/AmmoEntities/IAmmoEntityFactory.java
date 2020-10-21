@@ -23,6 +23,8 @@ public interface IAmmoEntityFactory {
                 return AmmoExplosiveEntity::new;
             case INCENDIARY:
                 return AmmoIncendiaryEntity::new;
+            case SHORT_GUN_NORMAL:
+                return AmmoShortGunNormal::new;
             case NORMAL:
             default:
                 return AmmoNormalEntity::new;

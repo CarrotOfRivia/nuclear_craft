@@ -37,18 +37,8 @@ public class SoundPacket {
     }
 
     public static void handle(SoundPacket packet, Supplier<NetworkEvent.Context> ctx){
-        //TODO
         ctx.get().enqueueWork(()-> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()->()->{
-            switch (packet.action){
-                case "c4_beep":
-                    SoundPlayMethods.c4Beep(new BlockPos(packet.x, packet.y, packet.z)); break;
-                case "c4_activate":
-                    SoundPlayMethods.activeSound(new BlockPos(packet.x, packet.y, packet.z)); break;
-                case "rocket_load":
-                    SoundPlayMethods.playLoadSound(new BlockPos(packet.x, packet.y, packet.z)); break;
-                default:
-                    SoundPlayMethods.playSoundFromString(new BlockPos(packet.x, packet.y, packet.z), packet.action); break;
-            }
+            SoundPlayMethods.playSoundFromString(new BlockPos(packet.x, packet.y, packet.z), packet.action);
         }));
         ctx.get().setPacketHandled(true);
     }

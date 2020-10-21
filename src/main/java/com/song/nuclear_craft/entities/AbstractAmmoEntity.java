@@ -168,20 +168,17 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
         Entity entity = entityRayTraceResult.getEntity();
         this.piercedEntities.add(entity.getEntityId());
 
-        if(entity instanceof ItemEntity){
+        if(entity instanceof ItemEntity || entity instanceof AbstractAmmoEntity){
             // bullets do not destroy item
             return;
         }
         double damage = this.baseDamage * getEnergy(this.getMotion().length()) / this.initEnergy;
         // get shooter
         DamageSource damageSource = new IndirectEntityDamageSource(new ResourceLocation(NuclearCraft.MODID, "bullet").toString(), this, this.func_234616_v_()).setProjectile();
-        entity.attackEntityFrom(damageSource, (float) damage);
+        boolean result = entity.attackEntityFrom(damageSource, (float) damage);
 
-        if (entity instanceof LivingEntity){
+        if (result){
             this.energy -= 30;
-        }
-        else {
-            this.energy -= 10;
         }
     }
 

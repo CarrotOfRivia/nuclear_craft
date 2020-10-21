@@ -52,8 +52,6 @@ public class NukeExplosion extends Explosion {
     private final Vector3d position;
 
     public NukeExplosion(World worldIn, @Nullable Entity entityIn, double x, double y, double z, float size, List<BlockPos> affectedPositions) {
-        // TODO
-//        DamageSource damageSource = new DamageSource(new ResourceLocation(NuclearCraft.MODID, "nuke_explosion").toString());
         super(worldIn, entityIn,null,null,  x, y, z,  size,false, Mode.DESTROY);
         this.world = worldIn;
         this.exploder = entityIn;

@@ -3,7 +3,6 @@ package com.song.nuclear_craft.items;
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.items.Ammo.AmmoSize;
 import com.song.nuclear_craft.misc.Config;
-import com.song.nuclear_craft.misc.SoundEventList;
 
 import javax.annotation.Nonnull;
 
@@ -56,11 +55,6 @@ public class Barrett extends AbstractGunItem{
     @Override
     public boolean canUseScope() {
         return true;
-    }
-
-    @Override
-    public float getSoundVolume() {
-        return 0.5f;
     }
 
     @Override

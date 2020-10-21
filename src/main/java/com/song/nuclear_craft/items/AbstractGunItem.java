@@ -3,6 +3,7 @@ package com.song.nuclear_craft.items;
 import com.song.nuclear_craft.entities.AmmoEntities.IAmmoEntityFactory;
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.entities.AbstractAmmoEntity;
+import com.song.nuclear_craft.items.Ammo.AmmoPossibleCombination;
 import com.song.nuclear_craft.items.Ammo.AmmoSize;
 import com.song.nuclear_craft.items.Ammo.AmmoType;
 import com.song.nuclear_craft.misc.ClientEventForgeSubscriber;
@@ -39,8 +40,9 @@ public abstract class AbstractGunItem extends Item {
         super(properties);
     }
 
+    @Nonnull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, PlayerEntity playerIn, @Nonnull Hand handIn) {
         ItemStack heldItemStack = playerIn.getHeldItem(handIn);
         if (heldItemStack.getItem() instanceof AbstractGunItem){
             AbstractGunItem gunItem = (AbstractGunItem) heldItemStack.getItem();
@@ -54,19 +56,17 @@ public abstract class AbstractGunItem extends Item {
                 AbstractAmmo ammoItem = gunItem.getAmmoItem(ammoType, ammoSize);
                 ItemStack toBeFired = new ItemStack(ammoItem);
                 Vector3d lookVec = playerIn.getLookVec();
-                // We add 0.1m to avoid player from shooting themselves when they are running in their shooting direction
-                AbstractAmmoEntity entity = gunItem.getAmmoEntity(playerIn.getPosX()+lookVec.x*0.1, playerIn.getPosYEye() - (double)0.15F+lookVec.y*0.1, playerIn.getPosZ()+lookVec.z*0.1, worldIn, toBeFired, playerIn, ammoType, ammoSize);
+
+                for(int i = 0; i< getBirdShotCount(ammoType); i++){
+                    AbstractAmmoEntity entity = getAmmoEntity(gunItem, playerIn, lookVec, toBeFired, worldIn, ammoItem, ammoType, ammoSize);
+                    entity.shoot(lookVec.x, lookVec.y, lookVec.z, ammoItem.getBaseSpeed()*getSpeedModifier(), getInaccuracy(worldIn, playerIn));
+                    worldIn.addEntity(entity);
+                }
+
                 BlockPos pos = playerIn.getPosition();
                 NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), getGunSoundDist(), playerIn.world.getDimensionKey())),
                         new SoundPacket(pos, getShootActionString()));
-                entity.setSilent(true);
-                // handle it myself
-                entity.setNoGravity(true);
-                entity.setGravity(ammoItem.getGravity());
 
-                entity.shoot(lookVec.x, lookVec.y, lookVec.z, ammoItem.getBaseSpeed()*getSpeedModifier(), 0);
-                entity.setBaseDamage(getDamageModifier()*entity.getBaseDamage());
-                worldIn.addEntity(entity);
                 shrinkAmmoNBT(heldItemStack);
                 return ActionResult.func_233538_a_(heldItemStack, worldIn.isRemote());
             }
@@ -77,6 +77,26 @@ public abstract class AbstractGunItem extends Item {
             }
         }
         return super.onItemRightClick(worldIn, playerIn, handIn);
+    }
+
+    private AbstractAmmoEntity getAmmoEntity(AbstractGunItem gunItem, PlayerEntity playerIn, Vector3d lookVec, ItemStack toBeFired, World worldIn, AbstractAmmo ammoItem, AmmoType ammoType, AmmoSize ammoSize){
+        // We add 0.1m to avoid player from shooting themselves when they are running in their shooting direction
+        AbstractAmmoEntity entity = gunItem.getAmmoEntity(playerIn.getPosX()+lookVec.x*0.1, playerIn.getPosYEye() - (double)0.15F+lookVec.y*0.1, playerIn.getPosZ()+lookVec.z*0.1, worldIn, toBeFired, playerIn, ammoType, ammoSize);
+        entity.setSilent(true);
+        // handle it myself
+        entity.setNoGravity(true);
+        entity.setGravity(ammoItem.getGravity());
+        entity.setBaseDamage(getDamageModifier()*entity.getBaseDamage());
+        return entity;
+    }
+
+    protected float getInaccuracy(World world, PlayerEntity playerEntity){
+        return 0;
+    }
+
+    protected int getBirdShotCount(AmmoType ammoType){
+        // Number of ammo entities per shoot, used for short guns
+        return 1;
     }
 
     protected double getGunSoundDist(){
@@ -98,10 +118,6 @@ public abstract class AbstractGunItem extends Item {
                 return false;
             }
         }
-    }
-
-    public float getSoundVolume(){
-        return 0.2f;
     }
 
     public static void clearAmmoNBT(ItemStack itemStack){
@@ -157,6 +173,9 @@ public abstract class AbstractGunItem extends Item {
     }
 
     public AbstractAmmo getAmmoItem(AmmoType ammoType, AmmoSize ammoSize) {
+        if(AmmoPossibleCombination.SHORT_GUN_AMMO.getAmmoTypes().contains(ammoType)){
+            return ItemList.AMMO_12_GA_SHOOT.get();
+        }
         return ItemList.AMMO_REGISTRIES_TYPE.get(ammoSize).get(ammoType).get();
 
     }
@@ -168,20 +187,34 @@ public abstract class AbstractGunItem extends Item {
         return IAmmoEntityFactory.getAmmoEntityFactory(ammoType).create(x, y, z, world, toBeFired, shooter);
     }
 
+    protected int getAmmoCountPerLoad(){
+        // Maximum ammo count per load, used for short guns if you want to load one bullet at a time
+        // -1 means as much as possible
+        return -1;
+    }
+
 
     public void addAmmo(ItemStack offhand, ItemStack mainHand, int slot, PlayerEntity entity) {
         ItemStack ammo = findAmmo(offhand, mainHand, slot, entity);
         if(ammo != null){
             AbstractAmmo ammoItem = (AbstractAmmo) ammo.getItem();
             if ((hasAmmo(mainHand) && (ammoItem.getType())==(getAmmoType(mainHand)))||(!hasAmmo(mainHand))){
-                int n_load = Math.min(ammo.getCount(), this.maxAmmo() - getAmmoCount(mainHand));
-                ammo.shrink(n_load);
-                addAmmoNBT(mainHand, n_load, ammoItem.getType().name());
-                entity.getCooldownTracker().setCooldown(mainHand.getItem(), getLoadTime());
-                if(!entity.world.isRemote){
-                    BlockPos pos = entity.getPosition();
-                    NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), 10, entity.world.getDimensionKey())),
-                            new SoundPacket(pos, getReloadSound()));
+                int n_load = 0;
+                if(getAmmoCountPerLoad() > 0){
+                    n_load = Math.min(getAmmoCountPerLoad(), this.maxAmmo() - getAmmoCount(mainHand));
+                }
+                else{
+                    n_load = Math.min(ammo.getCount(), this.maxAmmo() - getAmmoCount(mainHand));
+                }
+                if (n_load > 0){
+                    ammo.shrink(n_load);
+                    addAmmoNBT(mainHand, n_load, ammoItem.getType().name());
+                    entity.getCooldownTracker().setCooldown(mainHand.getItem(), getLoadTime());
+                    if(!entity.world.isRemote){
+                        BlockPos pos = entity.getPosition();
+                        NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), 10, entity.world.getDimensionKey())),
+                                new SoundPacket(pos, getReloadSound()));
+                    }
                 }
             }
         }

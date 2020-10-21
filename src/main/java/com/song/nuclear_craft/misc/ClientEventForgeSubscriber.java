@@ -20,6 +20,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -37,7 +38,6 @@ public class ClientEventForgeSubscriber {
 
     @SubscribeEvent
     public static void onInitGuiEvent(final GuiScreenEvent.InitGuiEvent event){
-        //TODO client to server
         Screen gui = event.getGui();
         if (gui instanceof C4BombContainerScreen){
             int i = (gui.width - ((C4BombContainerScreen) gui).getXSize()) / 2;
@@ -109,6 +109,17 @@ public class ClientEventForgeSubscriber {
         if(zoomState>0){
             MainWindow window = event.getWindow();
             new ScopeZoomGui(Minecraft.getInstance()).drawGuiContainerBackgroundLayer(event.getMatrixStack(), window.getWindowX(), window.getWindowY(), window.getScaledWidth(), window.getScaledHeight());
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerRender(final RenderPlayerEvent event){
+        PlayerEntity playerEntity = event.getPlayer();
+        if(playerEntity.getHeldItemMainhand().getItem() instanceof AbstractGunItem){
+            if(event.isCancelable()){
+                // TODO do something to render correct armor
+//                event.setCanceled(true);
+            }
         }
     }
 

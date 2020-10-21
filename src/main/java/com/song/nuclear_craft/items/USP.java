@@ -3,7 +3,6 @@ package com.song.nuclear_craft.items;
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.items.Ammo.AmmoSize;
 import com.song.nuclear_craft.misc.Config;
-import com.song.nuclear_craft.misc.SoundEventList;
 
 import javax.annotation.Nonnull;
 
@@ -46,11 +45,6 @@ public class USP extends AbstractGunItem{
     @Override
     public String getReloadSound() {
         return "de_reload_empty";
-    }
-
-    @Override
-    public float getSoundVolume() {
-        return 0.1f;
     }
 
     @Override

@@ -78,5 +78,15 @@
     "category": "player",
     "subtitle": "nuclear_craft.subtitle.m4a4_reload",
     "sounds": ["nuclear_craft:m4a4_reload"]
+  },
+  "xm1014": {
+    "category": "player",
+    "subtitle": "nuclear_craft.subtitle.xm1014",
+    "sounds": ["nuclear_craft:xm1014"]
+  },
+  "xm1014_reload": {
+    "category": "player",
+    "subtitle": "nuclear_craft.subtitle.xm1014_reload",
+    "sounds": ["nuclear_craft:xm1014_reload"]
   }
 }

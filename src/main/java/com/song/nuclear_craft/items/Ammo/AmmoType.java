@@ -9,20 +9,27 @@ public enum AmmoType {
     NORMAL("Normal", "normal", 5, 27, 0.03f),
     NUKE("Nuke", "nuke", 6, 30, 0.03f),
     SILVER("Silver", "silver",7, 40, 0.03f),
-//    TEST("Test", "test", 1, 30, 0f),
-    TUNGSTEN("Tungsten", "tungsten", 8, 50, 0.03f)
+    TUNGSTEN("Tungsten", "tungsten", 8, 50, 0.03f),
+    SHORT_GUN_NORMAL("Normal", "short_gun_normal", 5, 7, 0.03f, 10)
     ;
     private final String description;
     private final String registerString;
     private final float speed;
     private final float damage;
     private final float gravity;
+    private int birdShotCount =0;
     AmmoType(String description, String registerString, float speed, float damage, float gravity){
         this.description = description;
         this.registerString = registerString;
         this.speed = speed;
         this.damage = damage;
         this.gravity = gravity;
+    }
+
+    AmmoType(String description, String registerString, float speed, float damage, float gravity, int birdShotCount){
+        this(description, registerString, speed, damage, gravity);
+        this.birdShotCount = birdShotCount;
+
     }
 
     @Nonnull
@@ -44,5 +51,9 @@ public enum AmmoType {
 
     public float getGravity() {
         return gravity;
+    }
+
+    public int getBirdShotCount(){
+        return birdShotCount;
     }
 }
