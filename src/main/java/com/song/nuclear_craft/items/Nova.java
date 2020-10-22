@@ -9,24 +9,24 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
-public class XM1014 extends AbstractGunItem{
-    public XM1014() {
+public class Nova extends AbstractGunItem{
+    public Nova() {
         super(new Properties().maxStackSize(1).group(NuclearCraft.ITEM_GROUP));
     }
 
     @Override
     public int getCoolDown() {
-        return 10;
+        return 20;
     }
 
     @Override
     public String getShootActionString() {
-        return "xm1014";
+        return "nova";
     }
 
     @Override
     public int maxAmmo() {
-        return 7;
+        return 8;
     }
 
     @Override
@@ -42,12 +42,12 @@ public class XM1014 extends AbstractGunItem{
 
     @Override
     public float getSpeedModifier() {
-        return 1f;
+        return 1.1f;
     }
 
     @Override
     public double getDamageModifier() {
-        return 1;
+        return 1.2;
     }
 
     @Override
@@ -62,7 +62,7 @@ public class XM1014 extends AbstractGunItem{
 
     @Override
     protected float getInaccuracy(World world, PlayerEntity playerEntity) {
-        return 5.f;
+        return 3.4f;
     }
 
     @Override

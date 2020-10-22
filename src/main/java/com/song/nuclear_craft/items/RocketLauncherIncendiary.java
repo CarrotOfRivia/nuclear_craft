@@ -8,6 +8,7 @@ import com.song.nuclear_craft.misc.SoundEventList;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -22,6 +23,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -30,8 +32,12 @@ public class RocketLauncherIncendiary extends RocketLauncherWithAmmo{
 
     public RocketLauncherIncendiary() {
         super(new Item.Properties().maxStackSize(1).group(NuclearCraft.ITEM_GROUP));
-        this.BONDED_AMMO = ItemList.INCENDIARY_ROCKET;
         this.coolDown = 5;
+    }
+
+    @Override
+    public Item getBoundedAmmo() {
+        return ItemList.INCENDIARY_ROCKET.get();
     }
 
     @Override
@@ -40,25 +46,7 @@ public class RocketLauncherIncendiary extends RocketLauncherWithAmmo{
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        enterCD(playerIn);
-        ItemStack toBeFired = new ItemStack(ItemList.INCENDIARY_ROCKET);
-        toBeFired.getOrCreateChildTag("Fireworks").putByte("Flight", (byte) 127);
-
-        ItemStack thisItemStack = playerIn.getHeldItem(handIn);
-        if (!worldIn.isRemote){
-            IncendiaryRocketEntity incendiaryRocketEntity = new IncendiaryRocketEntity(worldIn, toBeFired, playerIn, playerIn.getPosX(), playerIn.getPosYEye() - (double)0.15F, playerIn.getPosZ(), true);
-            Vector3d vec3d = playerIn.getLookVec();
-            incendiaryRocketEntity.shoot(vec3d.x, vec3d.y, vec3d.z, 5f, 0);
-            worldIn.addEntity(incendiaryRocketEntity);
-            worldIn.playSound((PlayerEntity)null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), SoundEvents.ITEM_CROSSBOW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.f);
-//            System.out.println("entity added");
-        }
-        if (playerIn.isCreative()){
-            return ActionResult.func_233538_a_(new ItemStack(this), worldIn.isRemote());
-        }
-        else {
-            return afterFire(worldIn, thisItemStack);
-        }
+    protected FireworkRocketEntity getEntity(World worldIn, ItemStack toBeFired, Entity playerIn, double x, double y, double z, boolean p_i231582_10_) {
+        return new IncendiaryRocketEntity(worldIn, toBeFired, playerIn, x, y, z, p_i231582_10_);
     }
 }

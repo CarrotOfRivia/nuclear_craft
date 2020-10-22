@@ -23,6 +23,7 @@ public class Config {
     public static ForgeConfigSpec.IntValue HIGH_EXPLOSIVE_MAX_AMMO;
     public static ForgeConfigSpec.IntValue INCENDIARY_MAX_AMMO;
     public static ForgeConfigSpec.IntValue SMOKE_MAX_AMMO;
+    public static ForgeConfigSpec.IntValue WATER_DROP_MAX_AMMO;
 
     public static ForgeConfigSpec.DoubleValue NUKE_BLAST_POWER;
     public static ForgeConfigSpec.DoubleValue HIGH_EXPLOSIVE_BLAST_POWER;
@@ -55,9 +56,10 @@ public class Config {
         SMOKE_RADIUS = CONFIG_BUILDER.comment("Smoke bomb radius").defineInRange("smoke_bomb", 30f, 0f, 256f);
         INCENDIARY_COUNT = CONFIG_BUILDER.comment("Number of flames from incendiary").defineInRange("incendiary_bomb", 100, 0, 10000);
 
-        HIGH_EXPLOSIVE_MAX_AMMO = CONFIG_BUILDER.comment("Max number of ammo of high explosive rocket launcher").defineInRange("high_explosive_ammo", 10, 0, 32767);
-        INCENDIARY_MAX_AMMO = CONFIG_BUILDER.comment("Max number of ammo of incendiary rocket launcher").defineInRange("incendiary_ammo", 10, 0, 32767);
-        SMOKE_MAX_AMMO = CONFIG_BUILDER.comment("Max number of ammo of smoke rocket launcher").defineInRange("smoke_ammo", 10, 0, 32767);
+        HIGH_EXPLOSIVE_MAX_AMMO = CONFIG_BUILDER.comment("Max number of ammo of high explosive rocket launcher").defineInRange("high_explosive_ammo", 1, 0, 32767);
+        INCENDIARY_MAX_AMMO = CONFIG_BUILDER.comment("Max number of ammo of incendiary rocket launcher").defineInRange("incendiary_ammo", 1, 0, 32767);
+        SMOKE_MAX_AMMO = CONFIG_BUILDER.comment("Max number of ammo of smoke rocket launcher").defineInRange("smoke_ammo", 1, 0, 32767);
+        WATER_DROP_MAX_AMMO = CONFIG_BUILDER.comment("Max number of ammo of water drop rocket launcher").defineInRange("water_drop_ammo", 1, 0, 32767);
 
         NUKE_BLAST_POWER = CONFIG_BUILDER.comment("Atomic bomb explosion power(i.e. max blast resistance block to break) 3,600,000 for bedrock, 1200 for obsidian, 100 for water").defineInRange("nuke_blast_power", 1500d, 0d, 999999999d);
         HIGH_EXPLOSIVE_BLAST_POWER = CONFIG_BUILDER.comment("High explosive bomb explosion power(i.e. max blast resistance block to break) 3,600,000 for bedrock, 1200 for obsidian, 100 for water").defineInRange("high_explosive_blast_power", 101d, 0d, 999999999d);

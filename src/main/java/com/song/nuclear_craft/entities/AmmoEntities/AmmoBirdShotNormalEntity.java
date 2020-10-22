@@ -11,21 +11,23 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.FMLPlayMessages;
 
-public class AmmoShortGunNormal extends AbstractAmmoEntity {
-    public AmmoShortGunNormal(EntityType<? extends AbstractAmmoEntity> type, World world) {
+import javax.annotation.Nonnull;
+
+public class AmmoBirdShotNormalEntity extends AbstractAmmoEntity {
+    public AmmoBirdShotNormalEntity(EntityType<? extends AbstractAmmoEntity> type, World world) {
         super(type, world);
     }
 
-    public AmmoShortGunNormal(FMLPlayMessages.SpawnEntity entity, World world) {
+    public AmmoBirdShotNormalEntity(FMLPlayMessages.SpawnEntity entity, World world) {
         super(entity, world);
     }
 
-    public AmmoShortGunNormal(double x, double y, double z, World world, ItemStack itemStack, PlayerEntity shooter) {
+    public AmmoBirdShotNormalEntity(double x, double y, double z, World world, ItemStack itemStack, PlayerEntity shooter) {
         super(x, y, z, world, itemStack, shooter);
     }
 
     @Override
-    protected void onEntityHit(EntityRayTraceResult entityRayTraceResult) {
+    protected void onEntityHit(@Nonnull EntityRayTraceResult entityRayTraceResult) {
         super.onEntityHit(entityRayTraceResult);
         Entity entity = entityRayTraceResult.getEntity();
         if(entity instanceof LivingEntity){

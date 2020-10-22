@@ -68,6 +68,8 @@ public class SoundPlayMethods {
                 world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.XM1014, SoundCategory.PLAYERS, 0.25f, 1.0f, false); break;
             case "xm1014_reload":
                 world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.XM1014_RELOAD, SoundCategory.PLAYERS, 1.5f, 1.0f, false); break;
+            case "nova":
+                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.NOVA, SoundCategory.PLAYERS, 0.25f, 1.0f, false); break;
         }
     }
 }

@@ -54,7 +54,7 @@ public class NuclearCraft
     public static final ItemGroup ITEM_GROUP = new ItemGroup("weapons") {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(ItemList.ATOMIC_BOMB_ROCKET);
+            return new ItemStack(ItemList.ATOMIC_BOMB_ROCKET.get());
         }
     };
     public static final ItemGroup AMMO_ITEM_GROUP = new ItemGroup("bullets") {
@@ -134,9 +134,7 @@ public class NuclearCraft
         public static void onItemsRegistry(final RegistryEvent.Register<Item> event) {
             // register items
             LOGGER.info("HELLO from Register Item");
-            event.getRegistry().registerAll(ItemList.ATOMIC_BOMB_ROCKET, ItemList.ROCKET_LAUNCHER, ItemList.ROCKET_LAUNCHER_ATOMIC_BOMB, ItemList.INCENDIARY_ROCKET,
-                    ItemList.SMOKE_ROCKET, ItemList.ROCKET_LAUNCHER_INCENDIARY, ItemList.ROCKET_LAUNCHER_SMOKE, ItemList.HIGH_EXPLOSIVE_ROCKET,
-                    ItemList.ROCKET_LAUNCHER_HIGH_EXPLOSIVE, ItemList.C4_ATOMIC_BOMB, ItemList.C4_HIGH_EXPLOSIVE, ItemList.C4_INCENDIARY,
+            event.getRegistry().registerAll(ItemList.C4_ATOMIC_BOMB, ItemList.C4_HIGH_EXPLOSIVE, ItemList.C4_INCENDIARY,
                     ItemList.C4_SMOKE);
         }
 

@@ -173,8 +173,9 @@ public abstract class AbstractGunItem extends Item {
     }
 
     public AbstractAmmo getAmmoItem(AmmoType ammoType, AmmoSize ammoSize) {
+        // Get item to be rendered when shoot
         if(AmmoPossibleCombination.SHORT_GUN_AMMO.getAmmoTypes().contains(ammoType)){
-            return ItemList.AMMO_12_GA_SHOOT.get();
+            return AmmoType.getBirdShotFromType(ammoType);
         }
         return ItemList.AMMO_REGISTRIES_TYPE.get(ammoSize).get(ammoType).get();
 

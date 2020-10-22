@@ -4,6 +4,7 @@ import com.song.nuclear_craft.NuclearCraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,6 +17,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
@@ -28,6 +30,22 @@ public class RocketLauncher extends RocketLauncherWithAmmo {
     }
 
     @Override
+    protected FireworkRocketEntity getEntity(World worldIn, ItemStack toBeFired, Entity playerIn, double x, double y, double z, boolean p_i231582_10_) {
+        return null;
+    }
+
+    @Override
+    public Item getBoundedAmmo() {
+        return null;
+    }
+
+    @Nonnull
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, @Nonnull PlayerEntity playerIn, @Nonnull Hand handIn) {
+        return ActionResult.resultPass(playerIn.getHeldItem(handIn));
+    }
+
+    @Override
     @OnlyIn(Dist.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         tooltip.add(new TranslationTextComponent(String.format("item.%s.rocket_launcher.tooltip", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY));
@@ -37,14 +55,20 @@ public class RocketLauncher extends RocketLauncherWithAmmo {
     protected void addAmmo(ItemStack ammo, ItemStack rocket, int itemSlot, Entity entityIn) {
         String ammoRegistryName = Objects.requireNonNull(ammo.getItem().getRegistryName()).toString();
         ItemStack itemStack;
-        if(ammoRegistryName.equals(ItemList.ATOMIC_BOMB_ROCKET.getRegistryName().toString())){
-            itemStack = new ItemStack(ItemList.ROCKET_LAUNCHER_ATOMIC_BOMB);
-        }else if(ammoRegistryName.equals(ItemList.INCENDIARY_ROCKET.getRegistryName().toString())){
-            itemStack = new ItemStack(ItemList.ROCKET_LAUNCHER_INCENDIARY);
-        }else if(ammoRegistryName.equals(ItemList.SMOKE_ROCKET.getRegistryName().toString())){
-            itemStack = new ItemStack(ItemList.ROCKET_LAUNCHER_SMOKE);
-        }else if(ammoRegistryName.equals(ItemList.HIGH_EXPLOSIVE_ROCKET.getRegistryName().toString())){
-            itemStack = new ItemStack(ItemList.ROCKET_LAUNCHER_HIGH_EXPLOSIVE);
+        if(ammo.getItem() == ItemList.ATOMIC_BOMB_ROCKET.get()){
+            itemStack = new ItemStack(ItemList.ROCKET_LAUNCHER_ATOMIC_BOMB.get());
+        }
+        else if(ammo.getItem() == ItemList.INCENDIARY_ROCKET.get()){
+            itemStack = new ItemStack(ItemList.ROCKET_LAUNCHER_INCENDIARY.get());
+        }
+        else if(ammo.getItem() == ItemList.SMOKE_ROCKET.get()){
+            itemStack = new ItemStack(ItemList.ROCKET_LAUNCHER_SMOKE.get());
+        }
+        else if(ammo.getItem() == ItemList.HIGH_EXPLOSIVE_ROCKET.get()){
+            itemStack = new ItemStack(ItemList.ROCKET_LAUNCHER_SMOKE.get());
+        }
+        else if(ammo.getItem() == ItemList.WATER_DROP_ROCKET.get()){
+            itemStack = new ItemStack(ItemList.ROCKET_LAUNCHER_WATER_DROP.get());
         }
         else {
             return;

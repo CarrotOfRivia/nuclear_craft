@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.widget.button.ImageButton;
+import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -117,8 +118,9 @@ public class ClientEventForgeSubscriber {
         PlayerEntity playerEntity = event.getPlayer();
         if(playerEntity.getHeldItemMainhand().getItem() instanceof AbstractGunItem){
             if(event.isCancelable()){
-                // TODO do something to render correct armor
-//                event.setCanceled(true);
+                // TODO do something to render correct pose
+                event.getRenderer().getEntityModel().rightArmPose = BipedModel.ArmPose.CROSSBOW_HOLD;
+                event.getRenderer().getEntityModel().rightArmPose = BipedModel.ArmPose.CROSSBOW_HOLD;
             }
         }
     }

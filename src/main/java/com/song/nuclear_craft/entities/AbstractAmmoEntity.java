@@ -164,12 +164,14 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
     }
 
     @Override
-    protected void onEntityHit(EntityRayTraceResult entityRayTraceResult) {
+    protected void onEntityHit(@Nonnull EntityRayTraceResult entityRayTraceResult) {
+        this.teleportToHitPoint(entityRayTraceResult);
         Entity entity = entityRayTraceResult.getEntity();
         this.piercedEntities.add(entity.getEntityId());
 
         if(entity instanceof ItemEntity || entity instanceof AbstractAmmoEntity){
             // bullets do not destroy item
+            // bullets do not destroy themselves (for short guns)
             return;
         }
         double damage = this.baseDamage * getEnergy(this.getMotion().length()) / this.initEnergy;
@@ -179,6 +181,9 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
 
         if (result){
             this.energy -= 30;
+        }
+        else {
+            this.energy -= 10;
         }
     }
 

@@ -88,5 +88,10 @@
     "category": "player",
     "subtitle": "nuclear_craft.subtitle.xm1014_reload",
     "sounds": ["nuclear_craft:xm1014_reload"]
+  },
+  "nova": {
+    "category": "player",
+    "subtitle": "nuclear_craft.subtitle.nova",
+    "sounds": ["nuclear_craft:nova"]
   }
 }

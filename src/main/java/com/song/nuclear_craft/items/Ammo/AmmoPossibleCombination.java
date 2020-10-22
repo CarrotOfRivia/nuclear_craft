@@ -33,7 +33,7 @@ public class AmmoPossibleCombination {
         RIFLE_AMMO.addAmmoTypes(AmmoType.ANTI_GRAVITY, AmmoType.EXPLOSIVE, AmmoType.INCENDIARY, AmmoType.NORMAL,
                 AmmoType.NUKE, AmmoType.SILVER, AmmoType.TUNGSTEN);
 
-        SHORT_GUN_AMMO.addAmmoTypes(AmmoType.SHORT_GUN_NORMAL);
+        SHORT_GUN_AMMO.addAmmoTypes(AmmoType.SHORT_GUN_NORMAL, AmmoType.SHORT_GUN_BLIGHT);
         SHORT_GUN_AMMO.addAmmoSizes(AmmoSize.SIZE_12_GA);
     }
 }
