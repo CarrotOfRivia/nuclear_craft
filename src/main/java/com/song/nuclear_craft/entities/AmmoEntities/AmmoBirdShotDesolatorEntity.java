@@ -17,18 +17,18 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.UUID;
 
-public class AmmoBirdShotBlighEntity extends AmmoBirdShotNormalEntity{
+public class AmmoBirdShotDesolatorEntity extends AmmoBirdShotNormalEntity{
     // TODO maybe a better way of generating uuid
     private static final UUID uuid = UUID.nameUUIDFromBytes((NuclearCraft.MODID+".blight_armor_reduction").getBytes());
-    public AmmoBirdShotBlighEntity(EntityType<? extends AbstractAmmoEntity> type, World world) {
+    public AmmoBirdShotDesolatorEntity(EntityType<? extends AbstractAmmoEntity> type, World world) {
         super(type, world);
     }
 
-    public AmmoBirdShotBlighEntity(FMLPlayMessages.SpawnEntity entity, World world) {
+    public AmmoBirdShotDesolatorEntity(FMLPlayMessages.SpawnEntity entity, World world) {
         super(entity, world);
     }
 
-    public AmmoBirdShotBlighEntity(double x, double y, double z, World world, ItemStack itemStack, PlayerEntity shooter) {
+    public AmmoBirdShotDesolatorEntity(double x, double y, double z, World world, ItemStack itemStack, PlayerEntity shooter) {
         super(x, y, z, world, itemStack, shooter);
     }
 
@@ -36,7 +36,7 @@ public class AmmoBirdShotBlighEntity extends AmmoBirdShotNormalEntity{
     protected void onEntityHit(@Nonnull EntityRayTraceResult entityRayTraceResult) {
         Entity entity = entityRayTraceResult.getEntity();
         if(entity instanceof LivingEntity){
-            AttributeModifier armorReductionModifier = new AttributeModifier(uuid, "Blight Armor modifier", -7, AttributeModifier.Operation.ADDITION);
+            AttributeModifier armorReductionModifier = new AttributeModifier(uuid, "Blight Armor modifier", -14, AttributeModifier.Operation.ADDITION);
             Objects.requireNonNull(((LivingEntity) entity).getAttributeManager().createInstanceIfAbsent(Attributes.ARMOR)).applyNonPersistentModifier(armorReductionModifier);
             super.onEntityHit(entityRayTraceResult);
             Objects.requireNonNull(((LivingEntity) entity).getAttributeManager().createInstanceIfAbsent(Attributes.ARMOR)).removeModifier(armorReductionModifier);

@@ -54,6 +54,6 @@ public class RocketLauncherAtomicBomb extends RocketLauncherWithAmmo {
     @OnlyIn(Dist.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent(String.format("item.%s.rocket_launcher_atomic_bomb.tooltip", NuclearCraft.MODID)).mergeStyle(TextFormatting.GOLD));
+        tooltip.add(new TranslationTextComponent(String.format("tooltip.%s.atomic_bomb_rocket.line0", NuclearCraft.MODID)).mergeStyle(TextFormatting.GOLD));
     }
 }

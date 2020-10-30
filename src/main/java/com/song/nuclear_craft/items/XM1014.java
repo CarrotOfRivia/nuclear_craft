@@ -62,7 +62,7 @@ public class XM1014 extends AbstractGunItem{
 
     @Override
     protected float getInaccuracy(World world, PlayerEntity playerEntity) {
-        return 5.f;
+        return 5f;
     }
 
     @Override

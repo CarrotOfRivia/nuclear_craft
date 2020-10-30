@@ -15,7 +15,8 @@ public enum AmmoType {
     SILVER("Silver", "silver",7, 40, 0.03f),
     TUNGSTEN("Tungsten", "tungsten", 8, 50, 0.03f),
     SHORT_GUN_NORMAL("Normal", "short_gun_normal", 5, 7, 0.03f, 10),
-    SHORT_GUN_BLIGHT("Blight", "short_gun_blight", 5, 7, 0.03f, 10)
+    SHORT_GUN_BLIGHT("Blight", "short_gun_blight", 5, 7, 0.03f, 10),
+    SHORT_GUN_DESOLATOR("Desolator", "short_gun_desolator", 5, 7, 0.03f, 10)
     ;
     private final String description;
     private final String registerString;
@@ -64,12 +65,6 @@ public enum AmmoType {
     }
 
     public static AbstractAmmo getBirdShotFromType(AmmoType ammoType){
-        switch (ammoType){
-            case SHORT_GUN_NORMAL:
-            case SHORT_GUN_BLIGHT:
-                return ItemList.BIRD_SHOT_12_GA.get();
-            default:
-                return null;
-        }
+        return ItemList.BIRD_SHOT_MAP.get(ammoType).get();
     }
 }

@@ -62,7 +62,7 @@ public class Nova extends AbstractGunItem{
 
     @Override
     protected float getInaccuracy(World world, PlayerEntity playerEntity) {
-        return 3.4f;
+        return 3f;
     }
 
     @Override
