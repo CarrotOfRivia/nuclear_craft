@@ -6,6 +6,8 @@ import com.song.nuclear_craft.misc.NukeExplosion;
 import com.song.nuclear_craft.network.MySExplosionPacket;
 import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
 import com.song.nuclear_craft.particles.ParticleList;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
@@ -58,7 +60,7 @@ public class AtomicBombEntity extends TNTEntity {
         }
     }
 
-    public static Explosion nukeExplode(World world, Entity entity, double x, double y, double z, float radius, boolean spawnCloud, double max_blast_power) {
+    public static List<BlockPos> getAffectedBlockPositions(World world, double x, double y, double z, float radius, double max_blast_power){
         List<BlockPos> affectedBlockPositions = Lists.newArrayList();
         int radius_int = (int) Math.ceil(radius);
         for (int dx = -radius_int; dx < radius_int + 1; dx++) {
@@ -68,9 +70,10 @@ public class AtomicBombEntity extends TNTEntity {
                 int z_lim = (int) Math.sqrt(radius_int*radius_int-dx*dx-dy*dy);
                 for (int dz = -z_lim; dz < z_lim + 1; dz++) {
                     BlockPos blockPos = new BlockPos(x + dx, y + dy, z + dz);
+                    BlockState blockState = world.getBlockState(blockPos);
                     double power = getBlastPower(Math.sqrt(dx*dx+dy*dy+dz*dz), radius);
-                    if ((power>1) ||(power > new Random().nextDouble())){
-                        float resistance = world.getBlockState(blockPos).getBlock().getExplosionResistance();
+                    if (blockState!= Blocks.AIR.getDefaultState() && ((power>1) ||(power > new Random().nextDouble()))){
+                        float resistance = blockState.getBlock().getExplosionResistance();
                         if (resistance < max_blast_power) {
                             affectedBlockPositions.add(blockPos);
                         }
@@ -78,6 +81,11 @@ public class AtomicBombEntity extends TNTEntity {
                 }
             }
         }
+        return affectedBlockPositions;
+    }
+
+    public static Explosion nukeExplode(World world, Entity entity, double x, double y, double z, float radius, boolean spawnCloud, double max_blast_power) {
+        List<BlockPos> affectedBlockPositions = getAffectedBlockPositions(world, x, y, z, radius, max_blast_power);
         NukeExplosion nukeExplosion = new NukeExplosion(world, entity, x, y, z, radius, affectedBlockPositions);
         nukeExplosion.doExplosionA();
         nukeExplosion.doExplosionB(false);

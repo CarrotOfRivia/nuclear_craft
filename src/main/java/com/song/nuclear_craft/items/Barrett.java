@@ -1,7 +1,8 @@
 package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
-import com.song.nuclear_craft.misc.SoundEventList;
+import com.song.nuclear_craft.items.Ammo.AmmoSize;
+import com.song.nuclear_craft.misc.Config;
 
 import javax.annotation.Nonnull;
 
@@ -27,8 +28,8 @@ public class Barrett extends AbstractGunItem{
 
     @Nonnull
     @Override
-    public String compatibleSize() {
-        return "12.7mm";
+    public AmmoSize compatibleSize() {
+        return AmmoSize.SIZE_127;
     }
 
     @Override
@@ -38,12 +39,12 @@ public class Barrett extends AbstractGunItem{
 
     @Override
     public float getSpeedModifier() {
-        return 4.0f;
+        return Config.BARRETT_CONFIG.getSpeedModify().get().floatValue();
     }
 
     @Override
     public double getDamageModifier() {
-        return 5.0f;
+        return Config.BARRETT_CONFIG.getDamageModify().get();
     }
 
     @Override
@@ -54,11 +55,6 @@ public class Barrett extends AbstractGunItem{
     @Override
     public boolean canUseScope() {
         return true;
-    }
-
-    @Override
-    public float getSoundVolume() {
-        return 0.5f;
     }
 
     @Override

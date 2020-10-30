@@ -4,6 +4,8 @@ import com.song.nuclear_craft.blocks.BlockList;
 import com.song.nuclear_craft.blocks.tileentity.TileEntityList;
 import com.song.nuclear_craft.blocks.container.ContainerTypeList;
 import com.song.nuclear_craft.entities.EntityList;
+import com.song.nuclear_craft.items.Ammo.AmmoSize;
+import com.song.nuclear_craft.items.Ammo.AmmoType;
 import com.song.nuclear_craft.items.ItemList;
 import com.song.nuclear_craft.misc.ClientEventForgeSubscriber;
 import com.song.nuclear_craft.misc.Config;
@@ -49,10 +51,16 @@ public class NuclearCraft
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
     public static final String MODID = "nuclear_craft";
-    public static final ItemGroup ITEM_GROUP = new ItemGroup(MODID) {
+    public static final ItemGroup ITEM_GROUP = new ItemGroup("weapons") {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(ItemList.ATOMIC_BOMB_ROCKET);
+            return new ItemStack(ItemList.ATOMIC_BOMB_ROCKET.get());
+        }
+    };
+    public static final ItemGroup AMMO_ITEM_GROUP = new ItemGroup("bullets") {
+        @Override
+        public ItemStack createIcon() {
+            return new ItemStack(ItemList.AMMO_REGISTRIES_TYPE.get(AmmoSize.SIZE_127).get(AmmoType.NORMAL).get());
         }
     };
 
@@ -126,14 +134,8 @@ public class NuclearCraft
         public static void onItemsRegistry(final RegistryEvent.Register<Item> event) {
             // register items
             LOGGER.info("HELLO from Register Item");
-            event.getRegistry().registerAll(ItemList.ATOMIC_BOMB_ROCKET, ItemList.ROCKET_LAUNCHER, ItemList.ROCKET_LAUNCHER_ATOMIC_BOMB, ItemList.INCENDIARY_ROCKET,
-                    ItemList.SMOKE_ROCKET, ItemList.ROCKET_LAUNCHER_INCENDIARY, ItemList.ROCKET_LAUNCHER_SMOKE, ItemList.HIGH_EXPLOSIVE_ROCKET,
-                    ItemList.ROCKET_LAUNCHER_HIGH_EXPLOSIVE, ItemList.C4_ATOMIC_BOMB, ItemList.C4_HIGH_EXPLOSIVE, ItemList.C4_INCENDIARY,
-                    ItemList.C4_SMOKE, ItemList.DESERT_EAGLE, ItemList.AMMO_9MM, ItemList.AMMO_TEST, ItemList.AMMO_9MM_ANTI_GRAVITY, ItemList.AMMO_9MM_INCENDIARY,
-                    ItemList.AMMO_9MM_NUKE, ItemList.AMMO_9MM_SILVER, ItemList.AMMO_9MM_TUNGSTEN, ItemList.AMMO_9MM_EXPLOSIVE, ItemList.GLOCK, ItemList.USP, ItemList.AK47,
-                    ItemList.AMMO_762_ANTI_GRAVITY, ItemList.AMMO_762_EXPLOSIVE, ItemList.AMMO_762_INCENDIARY, ItemList.AMMO_762_NORMAL, ItemList.AMMO_762_NUKE,
-                    ItemList.AMMO_762_SILVER, ItemList.AMMO_762_TUNGSTEN, ItemList.AWP, ItemList.BARRETT, ItemList.AMMO_127_ANTI_GRAVITY, ItemList.AMMO_127_EXPLOSIVE,
-                    ItemList.AMMO_127_INCENDIARY, ItemList.AMMO_127_NORMAL, ItemList.AMMO_127_NUKE, ItemList.AMMO_127_SILVER, ItemList.AMMO_127_TUNGSTEN);
+            event.getRegistry().registerAll(ItemList.C4_ATOMIC_BOMB, ItemList.C4_HIGH_EXPLOSIVE, ItemList.C4_INCENDIARY,
+                    ItemList.C4_SMOKE);
         }
 
         @SubscribeEvent

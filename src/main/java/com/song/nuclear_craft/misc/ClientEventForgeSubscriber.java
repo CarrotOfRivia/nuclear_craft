@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.widget.button.ImageButton;
+import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -20,6 +21,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -37,7 +39,6 @@ public class ClientEventForgeSubscriber {
 
     @SubscribeEvent
     public static void onInitGuiEvent(final GuiScreenEvent.InitGuiEvent event){
-        //TODO client to server
         Screen gui = event.getGui();
         if (gui instanceof C4BombContainerScreen){
             int i = (gui.width - ((C4BombContainerScreen) gui).getXSize()) / 2;
@@ -109,6 +110,18 @@ public class ClientEventForgeSubscriber {
         if(zoomState>0){
             MainWindow window = event.getWindow();
             new ScopeZoomGui(Minecraft.getInstance()).drawGuiContainerBackgroundLayer(event.getMatrixStack(), window.getWindowX(), window.getWindowY(), window.getScaledWidth(), window.getScaledHeight());
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerRender(final RenderPlayerEvent event){
+        PlayerEntity playerEntity = event.getPlayer();
+        if(playerEntity.getHeldItemMainhand().getItem() instanceof AbstractGunItem){
+            if(event.isCancelable()){
+                // TODO do something to render correct pose
+                event.getRenderer().getEntityModel().rightArmPose = BipedModel.ArmPose.CROSSBOW_HOLD;
+                event.getRenderer().getEntityModel().rightArmPose = BipedModel.ArmPose.CROSSBOW_HOLD;
+            }
         }
     }
 

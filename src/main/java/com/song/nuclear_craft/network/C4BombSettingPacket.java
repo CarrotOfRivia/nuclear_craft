@@ -41,7 +41,6 @@ public class C4BombSettingPacket {
     }
 
     public static void handle(C4BombSettingPacket packet, Supplier<NetworkEvent.Context> ctx){
-        //TODO
         ctx.get().enqueueWork(()-> {
             NetworkEvent.Context context = ctx.get();
             INetHandler handler = context.getNetworkManager().getNetHandler();

@@ -1,6 +1,8 @@
 package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
+import com.song.nuclear_craft.items.Ammo.AmmoSize;
+import com.song.nuclear_craft.misc.Config;
 import com.song.nuclear_craft.misc.SoundEventList;
 
 import javax.annotation.Nonnull;
@@ -33,12 +35,12 @@ public class DesertEagle extends AbstractGunItem{
 
     @Override
     public float getSpeedModifier() {
-        return 1.4f;
+        return Config.DESERT_EAGLE_CONFIG.getSpeedModify().get().floatValue();
     }
 
     @Override
     public double getDamageModifier() {
-        return 1.4;
+        return Config.DESERT_EAGLE_CONFIG.getDamageModify().get();
     }
 
     @Override
@@ -48,8 +50,8 @@ public class DesertEagle extends AbstractGunItem{
 
     @Nonnull
     @Override
-    public String compatibleSize() {
-        return "9mm";
+    public AmmoSize compatibleSize() {
+        return AmmoSize.SIZE_9MM;
     }
 
     @Override

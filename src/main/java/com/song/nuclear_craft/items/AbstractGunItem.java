@@ -1,8 +1,11 @@
 package com.song.nuclear_craft.items;
 
+import com.song.nuclear_craft.entities.AmmoEntities.IAmmoEntityFactory;
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.entities.AbstractAmmoEntity;
-import com.song.nuclear_craft.entities.AmmoEntities.*;
+import com.song.nuclear_craft.items.Ammo.AmmoPossibleCombination;
+import com.song.nuclear_craft.items.Ammo.AmmoSize;
+import com.song.nuclear_craft.items.Ammo.AmmoType;
 import com.song.nuclear_craft.misc.ClientEventForgeSubscriber;
 import com.song.nuclear_craft.network.GunLoadingPacket;
 import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
@@ -37,33 +40,33 @@ public abstract class AbstractGunItem extends Item {
         super(properties);
     }
 
+    @Nonnull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, PlayerEntity playerIn, @Nonnull Hand handIn) {
         ItemStack heldItemStack = playerIn.getHeldItem(handIn);
         if (heldItemStack.getItem() instanceof AbstractGunItem){
             AbstractGunItem gunItem = (AbstractGunItem) heldItemStack.getItem();
             if((!worldIn.isRemote)&&(hasAmmo(heldItemStack))){
-                String ammoType = getAmmoType(heldItemStack);
+                AmmoType ammoType = getAmmoType(heldItemStack);
                 assert ammoType != null;
-                String ammoSize = compatibleSize();
+                AmmoSize ammoSize = compatibleSize();
                 if(gunItem.getCoolDown()>0){
                     playerIn.getCooldownTracker().setCooldown(heldItemStack.getItem(), gunItem.getCoolDown());
                 }
-                AbstractAmmo ammoItem = gunItem.getAmmoItem(ammoType);
-                ammoItem.setSize(gunItem.compatibleSize());
+                AbstractAmmo ammoItem = gunItem.getAmmoItem(ammoType, ammoSize);
                 ItemStack toBeFired = new ItemStack(ammoItem);
-                AbstractAmmoEntity entity = gunItem.getAmmoEntity(playerIn.getPosX(), playerIn.getPosYEye() - (double)0.15F, playerIn.getPosZ(), worldIn, toBeFired, playerIn, ammoType, ammoSize);
+                Vector3d lookVec = playerIn.getLookVec();
+
+                for(int i = 0; i< getBirdShotCount(ammoType); i++){
+                    AbstractAmmoEntity entity = getAmmoEntity(gunItem, playerIn, lookVec, toBeFired, worldIn, ammoItem, ammoType, ammoSize);
+                    entity.shoot(lookVec.x, lookVec.y, lookVec.z, ammoItem.getBaseSpeed()*getSpeedModifier(), getInaccuracy(worldIn, playerIn));
+                    worldIn.addEntity(entity);
+                }
+
                 BlockPos pos = playerIn.getPosition();
                 NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), getGunSoundDist(), playerIn.world.getDimensionKey())),
                         new SoundPacket(pos, getShootActionString()));
-                entity.setSilent(true);
-                // handle it myself
-                entity.setNoGravity(true);
-                entity.setGravity(ammoItem.getGravity());
-                Vector3d vec3d = playerIn.getLookVec();
-                entity.shoot(vec3d.x, vec3d.y, vec3d.z, ammoItem.getBaseSpeed()*getSpeedModifier(), 0);
-                entity.setBaseDamage(getDamageModifier()*entity.getBaseDamage());
-                worldIn.addEntity(entity);
+
                 shrinkAmmoNBT(heldItemStack);
                 return ActionResult.func_233538_a_(heldItemStack, worldIn.isRemote());
             }
@@ -74,6 +77,26 @@ public abstract class AbstractGunItem extends Item {
             }
         }
         return super.onItemRightClick(worldIn, playerIn, handIn);
+    }
+
+    private AbstractAmmoEntity getAmmoEntity(AbstractGunItem gunItem, PlayerEntity playerIn, Vector3d lookVec, ItemStack toBeFired, World worldIn, AbstractAmmo ammoItem, AmmoType ammoType, AmmoSize ammoSize){
+        // We add 0.1m to avoid player from shooting themselves when they are running in their shooting direction
+        AbstractAmmoEntity entity = gunItem.getAmmoEntity(playerIn.getPosX()+lookVec.x*0.1, playerIn.getPosYEye() - (double)0.15F+lookVec.y*0.1, playerIn.getPosZ()+lookVec.z*0.1, worldIn, toBeFired, playerIn, ammoType, ammoSize);
+        entity.setSilent(true);
+        // handle it myself
+        entity.setNoGravity(true);
+        entity.setGravity(ammoItem.getGravity());
+        entity.setBaseDamage(getDamageModifier()*entity.getBaseDamage());
+        return entity;
+    }
+
+    protected float getInaccuracy(World world, PlayerEntity playerEntity){
+        return 0;
+    }
+
+    protected int getBirdShotCount(AmmoType ammoType){
+        // Number of ammo entities per shoot, used for short guns
+        return 1;
     }
 
     protected double getGunSoundDist(){
@@ -95,10 +118,6 @@ public abstract class AbstractGunItem extends Item {
                 return false;
             }
         }
-    }
-
-    public float getSoundVolume(){
-        return 0.2f;
     }
 
     public static void clearAmmoNBT(ItemStack itemStack){
@@ -139,68 +158,40 @@ public abstract class AbstractGunItem extends Item {
         }
     }
 
-    public static String getAmmoType(ItemStack itemStack){
+    public static AmmoType getAmmoType(ItemStack itemStack){
         CompoundNBT nbt = itemStack.getChildTag("ammo");
         if (nbt == null){
             return null;
         }else{
-            return nbt.getString("type");
+            return AmmoType.valueOf(nbt.getString("type"));
         }
     }
 
     public static String getAmmoShowType(ItemStack itemStack){
-        String type = getAmmoType(itemStack);
-        return type == null ? "none" : type;
+        AmmoType type = getAmmoType(itemStack);
+        return type == null ? "none" : type.getDescription();
     }
 
-    public AbstractAmmo getAmmoItem(String ammoType) {
-        // get Ammo Item instance from type and size
-        switch (ammoType){
-            case "test":
-                return ItemList.AMMO_TEST;
-            case "anti_gravity":
-                return ItemList.AMMO_9MM_ANTI_GRAVITY;
-            case "explosive":
-                return ItemList.AMMO_9MM_EXPLOSIVE;
-            case "incendiary":
-                return ItemList.AMMO_9MM_INCENDIARY;
-            case "nuke":
-                return ItemList.AMMO_9MM_NUKE;
-            case "silver":
-                return ItemList.AMMO_9MM_SILVER;
-            case "tungsten":
-                return ItemList.AMMO_9MM_TUNGSTEN;
-            case "normal":
-            default:
-                return ItemList.AMMO_9MM;
+    public AbstractAmmo getAmmoItem(AmmoType ammoType, AmmoSize ammoSize) {
+        // Get item to be rendered when shoot
+        if(AmmoPossibleCombination.SHORT_GUN_AMMO.getAmmoTypes().contains(ammoType)){
+            return AmmoType.getBirdShotFromType(ammoType);
         }
+        return ItemList.AMMO_REGISTRIES_TYPE.get(ammoSize).get(ammoType).get();
 
     }
 
 
     public abstract int getCoolDown();
 
-    public AbstractAmmoEntity getAmmoEntity(double x, double y, double z, World world, ItemStack toBeFired, PlayerEntity shooter, String ammoType, String ammoSize) {
-        // TODO
-        switch (ammoType){
-            case "test":
-                return new TestAmmoEntity(x, y, z, world, toBeFired, shooter);
-            case "anti_gravity":
-                return new AmmoAntiGravityEntity(x, y, z, world, toBeFired, shooter);
-            case "explosive":
-                return new AmmoExplosiveEntity(x, y, z, world, toBeFired, shooter);
-            case "incendiary":
-                return new AmmoIncendiaryEntity(x, y, z, world, toBeFired, shooter);
-            case "nuke":
-                return new AmmoNukeEntity(x, y, z, world, toBeFired, shooter);
-            case "silver":
-                return new AmmoSilverEntity(x, y, z, world, toBeFired, shooter);
-            case "tungsten":
-                return new AmmoTungstenEntity(x, y, z, world, toBeFired, shooter);
-            case "normal":
-            default:
-                return new AmmoNormalEntity(x, y, z, world, toBeFired, shooter);
-        }
+    public AbstractAmmoEntity getAmmoEntity(double x, double y, double z, World world, ItemStack toBeFired, PlayerEntity shooter, AmmoType ammoType, AmmoSize ammoSize) {
+        return IAmmoEntityFactory.getAmmoEntityFactory(ammoType).create(x, y, z, world, toBeFired, shooter);
+    }
+
+    protected int getAmmoCountPerLoad(){
+        // Maximum ammo count per load, used for short guns if you want to load one bullet at a time
+        // -1 means as much as possible
+        return -1;
     }
 
 
@@ -208,15 +199,23 @@ public abstract class AbstractGunItem extends Item {
         ItemStack ammo = findAmmo(offhand, mainHand, slot, entity);
         if(ammo != null){
             AbstractAmmo ammoItem = (AbstractAmmo) ammo.getItem();
-            if ((hasAmmo(mainHand) && (ammoItem.getType()).equals(getAmmoType(mainHand)))||(!hasAmmo(mainHand))){
-                int n_load = Math.min(ammo.getCount(), this.maxAmmo() - getAmmoCount(mainHand));
-                ammo.shrink(n_load);
-                addAmmoNBT(mainHand, n_load, ammoItem.getType());
-                entity.getCooldownTracker().setCooldown(mainHand.getItem(), getLoadTime());
-                if(!entity.world.isRemote){
-                    BlockPos pos = entity.getPosition();
-                    NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), 10, entity.world.getDimensionKey())),
-                            new SoundPacket(pos, getReloadSound()));
+            if ((hasAmmo(mainHand) && (ammoItem.getType())==(getAmmoType(mainHand)))||(!hasAmmo(mainHand))){
+                int n_load = 0;
+                if(getAmmoCountPerLoad() > 0){
+                    n_load = Math.min(getAmmoCountPerLoad(), this.maxAmmo() - getAmmoCount(mainHand));
+                }
+                else{
+                    n_load = Math.min(ammo.getCount(), this.maxAmmo() - getAmmoCount(mainHand));
+                }
+                if (n_load > 0){
+                    ammo.shrink(n_load);
+                    addAmmoNBT(mainHand, n_load, ammoItem.getType().name());
+                    entity.getCooldownTracker().setCooldown(mainHand.getItem(), getLoadTime());
+                    if(!entity.world.isRemote){
+                        BlockPos pos = entity.getPosition();
+                        NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), 10, entity.world.getDimensionKey())),
+                                new SoundPacket(pos, getReloadSound()));
+                    }
                 }
             }
         }
@@ -224,11 +223,11 @@ public abstract class AbstractGunItem extends Item {
 
     public ItemStack findAmmo(ItemStack offhand, ItemStack mainHand, int slot, PlayerEntity entity){
         // Find ammo similar to arrow finding algorithm
-        if(offhand.getItem() instanceof AbstractAmmo && ((AbstractAmmo) offhand.getItem()).getSize().equals(compatibleSize())){
+        if(offhand.getItem() instanceof AbstractAmmo && ((AbstractAmmo) offhand.getItem()).getSize()==compatibleSize()){
             return offhand;
         }
         for(ItemStack stack: entity.inventory.mainInventory){
-            if(stack.getItem() instanceof AbstractAmmo && ((AbstractAmmo) stack.getItem()).getSize().equals(compatibleSize())){
+            if(stack.getItem() instanceof AbstractAmmo && ((AbstractAmmo)stack.getItem()).getSize()==compatibleSize()){
                 return stack;
             }
         }
@@ -242,7 +241,7 @@ public abstract class AbstractGunItem extends Item {
     public abstract int getLoadTime();
 
     @Nonnull
-    public abstract String compatibleSize();
+    public abstract AmmoSize compatibleSize();
 
     public abstract float getSpeedModifier();
 
@@ -259,10 +258,8 @@ public abstract class AbstractGunItem extends Item {
             if(ClientEventForgeSubscriber.gunReload.isPressed() && (entityIn instanceof PlayerEntity)){
                 NuclearCraftPacketHandler.KEY_BIND.sendToServer(new GunLoadingPacket(itemSlot));
                 }
-            if (((getCoolDown()<=0)||(Minecraft.getInstance().ingameGUI.getTicks()%getCoolDown()==0))){
-                Minecraft.getInstance().ingameGUI.setOverlayMessage(new TranslationTextComponent(String.format("item.%s.guns.ammo_left", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).
-                        append(new StringTextComponent(" "+getAmmoCount(stack)).mergeStyle(TextFormatting.GOLD)), false);
-            }
+            Minecraft.getInstance().ingameGUI.setOverlayMessage(new TranslationTextComponent(String.format("item.%s.guns.ammo_left", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).
+                    append(new StringTextComponent(" "+getAmmoCount(stack)).mergeStyle(TextFormatting.GOLD)), false);
         }
 
     }
@@ -286,12 +283,18 @@ public abstract class AbstractGunItem extends Item {
             tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.ammo_left", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).
                     append(new StringTextComponent(" "+n_ammo).mergeStyle(TextFormatting.GOLD)));
             tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.ammo_type", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).
-                    append(new StringTextComponent(Objects.requireNonNull(getAmmoType(stack))).mergeStyle(TextFormatting.GOLD)));
+                    append(new StringTextComponent(Objects.requireNonNull(getAmmoType(stack)).getDescription()).mergeStyle(TextFormatting.GOLD)));
         }
-        tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.compatible_ammo_size", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).append(new StringTextComponent(" "+compatibleSize())));
-        tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.damage_modifier", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).append(new StringTextComponent(" "+getDamageModifier())));
-        tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.speed_modifier", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).append(new StringTextComponent(" "+getSpeedModifier())));
+
+        tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.compatible_ammo_size", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY)
+                .append(new StringTextComponent(" "+compatibleSize())));
+        tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.damage_modifier", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY)
+                .append(new StringTextComponent(String.format(" %.0f", 100*getDamageModifier())+"%")));
+        tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.speed_modifier", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY)
+                .append(new StringTextComponent(String.format(" %.0f", 100*getSpeedModifier())+"%")));
+
         if(canUseScope()){
+            // add scope tutorial
             tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.use_scope", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).append(new StringTextComponent(" Z")));
         }
     }

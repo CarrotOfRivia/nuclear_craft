@@ -30,7 +30,16 @@ public class SoundPlayMethods {
     public static void playSoundFromString(BlockPos pos, String name){
         World world = Minecraft.getInstance().world;
         assert world != null;
+        if(name==null){
+            return;
+        }
         switch (name){
+            case "c4_beep":
+                SoundPlayMethods.c4Beep(new BlockPos(pos.getX(), pos.getY(), pos.getZ())); break;
+            case "c4_activate":
+                SoundPlayMethods.activeSound(new BlockPos(pos.getX(), pos.getY(), pos.getZ())); break;
+            case "rocket_load":
+                SoundPlayMethods.playLoadSound(new BlockPos(pos.getX(), pos.getY(), pos.getZ())); break;
             case "desert_eagle":
                 world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.DESERT_EAGLE, SoundCategory.PLAYERS, 0.25f, 1.0f, false); break;
             case "no_ammo":
@@ -51,6 +60,16 @@ public class SoundPlayMethods {
                 world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.AWP_RELOAD, SoundCategory.PLAYERS, 1f, 1.0f, false); break;
             case "barrett":
                 world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.BARRETT, SoundCategory.PLAYERS, 1f, 1.0f, false); break;
+            case "m4a4":
+                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.M4A4, SoundCategory.PLAYERS, 1f, 1.0f, false); break;
+            case "m4a4_reload":
+                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.M4A4_RELOAD, SoundCategory.PLAYERS, 1f, 1.0f, false); break;
+            case "xm1014":
+                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.XM1014, SoundCategory.PLAYERS, 0.25f, 1.0f, false); break;
+            case "xm1014_reload":
+                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.XM1014_RELOAD, SoundCategory.PLAYERS, 1.5f, 1.0f, false); break;
+            case "nova":
+                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.NOVA, SoundCategory.PLAYERS, 0.25f, 1.0f, false); break;
         }
     }
 }

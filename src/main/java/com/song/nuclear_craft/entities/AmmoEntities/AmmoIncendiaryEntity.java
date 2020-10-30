@@ -28,7 +28,7 @@ public class AmmoIncendiaryEntity extends AbstractAmmoEntity {
     }
 
     @Override
-    protected void onEntityHit(EntityRayTraceResult entityRayTraceResult) {
+    protected void onEntityHit(@Nonnull EntityRayTraceResult entityRayTraceResult) {
         super.onEntityHit(entityRayTraceResult);
         Entity entity = entityRayTraceResult.getEntity();
         entity.setFire(10);

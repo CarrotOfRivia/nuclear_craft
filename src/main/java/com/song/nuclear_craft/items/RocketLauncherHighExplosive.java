@@ -8,6 +8,7 @@ import com.song.nuclear_craft.misc.SoundEventList;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -21,16 +22,17 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class RocketLauncherHighExplosive extends RocketLauncherWithAmmo {
-    private final int MAX_AMMO = Config.HIGH_EXPLOSIVE_MAX_AMMO.get();
 
     public RocketLauncherHighExplosive() {
         super(new Item.Properties().maxStackSize(1).group(NuclearCraft.ITEM_GROUP));
-        this.BONDED_AMMO = ItemList.HIGH_EXPLOSIVE_ROCKET;
         this.coolDown = 5;
     }
 
@@ -40,25 +42,19 @@ public class RocketLauncherHighExplosive extends RocketLauncherWithAmmo {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        enterCD(playerIn);
-        ItemStack toBeFired = new ItemStack(ItemList.HIGH_EXPLOSIVE_ROCKET);
-        toBeFired.getOrCreateChildTag("Fireworks").putByte("Flight", (byte) 127);
+    public Item getBoundedAmmo() {
+        return ItemList.HIGH_EXPLOSIVE_ROCKET.get();
+    }
 
-        ItemStack thisItemStack = playerIn.getHeldItem(handIn);
+    @Override
+    protected FireworkRocketEntity getEntity(World worldIn, ItemStack toBeFired, Entity playerIn, double x, double y, double z, boolean p_i231582_10_) {
+        return new HighExplosiveRocketEntity(worldIn, toBeFired, playerIn, x, y, z, p_i231582_10_);
+    }
 
-        if (!worldIn.isRemote){
-            HighExplosiveRocketEntity highExplosiveRocketEntity = new HighExplosiveRocketEntity(worldIn, toBeFired, playerIn, playerIn.getPosX(), playerIn.getPosYEye() - (double)0.15F, playerIn.getPosZ(), true);
-            Vector3d vec3d = playerIn.getLookVec();
-            highExplosiveRocketEntity.shoot(vec3d.x, vec3d.y, vec3d.z, 5f, 0);
-            worldIn.addEntity(highExplosiveRocketEntity);
-            worldIn.playSound(null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), SoundEvents.ITEM_CROSSBOW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.f);
-        }
-        if (playerIn.isCreative()){
-            return ActionResult.func_233538_a_(thisItemStack, worldIn.isRemote());
-        }
-        else {
-            return afterFire(worldIn, thisItemStack);
-        }
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.addInformation(stack, worldIn, tooltip, flagIn);
+        tooltip.add(new TranslationTextComponent(String.format("tooltip.%s.high_explosive_rocket.line0", NuclearCraft.MODID)).mergeStyle(TextFormatting.GOLD));
     }
 }

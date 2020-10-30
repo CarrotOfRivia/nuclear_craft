@@ -1,6 +1,7 @@
 package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
+import com.song.nuclear_craft.entities.HighExplosiveRocketEntity;
 import com.song.nuclear_craft.misc.ClientEventForgeSubscriber;
 import com.song.nuclear_craft.misc.SoundEventList;
 import com.song.nuclear_craft.network.GunLoadingPacket;
@@ -10,12 +11,16 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -23,12 +28,12 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.PacketDistributor;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
 public abstract class RocketLauncherWithAmmo extends Item {
     private static final int MAX_AMMO = 10;
-    protected Item BONDED_AMMO=null;
     protected int coolDown = 0;
     public RocketLauncherWithAmmo(Properties properties) {
         super(properties);
@@ -37,6 +42,34 @@ public abstract class RocketLauncherWithAmmo extends Item {
     protected int getMAX_AMMO(){
         return MAX_AMMO;
     }
+
+    public abstract Item getBoundedAmmo();
+
+    @Nonnull
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, @Nonnull PlayerEntity playerIn, @Nonnull Hand handIn) {
+        enterCD(playerIn);
+        ItemStack toBeFired = new ItemStack(getBoundedAmmo());
+        toBeFired.getOrCreateChildTag("Fireworks").putByte("Flight", (byte) 127);
+
+        ItemStack thisItemStack = playerIn.getHeldItem(handIn);
+
+        if (!worldIn.isRemote){
+            FireworkRocketEntity entity = getEntity(worldIn, toBeFired, playerIn, playerIn.getPosX(), playerIn.getPosYEye() - (double)0.15F, playerIn.getPosZ(), true);
+            Vector3d vec3d = playerIn.getLookVec();
+            entity.shoot(vec3d.x, vec3d.y, vec3d.z, 5f, 0);
+            worldIn.addEntity(entity);
+            worldIn.playSound(null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), SoundEvents.ITEM_CROSSBOW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.f);
+        }
+        if (playerIn.isCreative()){
+            return ActionResult.func_233538_a_(thisItemStack, worldIn.isRemote());
+        }
+        else {
+            return afterFire(worldIn, thisItemStack);
+        }
+    }
+
+    protected abstract FireworkRocketEntity getEntity(World worldIn, ItemStack toBeFired, Entity playerIn, double x, double y, double z, boolean p_i231582_10_);
 
     protected int getAmmoCount(ItemStack itemStack){
         CompoundNBT compoundnbt = itemStack.getOrCreateTag();
@@ -67,7 +100,7 @@ public abstract class RocketLauncherWithAmmo extends Item {
             compoundnbt.putInt("ammo", n_ammo);
         }
         if (compoundnbt.getInt("ammo") <= 0){
-            return ActionResult.func_233538_a_(new ItemStack(ItemList.ROCKET_LAUNCHER), worldIn.isRemote());
+            return ActionResult.func_233538_a_(new ItemStack(ItemList.ROCKET_LAUNCHER.get()), worldIn.isRemote());
         }
         else {
             return ActionResult.func_233538_a_(thisItemStack, worldIn.isRemote());
@@ -82,8 +115,8 @@ public abstract class RocketLauncherWithAmmo extends Item {
     }
 
     protected void addAmmo(ItemStack ammo, ItemStack rocket, int itemSlot, Entity entityIn){
-        if (BONDED_AMMO != null){
-            if(ammo.getItem().getRegistryName().equals(BONDED_AMMO.getRegistryName())){
+        if (getBoundedAmmo() != null){
+            if(ammo.getItem().getRegistryName().equals(getBoundedAmmo().getRegistryName())){
                 int n_ammo = getAmmoCount(rocket);
                 if (n_ammo<getMAX_AMMO()){
                     int n_loaded = Math.min(getMAX_AMMO()-n_ammo, ammo.getCount());

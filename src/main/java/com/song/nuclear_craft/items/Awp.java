@@ -1,6 +1,8 @@
 package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
+import com.song.nuclear_craft.items.Ammo.AmmoSize;
+import com.song.nuclear_craft.misc.Config;
 import com.song.nuclear_craft.misc.SoundEventList;
 
 import javax.annotation.Nonnull;
@@ -32,18 +34,18 @@ public class Awp extends AbstractGunItem{
 
     @Nonnull
     @Override
-    public String compatibleSize() {
-        return "7.62mm";
+    public AmmoSize compatibleSize() {
+        return AmmoSize.SIZE_762;
     }
 
     @Override
     public float getSpeedModifier() {
-        return 2.0f;
+        return Config.AWP_CONFIG.getSpeedModify().get().floatValue();
     }
 
     @Override
     public double getDamageModifier() {
-        return 3.0f;
+        return Config.AWP_CONFIG.getDamageModify().get();
     }
 
     @Override

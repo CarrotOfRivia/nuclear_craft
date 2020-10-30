@@ -25,6 +25,7 @@ public class AmmoExplosiveEntity extends AbstractAmmoEntity {
     @Override
     protected void onImpact(RayTraceResult result) {
         super.onImpact(result);
+        teleportToHitPoint(result);
         if (!world.isRemote){
             AtomicBombEntity.nukeExplode(world, this, this.getPosX(), this.getPosY(), this.getPosZ(), 5, false, 20);
         }
