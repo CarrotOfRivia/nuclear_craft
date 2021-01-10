@@ -34,7 +34,8 @@ public class ClientEventForgeSubscriber {
     public static KeyBinding zoom;
 
     private static int zoomState = 0;
-    private static final double mouseSensitivityBefore = 0.5d;;
+    private static int prevZoomState = 0;
+    private static double mouseSensitivityBefore = Minecraft.getInstance().gameSettings.mouseSensitivity;
     private static final float fovBefore = 1f;
 
     @SubscribeEvent
@@ -91,15 +92,23 @@ public class ClientEventForgeSubscriber {
         switch (zoomState){
             case 0:
             default:
-                Minecraft.getInstance().gameSettings.mouseSensitivity = mouseSensitivityBefore;
+                if(prevZoomState != 0){
+                    Minecraft.getInstance().gameSettings.mouseSensitivity = mouseSensitivityBefore;
+                }
+                else{
+                    mouseSensitivityBefore = Minecraft.getInstance().gameSettings.mouseSensitivity;
+                }
+                prevZoomState = 0;
                 break;
             case 1:
                 event.setNewfov(0.33f * fovBefore);
                 Minecraft.getInstance().gameSettings.mouseSensitivity = 0.33*mouseSensitivityBefore;
+                prevZoomState = 1;
                 break;
             case 2:
                 event.setNewfov(0.1f * fovBefore);
                 Minecraft.getInstance().gameSettings.mouseSensitivity = 0.1*mouseSensitivityBefore;
+                prevZoomState = 2;
                 break;
         }
 

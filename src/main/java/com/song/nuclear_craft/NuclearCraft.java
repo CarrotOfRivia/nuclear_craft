@@ -12,6 +12,8 @@ import com.song.nuclear_craft.misc.Config;
 import com.song.nuclear_craft.network.*;
 import com.song.nuclear_craft.particles.NukeParticle;
 import com.song.nuclear_craft.particles.ParticleList;
+import com.song.nuclear_craft.villagers.PointOfInterestTypes;
+import com.song.nuclear_craft.villagers.ProfessionTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
@@ -43,6 +45,8 @@ import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.stream.Collectors;
+
+import static com.song.nuclear_craft.villagers.VillagerUtil.fixPOITypeBlockStates;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(NuclearCraft.MODID)
@@ -82,12 +86,19 @@ public class NuclearCraft
         EntityList.ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
         ParticleList.PARTICLES.register(FMLJavaModLoadingContext.get().getModEventBus());
         ItemList.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        BlockList.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ProfessionTypes.VILLAGER_PROFESSION.register(FMLJavaModLoadingContext.get().getModEventBus());
+        PointOfInterestTypes.POINT_OF_INTEREST_TYPE.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
     private void setup(final FMLCommonSetupEvent event)
     {
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT");
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+
+        fixPOITypeBlockStates(PointOfInterestTypes.RIFLE_AMMO_SELLER.get());
+        fixPOITypeBlockStates(PointOfInterestTypes.SHOTGUN_AMMO_SELLER.get());
+        fixPOITypeBlockStates(PointOfInterestTypes.GUN_SELLER.get());
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

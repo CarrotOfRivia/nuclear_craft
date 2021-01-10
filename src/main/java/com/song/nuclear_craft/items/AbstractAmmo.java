@@ -66,7 +66,7 @@ public class AbstractAmmo extends Item {
         }
         tooltip.add(new TranslationTextComponent(String.format("tooltip.%s.ammo.desc1", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY));
         tooltip.add(new TranslationTextComponent(String.format("tooltip.%s.ammo.desc2", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY));
-        if(AmmoPossibleCombination.SHORT_GUN_AMMO.getAmmoTypes().contains(getType())){
+        if(AmmoPossibleCombination.SHOTGUN_AMMO.getAmmoTypes().contains(getType())){
             // ShortGun ammo damage: dmg*count
             tooltip.add(new TranslationTextComponent(String.format("tooltip.%s.ammo.base_damage", NuclearCraft.MODID))
                     .append(new StringTextComponent(String.format(" %.2f x %d", getBaseDamage(), Config.BIRD_SHOT_COUNT_MAP.get(getType()).get()))).mergeStyle(TextFormatting.GRAY));

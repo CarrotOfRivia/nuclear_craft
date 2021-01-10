@@ -89,11 +89,11 @@ public class Config {
             GRAVITY_MAP.put(ammoSize, thisGravityMap);
         }
         // ------------------------ Short Guns Ammo Speed and Damage -------------------------- //
-        for (AmmoSize ammoSize: AmmoPossibleCombination.SHORT_GUN_AMMO.getAmmoSizes()){
+        for (AmmoSize ammoSize: AmmoPossibleCombination.SHOTGUN_AMMO.getAmmoSizes()){
             HashMap<AmmoType, ForgeConfigSpec.DoubleValue> thisDamageMap = new HashMap<>();
             HashMap<AmmoType, ForgeConfigSpec.DoubleValue> thisSpeedMap = new HashMap<>();
             HashMap<AmmoType, ForgeConfigSpec.DoubleValue> thisGravityMap = new HashMap<>();
-            for (AmmoType ammoType: AmmoPossibleCombination.SHORT_GUN_AMMO.getAmmoTypes()){
+            for (AmmoType ammoType: AmmoPossibleCombination.SHOTGUN_AMMO.getAmmoTypes()){
                 thisDamageMap.put(ammoType, CONFIG_BUILDER.comment("Base damage, base speed(m/tick) and gravity(m/tick^2) of ammo: "+ammoType.getDescription()+" "+ammoSize.getDescription())
                         .defineInRange("damage_"+ammoType.getRegisterString()+"_"+ammoSize.getRegisterString(), ammoType.getDamage()*ammoSize.getDamageModify(), 0, 999999));
                 thisSpeedMap.put(ammoType, CONFIG_BUILDER.defineInRange("speed_"+ammoType.getRegisterString()+"_"+ammoSize.getRegisterString(), ammoType.getSpeed()*ammoSize.getSpeedModify(), 0, 999999));
@@ -105,7 +105,7 @@ public class Config {
         }
 
         // -----------------------Short Guns Ammo Shoot Count ------------------------------//
-        for (AmmoType ammoType: AmmoPossibleCombination.SHORT_GUN_AMMO.getAmmoTypes()) {
+        for (AmmoType ammoType: AmmoPossibleCombination.SHOTGUN_AMMO.getAmmoTypes()) {
             BIRD_SHOT_COUNT_MAP.put(ammoType, CONFIG_BUILDER.comment("Number of birdshots in short gun ammo: "+ammoType.getDescription()).defineInRange("n_birdshot_"+ammoType.getRegisterString(), ammoType.getBirdShotCount(), 0, 999999));
         }
 
