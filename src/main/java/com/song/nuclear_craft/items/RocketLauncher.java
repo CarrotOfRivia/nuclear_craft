@@ -65,7 +65,7 @@ public class RocketLauncher extends RocketLauncherWithAmmo {
             itemStack = new ItemStack(ItemList.ROCKET_LAUNCHER_SMOKE.get());
         }
         else if(ammo.getItem() == ItemList.HIGH_EXPLOSIVE_ROCKET.get()){
-            itemStack = new ItemStack(ItemList.ROCKET_LAUNCHER_SMOKE.get());
+            itemStack = new ItemStack(ItemList.ROCKET_LAUNCHER_HIGH_EXPLOSIVE.get());
         }
         else if(ammo.getItem() == ItemList.WATER_DROP_ROCKET.get()){
             itemStack = new ItemStack(ItemList.ROCKET_LAUNCHER_WATER_DROP.get());

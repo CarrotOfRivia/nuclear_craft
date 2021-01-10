@@ -25,7 +25,7 @@ public class VillagerUtil
 
     static
     {
-        VillagerUtil.blockStatesInjector = ObfuscationReflectionHelper.findMethod(PointOfInterestType.class, "registerBlockStates", PointOfInterestType.class);
+        VillagerUtil.blockStatesInjector = ObfuscationReflectionHelper.findMethod(PointOfInterestType.class, "func_221052_a", PointOfInterestType.class);
     }
 
     public static Set<BlockState> getAllStates(Block block)
