@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "t #",
+    "###",
+    " ##"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:diamond_block"
+    },
+    "t": {
+      "item": "minecraft:torch"
+    }
+  },
+  "result": {
+    "item": "nuclear_craft:statue_of_liberty"
+  }
+}

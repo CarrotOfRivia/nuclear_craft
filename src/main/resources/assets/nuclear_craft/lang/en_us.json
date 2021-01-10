@@ -25,6 +25,9 @@
   "block.nuclear_craft.c4_incendiary": "Incendiary C4 Bomb",
   "block.nuclear_craft.c4_smoke": "Smoke C4 Bomb",
   "block.nuclear_craft.c4_high_explosive": "High Explosive C4 Bomb",
+  "block.nuclear_craft.statue_of_liberty": "Statue of Liberty",
+  "block.nuclear_craft.statue_of_rifle_ammo": "Statue of Ammo (Rifle)",
+  "block.nuclear_craft.statue_of_shotgun_ammo": "Statue of Ammo (Shotgun)",
   "item.nuclear_craft.c4_bomb.tooltip1": "C4 Bombs can be attached to any side of a block",
   "item.nuclear_craft.c4_bomb.tooltip2": "Activate it with redstone signal, and RUN!",
   "menu.nuclear_craft.c4_bomb.display_name": "Set up a delay here",
@@ -75,9 +78,9 @@
   "item.nuclear_craft.ammo_556_nuke": "5.56mm Micro-Atomic Bomb Bullet",
   "item.nuclear_craft.ammo_556_silver": "5.56mm Silver Piercing Bullet",
   "item.nuclear_craft.ammo_556_tungsten": "5.56mm Tungsten Piercing Bullet",
-  "item.nuclear_craft.ammo_12_ga_short_gun_normal": "Normal Short Gun Ammo",
-  "item.nuclear_craft.ammo_12_ga_short_gun_blight": "Blight Short Gun Ammo",
-  "item.nuclear_craft.ammo_12_ga_short_gun_desolator": "Desolator Short Gun Ammo",
+  "item.nuclear_craft.ammo_12_ga_short_gun_normal": "Normal Shotgun Ammo",
+  "item.nuclear_craft.ammo_12_ga_short_gun_blight": "Blight Shotgun Ammo",
+  "item.nuclear_craft.ammo_12_ga_short_gun_desolator": "Desolator Shotgun Ammo",
 
   "item.nuclear_craft.guns.compatible_ammo_size": "Compatible Ammo Size:",
   "item.nuclear_craft.guns.use_scope": "Use scope to zoom in, default key is:",
@@ -96,5 +99,11 @@
   "tooltip.nuclear_craft.ammo_12_ga_short_gun_blight.line0": "Penetrate 7 armor points",
   "tooltip.nuclear_craft.ammo_12_ga_short_gun_desolator.line0": "Penetrate 14 armor points",
   "tooltip.nuclear_craft.rocket_load.line0": "Hold Rocket in off hand",
-  "tooltip.nuclear_craft.rocket_load.line1": "Hold rocket launcher in main hand, press R"
+  "tooltip.nuclear_craft.rocket_load.line1": "Hold rocket launcher in main hand, press R",
+  "tooltip.nuclear_craft.block.statue.line1": "Place it on the ground to give an unemployed villager the corresponding profession.",
+  "tooltip.nuclear_craft.block.statue.line2": "",
+
+  "entity.minecraft.villager.nuclear_craft.rifle_ammo_seller": "Rifle Ammo Seller",
+  "entity.minecraft.villager.nuclear_craft.shotgun_ammo_seller": "Shotgun Ammo Seller",
+  "entity.minecraft.villager.nuclear_craft.gun_seller": "Gun Seller"
 }

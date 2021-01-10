@@ -165,7 +165,6 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
 
     @Override
     protected void onEntityHit(@Nonnull EntityRayTraceResult entityRayTraceResult) {
-        this.teleportToHitPoint(entityRayTraceResult);
         Entity entity = entityRayTraceResult.getEntity();
         this.piercedEntities.add(entity.getEntityId());
 

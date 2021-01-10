@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "nuclear_craft:block/statue_of_rifle_ammo",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "nuclear_craft:block/statue_of_rifle_ammo"
+    },
+    "facing=south": {
+      "model": "nuclear_craft:block/statue_of_rifle_ammo",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "nuclear_craft:block/statue_of_rifle_ammo",
+      "y": 270
+    }
+  }
+}

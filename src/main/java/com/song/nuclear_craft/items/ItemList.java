@@ -3,12 +3,12 @@ package com.song.nuclear_craft.items;
 import com.song.nuclear_craft.blocks.BlockList;
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.items.Ammo.*;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -37,6 +37,11 @@ public class ItemList {
     public static final Item C4_INCENDIARY = new C4BombItem(BlockList.C4_INCENDIARY, new Item.Properties().group(NuclearCraft.ITEM_GROUP));
     public static final Item C4_SMOKE = new C4BombItem(BlockList.C4_SMOKE, new Item.Properties().group(NuclearCraft.ITEM_GROUP));
 
+    // Statues
+    public static final RegistryObject<Item> STATUE_OF_LIBERTY = ITEMS.register("statue_of_liberty", ()->new BlockItem(BlockList.STATUE_OF_LIBERTY.get(), new Item.Properties().group(NuclearCraft.ITEM_GROUP)));
+    public static final RegistryObject<Item> STATUE_OF_RIFLE_AMMO = ITEMS.register("statue_of_rifle_ammo", ()->new BlockItem(BlockList.STATUE_OF_RIFLE_AMMO.get(), new Item.Properties().group(NuclearCraft.ITEM_GROUP)));
+    public static final RegistryObject<Item> STATUE_OF_SHOTGUN_AMMO = ITEMS.register("statue_of_shotgun_ammo", ()->new BlockItem(BlockList.STATUE_OF_SHOTGUN_AMMO.get(), new Item.Properties().group(NuclearCraft.ITEM_GROUP)));
+
     // Guns and bullets
     public static final RegistryObject<DesertEagle> DESERT_EAGLE = ITEMS.register("desert_eagle", DesertEagle::new);
     public static final RegistryObject<Glock> GLOCK = ITEMS.register("glock", Glock::new);
@@ -60,16 +65,16 @@ public class ItemList {
             AMMO_REGISTRIES_TYPE.put(ammoSize, tmp);
         }
         // Register Short Gun Ammo
-        for (AmmoSize ammoSize : AmmoPossibleCombination.SHORT_GUN_AMMO.getAmmoSizes()) {
+        for (AmmoSize ammoSize : AmmoPossibleCombination.SHOTGUN_AMMO.getAmmoSizes()) {
             HashMap<AmmoType, RegistryObject<AbstractAmmo>> tmp = new HashMap<>();
-            for (AmmoType ammoType: AmmoPossibleCombination.SHORT_GUN_AMMO.getAmmoTypes()){
+            for (AmmoType ammoType: AmmoPossibleCombination.SHOTGUN_AMMO.getAmmoTypes()){
                 tmp.put(ammoType, ITEMS.register("ammo_"+ammoSize.getRegisterString()+"_"+ammoType.getRegisterString(),
                         ()->new AbstractAmmo(new Item.Properties().group(NuclearCraft.AMMO_ITEM_GROUP), ammoSize, ammoType, 1)));
             }
             AMMO_REGISTRIES_TYPE.put(ammoSize, tmp);
         }
         // Register Short Gun Bird Shots
-        for (AmmoType ammoType: AmmoPossibleCombination.SHORT_GUN_AMMO.getAmmoTypes()){
+        for (AmmoType ammoType: AmmoPossibleCombination.SHOTGUN_AMMO.getAmmoTypes()){
             BIRD_SHOT_MAP.put(ammoType, ITEMS.register("bird_shot_12_ga_"+ammoType.getRegisterString(), ()->new AbstractAmmo(new Item.Properties(), AmmoSize.SIZE_12_GA, ammoType)));
         }
     }

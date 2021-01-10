@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public class AmmoPossibleCombination {
     public static final AmmoPossibleCombination RIFLE_AMMO = new AmmoPossibleCombination();
-    public static final AmmoPossibleCombination SHORT_GUN_AMMO = new AmmoPossibleCombination();
+    public static final AmmoPossibleCombination SHOTGUN_AMMO = new AmmoPossibleCombination();
     private final ArrayList<AmmoType> ammoTypes = new ArrayList<>();
     private final ArrayList<AmmoSize> ammoSizes = new ArrayList<>();
 
@@ -33,7 +33,7 @@ public class AmmoPossibleCombination {
         RIFLE_AMMO.addAmmoTypes(AmmoType.ANTI_GRAVITY, AmmoType.EXPLOSIVE, AmmoType.INCENDIARY, AmmoType.NORMAL,
                 AmmoType.NUKE, AmmoType.SILVER, AmmoType.TUNGSTEN);
 
-        SHORT_GUN_AMMO.addAmmoTypes(AmmoType.SHORT_GUN_NORMAL, AmmoType.SHORT_GUN_BLIGHT, AmmoType.SHORT_GUN_DESOLATOR);
-        SHORT_GUN_AMMO.addAmmoSizes(AmmoSize.SIZE_12_GA);
+        SHOTGUN_AMMO.addAmmoTypes(AmmoType.SHORT_GUN_NORMAL, AmmoType.SHORT_GUN_BLIGHT, AmmoType.SHORT_GUN_DESOLATOR);
+        SHOTGUN_AMMO.addAmmoSizes(AmmoSize.SIZE_12_GA);
     }
 }
