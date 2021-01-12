@@ -24,7 +24,7 @@ public class AmmoSilverEntity extends AbstractAmmoEntity {
 
     @Override
     public double getBlockBreakThreshold() {
-        return 6d;
+        return Config.AMMO_SILVER_BLOCK_BREAK_THRESHOLD.get();
     }
 
     @Override

@@ -28,6 +28,10 @@ public class Config {
     public static ForgeConfigSpec.DoubleValue NUKE_BLAST_POWER;
     public static ForgeConfigSpec.DoubleValue HIGH_EXPLOSIVE_BLAST_POWER;
 
+    public static ForgeConfigSpec.DoubleValue AMMO_BLOCK_BREAK_THRESHOLD;
+    public static ForgeConfigSpec.DoubleValue AMMO_SILVER_BLOCK_BREAK_THRESHOLD;
+    public static ForgeConfigSpec.DoubleValue AMMO_TUNGSTEN_BLOCK_BREAK_THRESHOLD;
+
     public static ForgeConfigSpec.DoubleValue AMMO_ANTI_GRAVITY_RICOCHET_LOSS;
     public static ForgeConfigSpec.DoubleValue AMMO_NORMAL_RICOCHET_LOSS;
     public static ForgeConfigSpec.DoubleValue AMMO_SILVER_RICOCHET_LOSS;
@@ -63,6 +67,13 @@ public class Config {
 
         NUKE_BLAST_POWER = CONFIG_BUILDER.comment("Atomic bomb explosion power(i.e. max blast resistance block to break) 3,600,000 for bedrock, 1200 for obsidian, 100 for water").defineInRange("nuke_blast_power", 1500d, 0d, 999999999d);
         HIGH_EXPLOSIVE_BLAST_POWER = CONFIG_BUILDER.comment("High explosive bomb explosion power(i.e. max blast resistance block to break) 3,600,000 for bedrock, 1200 for obsidian, 100 for water").defineInRange("high_explosive_blast_power", 101d, 0d, 999999999d);
+
+        AMMO_BLOCK_BREAK_THRESHOLD = CONFIG_BUILDER.comment("If the blast resistance of a block is smaller than this, it will be destroyed by ammo upon impact")
+                .defineInRange("ammo_block_break_threshold",3d, -100d, 32767d);
+        AMMO_SILVER_BLOCK_BREAK_THRESHOLD = CONFIG_BUILDER.comment("If the blast resistance of a block is smaller than this, it will be destroyed by silver ammo upon impact")
+                .defineInRange("ammo_silver_block_break_threshold",6d, -100d, 32767d);
+        AMMO_TUNGSTEN_BLOCK_BREAK_THRESHOLD = CONFIG_BUILDER.comment("If the blast resistance of a block is smaller than this, it will be destroyed by tungsten ammo upon impact")
+                .defineInRange("ammo_tungsten_block_break_threshold",6d, -100d, 32767d);
 
         AMMO_ANTI_GRAVITY_RICOCHET_LOSS = CONFIG_BUILDER.comment("Energy loss of ammo (Anti-Gravity) after ricochet (bouncing on hard surfaces)")
                 .defineInRange("ammo_anti_gravity_ricochet_loss",0.5d, 0d, 1d);
