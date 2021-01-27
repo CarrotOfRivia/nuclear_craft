@@ -28,7 +28,7 @@ public class AmmoNukeEntity extends AbstractAmmoEntity {
         super.onImpact(result);
         teleportToHitPoint(result);
         if (!world.isRemote){
-            AtomicBombEntity.nukeExplode(world, this, this.getPosX(), this.getPosY(), this.getPosZ(), 15, true, 20);
+            AtomicBombEntity.nukeExplode(world, this, this.getPosX(), this.getPosY(), this.getPosZ(), 15, true, 20, true);
         }
         this.remove();
     }

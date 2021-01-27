@@ -57,7 +57,7 @@ public class HighExplosiveRocketEntity extends FireworkRocketEntity {
     private void explode(){
         this.remove();
         if (! this.world.isRemote) {
-            AtomicBombEntity.nukeExplode(world, this.boostedEntity, this.getPosX(), this.getPosY(), this.getPosZ(), HIGH_EXPLOSIVE_RADIUS, false, MAX_BLAST_POWER);
+            AtomicBombEntity.nukeExplode(world, this.boostedEntity, this.getPosX(), this.getPosY(), this.getPosZ(), HIGH_EXPLOSIVE_RADIUS, false, MAX_BLAST_POWER, false);
         }
     }
 }

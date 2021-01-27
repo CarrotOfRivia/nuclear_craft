@@ -20,7 +20,7 @@ public class C4HighExplosive extends C4Bomb{
 
     @Override
     public void explode(World world, double x, double y, double z) {
-        AtomicBombEntity.nukeExplode(world, null, x, y, z, HighExplosiveRocketEntity.HIGH_EXPLOSIVE_RADIUS, false, HighExplosiveRocketEntity.MAX_BLAST_POWER);
+        AtomicBombEntity.nukeExplode(world, null, x, y, z, HighExplosiveRocketEntity.HIGH_EXPLOSIVE_RADIUS, false, HighExplosiveRocketEntity.MAX_BLAST_POWER, false);
     }
 
     @Nullable

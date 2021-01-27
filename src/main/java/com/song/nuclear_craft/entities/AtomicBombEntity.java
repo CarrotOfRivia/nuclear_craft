@@ -17,12 +17,17 @@ import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.TNTEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.projectile.FireworkRocketEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.network.play.server.SExplosionPacket;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -66,7 +71,7 @@ public class AtomicBombEntity extends TNTEntity {
         for (int dx = -radius_int; dx < radius_int + 1; dx++) {
             // fast calculate affected blocks
             int y_lim = (int) Math.sqrt(radius_int*radius_int-dx*dx);
-            for (int dy = -y_lim; dy < y_lim + 1; dy++) {
+            for (int dy = -y_lim; dy < (y_lim + 1)/3; dy++) {
                 int z_lim = (int) Math.sqrt(radius_int*radius_int-dx*dx-dy*dy);
                 for (int dz = -z_lim; dz < z_lim + 1; dz++) {
                     BlockPos blockPos = new BlockPos(x + dx, y + dy, z + dz);
@@ -84,7 +89,7 @@ public class AtomicBombEntity extends TNTEntity {
         return affectedBlockPositions;
     }
 
-    public static Explosion nukeExplode(World world, Entity entity, double x, double y, double z, float radius, boolean spawnCloud, double max_blast_power) {
+    public static Explosion nukeExplode(World world, Entity entity, double x, double y, double z, float radius, boolean spawnCloud, double max_blast_power, boolean isAtomic) {
         List<BlockPos> affectedBlockPositions = getAffectedBlockPositions(world, x, y, z, radius, max_blast_power);
         NukeExplosion nukeExplosion = new NukeExplosion(world, entity, x, y, z, radius, affectedBlockPositions);
         nukeExplosion.doExplosionA();
@@ -103,11 +108,26 @@ public class AtomicBombEntity extends TNTEntity {
         playNukeSound(world, x, y, z, radius);
         // normal explosion
         world.createExplosion(entity, x, y, z, radius*0.8f, Explosion.Mode.BREAK);
+
+        if (isAtomic){
+            for(int theta = 0; theta<360; theta+=10){
+                double theta_r = Math.PI * theta / 180;
+                FireworkRocketEntity entity1 = new WaterDropRocketEntity(world, new ItemStack(Items.COBWEB), null, x+Math.cos(theta_r)*radius, y, z+Math.sin(theta_r)*radius, true, (int) radius*10);
+                entity1.shoot(Math.cos(theta_r), 0, Math.sin(theta_r), 5, 2);
+                world.addEntity(entity1);
+            }
+            for (BlockPos blockPos: affectedBlockPositions){
+                if(blockPos.distanceSq(x, y, z, false) > (radius-1)*(radius-1)){
+                    world.setBlockState(blockPos, Blocks.LAVA.getDefaultState().with(BlockStateProperties.LEVEL_0_15, 15));
+                }
+            }
+        }
+
         return nukeExplosion;
     }
 
     public static Explosion nukeExplode(World world, Entity entity, double x, double y, double z, float radius, boolean spawnCloud){
-        return nukeExplode(world, entity, x, y, z, radius, spawnCloud, MAX_BLAST_POWER);
+        return nukeExplode(world, entity, x, y, z, radius, spawnCloud, MAX_BLAST_POWER, true);
     }
 
     public static void playNukeSound(World world, double x, double y, double z, double radius){

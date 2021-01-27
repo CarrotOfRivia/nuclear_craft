@@ -5,6 +5,7 @@ import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.items.Ammo.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -41,6 +42,8 @@ public class ItemList {
     public static final RegistryObject<Item> STATUE_OF_LIBERTY = ITEMS.register("statue_of_liberty", ()->new BlockItem(BlockList.STATUE_OF_LIBERTY.get(), new Item.Properties().group(NuclearCraft.ITEM_GROUP)));
     public static final RegistryObject<Item> STATUE_OF_RIFLE_AMMO = ITEMS.register("statue_of_rifle_ammo", ()->new BlockItem(BlockList.STATUE_OF_RIFLE_AMMO.get(), new Item.Properties().group(NuclearCraft.ITEM_GROUP)));
     public static final RegistryObject<Item> STATUE_OF_SHOTGUN_AMMO = ITEMS.register("statue_of_shotgun_ammo", ()->new BlockItem(BlockList.STATUE_OF_SHOTGUN_AMMO.get(), new Item.Properties().group(NuclearCraft.ITEM_GROUP)));
+    public static final RegistryObject<Item> STATUE_OF_ROCKET = ITEMS.register("statue_of_rocket", ()->new BlockItem(BlockList.STATUE_OF_ROCKET.get(), new Item.Properties().group(NuclearCraft.ITEM_GROUP)));
+    public static final RegistryObject<Item> STATUE_OF_EXPLOSIVE = ITEMS.register("statue_of_explosive", ()->new BlockItem(BlockList.STATUE_OF_EXPLOSIVE.get(), new Item.Properties().group(NuclearCraft.ITEM_GROUP)));
 
     // Guns and bullets
     public static final RegistryObject<DesertEagle> DESERT_EAGLE = ITEMS.register("desert_eagle", DesertEagle::new);
