@@ -19,4 +19,8 @@ public class PointOfInterestTypes {
             ()-> new PointOfInterestType("shotgun_ammo_seller", PointOfInterestType.getAllStates(BlockList.STATUE_OF_SHOTGUN_AMMO.get()), 1, 1));
     public static final RegistryObject<PointOfInterestType> GUN_SELLER = POINT_OF_INTEREST_TYPE.register("gun_seller",
             ()-> new PointOfInterestType("gun_seller", PointOfInterestType.getAllStates(BlockList.STATUE_OF_LIBERTY.get()), 1, 1));
+    public static final RegistryObject<PointOfInterestType> ROCKET_MASTER = POINT_OF_INTEREST_TYPE.register("rocket_master",
+            ()-> new PointOfInterestType("rocket_master", PointOfInterestType.getAllStates(BlockList.STATUE_OF_ROCKET.get()), 1, 1));
+    public static final RegistryObject<PointOfInterestType> EXPLOSIVE_MASTER = POINT_OF_INTEREST_TYPE.register("explosive_master",
+            ()-> new PointOfInterestType("explosive_master", PointOfInterestType.getAllStates(BlockList.STATUE_OF_EXPLOSIVE.get()), 1, 1));
 }

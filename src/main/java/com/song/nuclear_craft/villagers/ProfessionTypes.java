@@ -17,4 +17,8 @@ public class ProfessionTypes {
             ()->new VillagerProfession("shotgun_ammo_seller", PointOfInterestTypes.SHOTGUN_AMMO_SELLER.get(), ImmutableSet.of(), ImmutableSet.of(), SoundEvents.ENTITY_VILLAGER_WORK_WEAPONSMITH));
     public static final RegistryObject<VillagerProfession> GUN_SELLER_PROFESSION = VILLAGER_PROFESSION.register("gun_seller",
             ()->new VillagerProfession("gun_seller", PointOfInterestTypes.GUN_SELLER.get(), ImmutableSet.of(), ImmutableSet.of(), SoundEvents.ENTITY_VILLAGER_WORK_WEAPONSMITH));
+    public static final RegistryObject<VillagerProfession> ROCKET_MASTER_PROFESSION = VILLAGER_PROFESSION.register("rocket_master",
+            ()->new VillagerProfession("rocket_master", PointOfInterestTypes.ROCKET_MASTER.get(), ImmutableSet.of(), ImmutableSet.of(), SoundEvents.ENTITY_VILLAGER_WORK_WEAPONSMITH));
+    public static final RegistryObject<VillagerProfession> EXPLOSIVE_MASTER_PROFESSION = VILLAGER_PROFESSION.register("explosive_master",
+            ()->new VillagerProfession("explosive_master", PointOfInterestTypes.EXPLOSIVE_MASTER.get(), ImmutableSet.of(), ImmutableSet.of(), SoundEvents.ENTITY_VILLAGER_WORK_WEAPONSMITH));
 }

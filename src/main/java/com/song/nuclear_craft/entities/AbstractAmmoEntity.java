@@ -5,6 +5,7 @@ import com.song.nuclear_craft.items.AbstractAmmo;
 import com.song.nuclear_craft.items.Ammo.AmmoSize;
 import com.song.nuclear_craft.items.Ammo.AmmoType;
 import com.song.nuclear_craft.items.ItemList;
+import com.song.nuclear_craft.misc.Config;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import net.minecraft.block.Block;
@@ -234,7 +235,7 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
     }
 
     public double getBlockBreakThreshold(){
-        return 3d;
+        return Config.AMMO_BLOCK_BREAK_THRESHOLD.get();
     }
 
     public double getEnergyLoss(double blastResist){

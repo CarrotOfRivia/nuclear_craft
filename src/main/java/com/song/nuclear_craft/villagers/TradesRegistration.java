@@ -52,30 +52,61 @@ public class TradesRegistration {
         }
 
         if (event.getType() == ProfessionTypes.GUN_SELLER_PROFESSION.get()){
-            for (AmmoSize ammoSize: AmmoPossibleCombination.SHOTGUN_AMMO.getAmmoSizes()){
-                event.getTrades().get(1).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 10,10).
-                        setForSale(ItemList.GLOCK.get(), 1, 1).build()));
-                event.getTrades().get(1).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 10,10).
-                        setForSale(ItemList.USP.get(), 1, 1).build()));
+            event.getTrades().get(1).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 10,10).
+                    setForSale(ItemList.GLOCK.get(), 1, 1).build()));
+            event.getTrades().get(1).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 10,10).
+                    setForSale(ItemList.USP.get(), 1, 1).build()));
 
-                event.getTrades().get(2).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 20,30).
-                        setForSale(ItemList.DESERT_EAGLE.get(), 1, 1).build()));
-                event.getTrades().get(2).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 20,30).
-                        setForSale(ItemList.NOVA.get(), 1, 1).build()));
+            event.getTrades().get(2).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 20,30).
+                    setForSale(ItemList.DESERT_EAGLE.get(), 1, 1).build()));
+            event.getTrades().get(2).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 20,30).
+                    setForSale(ItemList.NOVA.get(), 1, 1).build()));
 
-                event.getTrades().get(3).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 30,40).
-                        setForSale(ItemList.M4A4.get(), 1, 1).build()));
-                event.getTrades().get(3).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 30,40).
-                        setForSale(ItemList.XM1014.get(), 1, 1).build()));
+            event.getTrades().get(3).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 30,40).
+                    setForSale(ItemList.M4A4.get(), 1, 1).build()));
+            event.getTrades().get(3).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 30,40).
+                    setForSale(ItemList.XM1014.get(), 1, 1).build()));
 
-                event.getTrades().get(4).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 40,50).
-                        setForSale(ItemList.AK47.get(), 1, 1).build()));
-                event.getTrades().get(4).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 40,50).
-                        setForSale(ItemList.AWP.get(), 1, 1).build()));
+            event.getTrades().get(4).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 40,50).
+                    setForSale(ItemList.AK47.get(), 1, 1).build()));
+            event.getTrades().get(4).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 40,50).
+                    setForSale(ItemList.AWP.get(), 1, 1).build()));
 
-                event.getTrades().get(4).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 50,64).
-                        setForSale(ItemList.BARRETT.get(), 1, 1).build()));
-            }
+            event.getTrades().get(5).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 50,64).
+                    setForSale(ItemList.BARRETT.get(), 1, 1).build()));
+        }
+
+        if (event.getType() == ProfessionTypes.ROCKET_MASTER_PROFESSION.get()){
+            event.getTrades().get(1).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 30,40).
+                    setForSale(ItemList.ROCKET_LAUNCHER.get(), 1, 1).build()));
+            event.getTrades().get(1).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 1,2).
+                    setForSale(ItemList.INCENDIARY_ROCKET.get(), 1, 1).build()));
+
+            event.getTrades().get(2).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 2,3).
+                    setForSale(ItemList.SMOKE_ROCKET.get(), 1, 1).build()));
+
+            event.getTrades().get(3).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 3,4).
+                    setForSale(ItemList.HIGH_EXPLOSIVE_ROCKET.get(), 1, 1).build()));
+
+            event.getTrades().get(4).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 40,50).
+                    setForSale(ItemList.ATOMIC_BOMB_ROCKET.get(), 1, 1).build()));
+
+            event.getTrades().get(5).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 40,50).
+                    setForSale(ItemList.WATER_DROP_ROCKET.get(), 1, 1).build()));
+        }
+
+        if (event.getType() == ProfessionTypes.EXPLOSIVE_MASTER_PROFESSION.get()){
+            event.getTrades().get(1).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 2,3).
+                    setForSale(ItemList.C4_INCENDIARY, 1, 1).build()));
+
+            event.getTrades().get(2).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 4,5).
+                    setForSale(ItemList.C4_SMOKE, 1, 1).build()));
+
+            event.getTrades().get(3).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 5,10).
+                    setForSale(ItemList.C4_HIGH_EXPLOSIVE, 1, 1).build()));
+
+            event.getTrades().get(4).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 40,50).
+                    setForSale(ItemList.C4_ATOMIC_BOMB, 1, 1).build()));
         }
     }
 }
