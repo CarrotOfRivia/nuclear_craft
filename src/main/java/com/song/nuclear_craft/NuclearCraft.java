@@ -103,6 +103,8 @@ public class NuclearCraft
         fixPOITypeBlockStates(PointOfInterestTypes.RIFLE_AMMO_SELLER.get());
         fixPOITypeBlockStates(PointOfInterestTypes.SHOTGUN_AMMO_SELLER.get());
         fixPOITypeBlockStates(PointOfInterestTypes.GUN_SELLER.get());
+        fixPOITypeBlockStates(PointOfInterestTypes.ROCKET_MASTER.get());
+        fixPOITypeBlockStates(PointOfInterestTypes.EXPLOSIVE_MASTER.get());
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

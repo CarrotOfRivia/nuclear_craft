@@ -19,8 +19,16 @@ import java.util.List;
 
 public class WaterDropRocketEntity extends FireworkRocketEntity {
     private int meltCD = 7;
-    public WaterDropRocketEntity(World p_i231582_1_, ItemStack p_i231582_2_, Entity p_i231582_3_, double p_i231582_4_, double p_i231582_6_, double p_i231582_8_, boolean p_i231582_10_) {
-        super(p_i231582_1_, p_i231582_2_, p_i231582_3_, p_i231582_4_, p_i231582_6_, p_i231582_8_, p_i231582_10_);
+    private final int maxLife;
+    private int age = 0;
+    public WaterDropRocketEntity(World world, ItemStack itemStack, Entity entity, double v, double v1, double v2, boolean b) {
+        super(world, itemStack, entity, v, v1, v2, b);
+        this.maxLife = 10000;
+    }
+
+    public WaterDropRocketEntity(World world, ItemStack itemStack, Entity entity, double v, double v1, double v2, boolean b, int maxLife){
+        super(world, itemStack, entity, v, v1, v2, b);
+        this.maxLife = maxLife;
     }
 
     @Override
@@ -46,7 +54,11 @@ public class WaterDropRocketEntity extends FireworkRocketEntity {
         }
 
         if(!world.isRemote){
+            age ++;
             if(this.getPosY() > 300 && this.getMotion().getY()>0){
+                this.remove();
+            }
+            if(this.age > maxLife){
                 this.remove();
             }
         }

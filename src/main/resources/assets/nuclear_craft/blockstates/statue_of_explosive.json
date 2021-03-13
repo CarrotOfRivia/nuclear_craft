@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "nuclear_craft:block/statue_of_explosive",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "nuclear_craft:block/statue_of_explosive"
+    },
+    "facing=south": {
+      "model": "nuclear_craft:block/statue_of_explosive",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "nuclear_craft:block/statue_of_explosive",
+      "y": 270
+    }
+  }
+}

@@ -28,6 +28,8 @@
   "block.nuclear_craft.statue_of_liberty": "Statue of Liberty",
   "block.nuclear_craft.statue_of_rifle_ammo": "Statue of Ammo (Rifle)",
   "block.nuclear_craft.statue_of_shotgun_ammo": "Statue of Ammo (Shotgun)",
+  "block.nuclear_craft.statue_of_rocket": "Statue of Rockets",
+  "block.nuclear_craft.statue_of_explosive": "Statue of Explosives",
   "item.nuclear_craft.c4_bomb.tooltip1": "C4 Bombs can be attached to any side of a block",
   "item.nuclear_craft.c4_bomb.tooltip2": "Activate it with redstone signal, and RUN!",
   "menu.nuclear_craft.c4_bomb.display_name": "Set up a delay here",
@@ -105,5 +107,7 @@
 
   "entity.minecraft.villager.nuclear_craft.rifle_ammo_seller": "Rifle Ammo Seller",
   "entity.minecraft.villager.nuclear_craft.shotgun_ammo_seller": "Shotgun Ammo Seller",
-  "entity.minecraft.villager.nuclear_craft.gun_seller": "Gun Seller"
+  "entity.minecraft.villager.nuclear_craft.gun_seller": "Gun Seller",
+  "entity.minecraft.villager.nuclear_craft.rocket_master": "Rocket Master",
+  "entity.minecraft.villager.nuclear_craft.explosive_master": "Explosive Master"
 }

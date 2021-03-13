@@ -26,6 +26,8 @@ public class BlockList {
     public static final RegistryObject<Block> STATUE_OF_LIBERTY = BLOCKS.register("statue_of_liberty", ()-> new Statue(AbstractBlock.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> STATUE_OF_RIFLE_AMMO = BLOCKS.register("statue_of_rifle_ammo", ()-> new Statue(AbstractBlock.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> STATUE_OF_SHOTGUN_AMMO = BLOCKS.register("statue_of_shotgun_ammo", ()-> new Statue(AbstractBlock.Properties.create(Material.ROCK)));
+    public static final RegistryObject<Block> STATUE_OF_ROCKET = BLOCKS.register("statue_of_rocket", ()-> new Statue(AbstractBlock.Properties.create(Material.ROCK)));
+    public static final RegistryObject<Block> STATUE_OF_EXPLOSIVE = BLOCKS.register("statue_of_explosive", ()-> new Statue(AbstractBlock.Properties.create(Material.ROCK)));
 
     static {
         C4_ATOMIC_BOMB.setRegistryName(NuclearCraft.MODID, "c4_atomic_bomb");
