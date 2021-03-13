@@ -1,8 +1,8 @@
 package com.song.nuclear_craft.blocks;
 
 import com.song.nuclear_craft.blocks.tileentity.C4BombTileEntity;
-import com.song.nuclear_craft.blocks.tileentity.TileEntityList;
-import com.song.nuclear_craft.entities.SmokeRocketEntity;
+import com.song.nuclear_craft.blocks.tileentity.TileEntityRegister;
+import com.song.nuclear_craft.entities.rocket_entities.SmokeRocketEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
@@ -25,6 +25,6 @@ public class C4Smoke extends C4Bomb{
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new C4BombTileEntity(TileEntityList.C4_SMOKE_TE_TYPE, FUSE_TIME);
+        return new C4BombTileEntity(TileEntityRegister.C4_SMOKE_TE_TYPE, FUSE_TIME);
     }
 }

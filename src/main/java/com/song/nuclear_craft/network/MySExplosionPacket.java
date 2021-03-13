@@ -1,6 +1,6 @@
 package com.song.nuclear_craft.network;
 
-import com.song.nuclear_craft.entities.AtomicBombEntity;
+import com.song.nuclear_craft.entities.ExplosionUtils;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
@@ -39,7 +39,7 @@ public class MySExplosionPacket {
         ctx.get().enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, ()->()->{
 //            NetworkEvent.Context context = ctx.get();
 //            INetHandler handler = context.getNetworkManager().getNetHandler();
-            AtomicBombEntity.mushroomCloud(packet.x, packet.y, packet.z, packet.radius/2);
+            ExplosionUtils.mushroomCloud(packet.x, packet.y, packet.z, packet.radius/2);
         }));
         ctx.get().setPacketHandled(true);
     }

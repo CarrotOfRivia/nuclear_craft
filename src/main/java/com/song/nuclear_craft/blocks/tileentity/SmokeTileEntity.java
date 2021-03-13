@@ -6,7 +6,7 @@ import net.minecraft.tileentity.TileEntityType;
 
 public class SmokeTileEntity extends C4BombTileEntity{
     public SmokeTileEntity() {
-        super(TileEntityList.C4_SMOKE_TE_TYPE);
+        super(TileEntityRegister.C4_SMOKE_TE_TYPE);
     }
 
     public SmokeTileEntity(TileEntityType<?> tileEntityTypeIn, int explode_time) {

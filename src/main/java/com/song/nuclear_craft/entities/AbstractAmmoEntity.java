@@ -6,11 +6,9 @@ import com.song.nuclear_craft.items.Ammo.AmmoSize;
 import com.song.nuclear_craft.items.Ammo.AmmoType;
 import com.song.nuclear_craft.items.ItemList;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
-import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
@@ -28,13 +26,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.FMLPlayMessages;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
 
 public class AbstractAmmoEntity extends ProjectileItemEntity {
     private double energy;
@@ -68,14 +63,14 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
 
 //    @OnlyIn(Dist.CLIENT)
     public AbstractAmmoEntity(FMLPlayMessages.SpawnEntity entity, World world){
-        this(EntityList.BULLET_ENTITY.get(), world);
+        this(EntityRegister.BULLET_ENTITY.get(), world);
         this.setMotion(entity.getVelX(), entity.getVelY(), entity.getVelZ());
         this.setHeadRotation(entity.getYaw(), entity.getPitch());
         this.setPosition(entity.getPosX(), entity.getPosY(), entity.getPosZ());
     }
 
     public AbstractAmmoEntity(double x, double y, double z, World world, ItemStack itemStack, PlayerEntity shooter){
-        super(EntityList.BULLET_ENTITY.get(), x, y, z, world);
+        super(EntityRegister.BULLET_ENTITY.get(), x, y, z, world);
         this.setItem(itemStack);
         this.setShooter(shooter);
         this.bulletSize = ((AbstractAmmo)itemStack.getItem()).getSize().getSize();

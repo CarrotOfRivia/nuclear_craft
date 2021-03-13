@@ -1,25 +1,15 @@
-package com.song.nuclear_craft.entities;
+package com.song.nuclear_craft.entities.rocket_entities;
 
+import com.song.nuclear_craft.entities.ExplosionUtils;
+import com.song.nuclear_craft.entities.NukeExplosionHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MoverType;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireworkRocketEntity;
-import net.minecraft.entity.projectile.ProjectileHelper;
-import net.minecraft.item.FireworkRocketItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
 
 import javax.annotation.Nullable;
 
@@ -64,7 +54,8 @@ public class AtomicBombRocketEntity extends FireworkRocketEntity {
         this.remove();
         if (! this.world.isRemote) {
 //            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()->()->AtomicBombEntity.nukeExplode(world, this.boostedEntity, this.getPosX(), this.getPosY(), this.getPosZ(), AtomicBombEntity.NUKE_RADIUS, true));
-            AtomicBombEntity.nukeExplode(world, this.boostedEntity, this.getPosX(), this.getPosY(), this.getPosZ(), AtomicBombEntity.NUKE_RADIUS, true);
+//            ExplosionUtils.oldNukeExplode(world, this.boostedEntity, this.getPosX(), this.getPosY(), this.getPosZ(), ExplosionUtils.NUKE_RADIUS, true);
+            this.world.addEntity(new NukeExplosionHandler(this.getPosX(), this.getPosY(), this.getPosZ(), this.world));
         }
     }
 }

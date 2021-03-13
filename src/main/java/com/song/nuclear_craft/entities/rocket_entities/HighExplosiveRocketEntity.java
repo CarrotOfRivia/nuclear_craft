@@ -1,12 +1,12 @@
-package com.song.nuclear_craft.entities;
+package com.song.nuclear_craft.entities.rocket_entities;
 
+import com.song.nuclear_craft.entities.ExplosionUtils;
 import com.song.nuclear_craft.misc.Config;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.world.World;
@@ -57,7 +57,7 @@ public class HighExplosiveRocketEntity extends FireworkRocketEntity {
     private void explode(){
         this.remove();
         if (! this.world.isRemote) {
-            AtomicBombEntity.nukeExplode(world, this.boostedEntity, this.getPosX(), this.getPosY(), this.getPosZ(), HIGH_EXPLOSIVE_RADIUS, false, MAX_BLAST_POWER);
+            ExplosionUtils.oldNukeExplode(world, this.boostedEntity, this.getPosX(), this.getPosY(), this.getPosZ(), HIGH_EXPLOSIVE_RADIUS, false, MAX_BLAST_POWER);
         }
     }
 }

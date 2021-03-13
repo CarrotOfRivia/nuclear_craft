@@ -1,9 +1,8 @@
 package com.song.nuclear_craft.blocks;
 
 import com.song.nuclear_craft.blocks.tileentity.C4BombTileEntity;
-import com.song.nuclear_craft.blocks.tileentity.IncendiaryTileEntity;
-import com.song.nuclear_craft.blocks.tileentity.TileEntityList;
-import com.song.nuclear_craft.entities.IncendiaryRocketEntity;
+import com.song.nuclear_craft.blocks.tileentity.TileEntityRegister;
+import com.song.nuclear_craft.entities.rocket_entities.IncendiaryRocketEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
@@ -27,6 +26,6 @@ public class C4Incendiary extends C4Bomb{
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new C4BombTileEntity(TileEntityList.C4_INCENDIARY_TE_TYPE, FUSE_TIME);
+        return new C4BombTileEntity(TileEntityRegister.C4_INCENDIARY_TE_TYPE, FUSE_TIME);
     }
 }

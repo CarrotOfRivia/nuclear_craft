@@ -1,9 +1,9 @@
 package com.song.nuclear_craft.blocks;
 
 import com.song.nuclear_craft.blocks.tileentity.C4BombTileEntity;
-import com.song.nuclear_craft.blocks.tileentity.TileEntityList;
-import com.song.nuclear_craft.entities.AtomicBombEntity;
-import com.song.nuclear_craft.entities.HighExplosiveRocketEntity;
+import com.song.nuclear_craft.blocks.tileentity.TileEntityRegister;
+import com.song.nuclear_craft.entities.ExplosionUtils;
+import com.song.nuclear_craft.entities.rocket_entities.HighExplosiveRocketEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
@@ -20,12 +20,12 @@ public class C4HighExplosive extends C4Bomb{
 
     @Override
     public void explode(World world, double x, double y, double z) {
-        AtomicBombEntity.nukeExplode(world, null, x, y, z, HighExplosiveRocketEntity.HIGH_EXPLOSIVE_RADIUS, false, HighExplosiveRocketEntity.MAX_BLAST_POWER);
+        ExplosionUtils.oldNukeExplode(world, null, x, y, z, HighExplosiveRocketEntity.HIGH_EXPLOSIVE_RADIUS, false, HighExplosiveRocketEntity.MAX_BLAST_POWER);
     }
 
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new C4BombTileEntity(TileEntityList.C4_HIGH_EXPLOSIVE_TE_TYPE, FUSE_TIME);
+        return new C4BombTileEntity(TileEntityRegister.C4_HIGH_EXPLOSIVE_TE_TYPE, FUSE_TIME);
     }
 }

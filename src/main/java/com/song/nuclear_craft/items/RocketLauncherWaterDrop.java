@@ -1,8 +1,7 @@
 package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
-import com.song.nuclear_craft.entities.IncendiaryRocketEntity;
-import com.song.nuclear_craft.entities.WaterDropRocketEntity;
+import com.song.nuclear_craft.entities.rocket_entities.WaterDropRocketEntity;
 import com.song.nuclear_craft.misc.Config;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;

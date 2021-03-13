@@ -1,4 +1,4 @@
-package com.song.nuclear_craft.entities;
+package com.song.nuclear_craft.entities.rocket_entities;
 
 import com.song.nuclear_craft.misc.Config;
 import net.minecraft.block.Blocks;

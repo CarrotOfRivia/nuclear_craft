@@ -6,7 +6,7 @@ import com.song.nuclear_craft.entities.AbstractAmmoEntity;
 import com.song.nuclear_craft.items.Ammo.AmmoPossibleCombination;
 import com.song.nuclear_craft.items.Ammo.AmmoSize;
 import com.song.nuclear_craft.items.Ammo.AmmoType;
-import com.song.nuclear_craft.misc.ClientEventForgeSubscriber;
+import com.song.nuclear_craft.events.ClientEventForgeSubscriber;
 import com.song.nuclear_craft.network.GunLoadingPacket;
 import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
 import com.song.nuclear_craft.network.SoundPacket;

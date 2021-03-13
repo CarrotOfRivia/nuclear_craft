@@ -1,13 +1,10 @@
 package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
-import com.song.nuclear_craft.entities.HighExplosiveRocketEntity;
-import com.song.nuclear_craft.misc.ClientEventForgeSubscriber;
-import com.song.nuclear_craft.misc.SoundEventList;
+import com.song.nuclear_craft.events.ClientEventForgeSubscriber;
 import com.song.nuclear_craft.network.GunLoadingPacket;
 import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
 import com.song.nuclear_craft.network.SoundPacket;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;

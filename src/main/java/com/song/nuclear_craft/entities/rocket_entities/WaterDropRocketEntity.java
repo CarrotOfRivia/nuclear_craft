@@ -1,15 +1,13 @@
-package com.song.nuclear_craft.entities;
+package com.song.nuclear_craft.entities.rocket_entities;
 
+import com.song.nuclear_craft.entities.ExplosionUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
@@ -57,7 +55,7 @@ public class WaterDropRocketEntity extends FireworkRocketEntity {
     private void meltDown(World world, double x, double y, double z){
         if(! world.isRemote){
             float radius = 10f;
-            List<BlockPos> affectedBlockPositions = AtomicBombEntity.getAffectedBlockPositions(world, x, y, z, radius, 3600002);
+            List<BlockPos> affectedBlockPositions = ExplosionUtils.getAffectedBlockPositions(world, x, y, z, radius, 3600002);
             for(BlockPos blockPos: affectedBlockPositions){
                 if(blockPos.withinDistance(new Vector3i(x, y, z), radius/4)){
                     world.setBlockState(blockPos, Blocks.AIR.getDefaultState());

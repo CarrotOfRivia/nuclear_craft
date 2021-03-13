@@ -1,7 +1,7 @@
 package com.song.nuclear_craft.entities.AmmoEntities;
 
 import com.song.nuclear_craft.entities.AbstractAmmoEntity;
-import com.song.nuclear_craft.entities.AtomicBombEntity;
+import com.song.nuclear_craft.entities.ExplosionUtils;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -27,7 +27,7 @@ public class AmmoExplosiveEntity extends AbstractAmmoEntity {
         super.onImpact(result);
         teleportToHitPoint(result);
         if (!world.isRemote){
-            AtomicBombEntity.nukeExplode(world, this, this.getPosX(), this.getPosY(), this.getPosZ(), 5, false, 20);
+            ExplosionUtils.oldNukeExplode(world, this, this.getPosX(), this.getPosY(), this.getPosZ(), 5, false, 20);
         }
         this.remove();
     }

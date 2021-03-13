@@ -6,7 +6,7 @@ import net.minecraft.tileentity.TileEntityType;
 
 public class IncendiaryTileEntity extends C4BombTileEntity{
     public IncendiaryTileEntity() {
-        super(TileEntityList.C4_INCENDIARY_TE_TYPE);
+        super(TileEntityRegister.C4_INCENDIARY_TE_TYPE);
     }
 
     public IncendiaryTileEntity(TileEntityType<?> tileEntityTypeIn, int explode_time) {

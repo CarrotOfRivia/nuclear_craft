@@ -51,7 +51,7 @@ public class Config {
         ForgeConfigSpec.Builder CONFIG_BUILDER = new ForgeConfigSpec.Builder();
         CONFIG_BUILDER.comment("atomic bomb settings").push("nuclear_craft");
 
-        NUKE_RADIUS = CONFIG_BUILDER.comment("Atomic bomb explosion radius").defineInRange("nuke_radius", 80f, 0f, 256f);
+        NUKE_RADIUS = CONFIG_BUILDER.comment("Atomic bomb explosion radius").defineInRange("nuke_radius", 50f, 0f, 256f);
         HIGH_EXPLOSIVE_RADIUS = CONFIG_BUILDER.comment("High explosive bomb radius").defineInRange("high_explosive", 10f, 0f, 80f);
         SMOKE_RADIUS = CONFIG_BUILDER.comment("Smoke bomb radius").defineInRange("smoke_bomb", 30f, 0f, 256f);
         INCENDIARY_COUNT = CONFIG_BUILDER.comment("Number of flames from incendiary").defineInRange("incendiary_bomb", 100, 0, 10000);

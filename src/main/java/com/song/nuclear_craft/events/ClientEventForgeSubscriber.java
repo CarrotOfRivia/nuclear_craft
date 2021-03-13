@@ -1,16 +1,24 @@
-package com.song.nuclear_craft.misc;
+package com.song.nuclear_craft.events;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.blocks.container.C4BombContainerScreen;
 import com.song.nuclear_craft.client.ScopeZoomGui;
 import com.song.nuclear_craft.items.AbstractGunItem;
+import com.song.nuclear_craft.misc.SoundEventList;
 import com.song.nuclear_craft.network.C4BombSettingPacket;
 import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
+import net.minecraft.block.Block;
+import net.minecraft.block.GrassBlock;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.widget.button.ImageButton;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,10 +26,8 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.FOVUpdateEvent;
-import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.client.event.*;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -38,8 +44,24 @@ public class ClientEventForgeSubscriber {
     private static double mouseSensitivityBefore = Minecraft.getInstance().gameSettings.mouseSensitivity;
     private static final float fovBefore = 1f;
 
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void onRenderWorldLastEvent(final RenderWorldLastEvent event){
+        ClientPlayerEntity player = Minecraft.getInstance().player;
+        if (player == null) {
+            return;
+        }
+
+        IRenderTypeBuffer.Impl renderTypeBuffer = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource();
+        MatrixStack matrixStack = event.getMatrixStack();
+        matrixStack.push();
+        IVertexBuilder builder = renderTypeBuffer.getBuffer(RenderType.getTranslucent());
+        builder.color(255, 0f, 0f, 255);
+        renderTypeBuffer.finish(RenderType.getTranslucent());
+        matrixStack.pop();
+    }
+
     @SubscribeEvent
-    public static void onInitGuiEvent(final GuiScreenEvent.InitGuiEvent event){
+    public void onInitGuiEvent(final GuiScreenEvent.InitGuiEvent event){
         Screen gui = event.getGui();
         if (gui instanceof C4BombContainerScreen){
             int i = (gui.width - ((C4BombContainerScreen) gui).getXSize()) / 2;
@@ -75,7 +97,7 @@ public class ClientEventForgeSubscriber {
     }
 
     @SubscribeEvent
-    public static void onFovUpdate(final FOVUpdateEvent event){
+    public void onFovUpdate(final FOVUpdateEvent event){
         PlayerEntity entity = event.getEntity();
         Item item = entity.getHeldItemMainhand().getItem();
         if(zoom.isPressed()){
@@ -115,7 +137,7 @@ public class ClientEventForgeSubscriber {
     }
 
     @SubscribeEvent
-    public static void onOverlayRender(final RenderGameOverlayEvent event){
+    public void onOverlayRender(final RenderGameOverlayEvent event){
         if(zoomState>0){
             MainWindow window = event.getWindow();
             new ScopeZoomGui(Minecraft.getInstance()).drawGuiContainerBackgroundLayer(event.getMatrixStack(), window.getWindowX(), window.getWindowY(), window.getScaledWidth(), window.getScaledHeight());
@@ -123,7 +145,7 @@ public class ClientEventForgeSubscriber {
     }
 
     @SubscribeEvent
-    public static void onPlayerRender(final RenderPlayerEvent event){
+    public void onPlayerRender(final RenderPlayerEvent event){
         PlayerEntity playerEntity = event.getPlayer();
         if(playerEntity.getHeldItemMainhand().getItem() instanceof AbstractGunItem){
             if(event.isCancelable()){

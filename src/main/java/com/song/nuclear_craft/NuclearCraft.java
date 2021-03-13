@@ -1,22 +1,25 @@
 package com.song.nuclear_craft;
 
 import com.song.nuclear_craft.blocks.BlockList;
-import com.song.nuclear_craft.blocks.tileentity.TileEntityList;
+import com.song.nuclear_craft.blocks.container.C4BombContainerScreen;
+import com.song.nuclear_craft.blocks.tileentity.TileEntityRegister;
 import com.song.nuclear_craft.blocks.container.ContainerTypeList;
-import com.song.nuclear_craft.entities.EntityList;
+import com.song.nuclear_craft.entities.EntityRegister;
+import com.song.nuclear_craft.events.ClientEventBusSubscriber;
 import com.song.nuclear_craft.items.Ammo.AmmoSize;
 import com.song.nuclear_craft.items.Ammo.AmmoType;
 import com.song.nuclear_craft.items.ItemList;
-import com.song.nuclear_craft.misc.ClientEventForgeSubscriber;
+import com.song.nuclear_craft.events.ClientEventForgeSubscriber;
 import com.song.nuclear_craft.misc.Config;
 import com.song.nuclear_craft.network.*;
-import com.song.nuclear_craft.particles.NukeParticle;
-import com.song.nuclear_craft.particles.ParticleList;
+import com.song.nuclear_craft.particles.*;
 import com.song.nuclear_craft.villagers.PointOfInterestTypes;
 import com.song.nuclear_craft.villagers.ProfessionTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
@@ -32,6 +35,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -83,8 +87,8 @@ public class NuclearCraft
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.CONFIG);
 
-        EntityList.ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
-        ParticleList.PARTICLES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        EntityRegister.ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ParticleRegister.PARTICLES.register(FMLJavaModLoadingContext.get().getModEventBus());
         ItemList.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         BlockList.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ProfessionTypes.VILLAGER_PROFESSION.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -108,6 +112,15 @@ public class NuclearCraft
         ClientEventForgeSubscriber.zoom = new KeyBinding("key."+MODID+".zoom", GLFW.GLFW_KEY_Z, "key."+MODID+".categories");
         ClientRegistry.registerKeyBinding(ClientEventForgeSubscriber.gunReload);
         ClientRegistry.registerKeyBinding(ClientEventForgeSubscriber.zoom);
+
+        ScreenManager.registerFactory(ContainerTypeList.C4_BOMB_CONTAINER_TYPE, C4BombContainerScreen::new);
+
+        RenderingRegistry.registerEntityRenderingHandler(EntityRegister.BULLET_ENTITY.get(),
+                renderManager -> new SpriteRenderer<>(renderManager,  Minecraft.getInstance().getItemRenderer())
+        );
+
+        MinecraftForge.EVENT_BUS.register(new ClientEventForgeSubscriber());
+        MinecraftForge.EVENT_BUS.register(new ClientEventBusSubscriber());
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
@@ -157,8 +170,8 @@ public class NuclearCraft
         @SubscribeEvent
         public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event){
             // Tile Entities
-            event.getRegistry().registerAll(TileEntityList.C4_ATOMIC_BOMB_TE_TYPE, TileEntityList.C4_HIGH_EXPLOSIVE_TE_TYPE,
-                    TileEntityList.C4_INCENDIARY_TE_TYPE, TileEntityList.C4_SMOKE_TE_TYPE);
+            event.getRegistry().registerAll(TileEntityRegister.C4_ATOMIC_BOMB_TE_TYPE, TileEntityRegister.C4_HIGH_EXPLOSIVE_TE_TYPE,
+                    TileEntityRegister.C4_INCENDIARY_TE_TYPE, TileEntityRegister.C4_SMOKE_TE_TYPE);
         }
 
         @SubscribeEvent
@@ -169,9 +182,13 @@ public class NuclearCraft
 
         @SubscribeEvent
         public static void onParticleFactoryRegistry(final ParticleFactoryRegisterEvent event){
-            Minecraft.getInstance().particles.registerFactory(ParticleList.NUKE_PARTICLE_SMOKE.get(), NukeParticle.NukeParticleFactory::new);
-            Minecraft.getInstance().particles.registerFactory(ParticleList.NUKE_PARTICLE_FIRE.get(), NukeParticle.NukeParticleFactory::new);
-            Minecraft.getInstance().particles.registerFactory(ParticleList.BIG_SMOKE.get(), NukeParticle.BigSmokeFactory::new);
+            Minecraft.getInstance().particles.registerFactory(ParticleRegister.NUKE_PARTICLE_SMOKE.get(), BigSmokeParticle.NukeParticleFactory::new);
+            Minecraft.getInstance().particles.registerFactory(ParticleRegister.NUKE_PARTICLE_FIRE.get(), BigSmokeParticle.NukeParticleFactory::new);
+            Minecraft.getInstance().particles.registerFactory(ParticleRegister.BIG_SMOKE.get(), BigSmokeParticle.BigSmokeFactory::new);
+            Minecraft.getInstance().particles.registerFactory(ParticleRegister.RESTRICTED_HEIGHT_SMOKE_PARTICLE.get(), RestrictedSmokeParticle.Factory::new);
+            Minecraft.getInstance().particles.registerFactory(ParticleRegister.DOWN_SMOKE.get(), DownSmoke.Factory::new);
+
+            Minecraft.getInstance().particles.registerFactory(ParticleRegister.EXPLODE_CORE.get(), ExplodeCoreParticle.Factory::new);
         }
 
         @SubscribeEvent

@@ -1,9 +1,8 @@
 package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
-import com.song.nuclear_craft.entities.AtomicBombRocketEntity;
+import com.song.nuclear_craft.entities.rocket_entities.AtomicBombRocketEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.item.FireworkRocketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -12,10 +11,8 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
 
 @Deprecated
 public class AtomicBombRocket extends FireworkRocketItem {

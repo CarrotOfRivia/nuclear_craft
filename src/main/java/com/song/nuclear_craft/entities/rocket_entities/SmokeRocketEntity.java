@@ -1,9 +1,9 @@
-package com.song.nuclear_craft.entities;
+package com.song.nuclear_craft.entities.rocket_entities;
 
 import com.song.nuclear_craft.misc.Config;
 import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
-import com.song.nuclear_craft.network.SmokeBombPacket;
-import com.song.nuclear_craft.particles.ParticleList;
+import com.song.nuclear_craft.network.ParticlePacket;
+import com.song.nuclear_craft.particles.ParticleRegister;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
@@ -73,7 +73,7 @@ public class SmokeRocketEntity extends FireworkRocketEntity {
         world.playSound(null, x, y, z, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 20, 1f);
         for(PlayerEntity playerEntity : world.getPlayers()){
             ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) playerEntity;
-            NuclearCraftPacketHandler.SMOKE_BOMB_CHANNEL.send(PacketDistributor.PLAYER.with(()->serverPlayerEntity), new SmokeBombPacket(x, y, z));
+            NuclearCraftPacketHandler.PARTICLE_CHANNEL.send(PacketDistributor.PLAYER.with(()->serverPlayerEntity), new ParticlePacket(x, y, z, "smoke_bomb"));
         }
     }
 
@@ -85,7 +85,7 @@ public class SmokeRocketEntity extends FireworkRocketEntity {
             for(double deltaY = -SMOKE_RADIUS; deltaY <= SMOKE_RADIUS; deltaY +=3){
                 for(double deltaZ = -SMOKE_RADIUS; deltaZ <= SMOKE_RADIUS; deltaZ +=3){
                     if ((deltaX*deltaX+deltaY*deltaY+deltaZ*deltaZ < SMOKE_RADIUS*SMOKE_RADIUS)&&(random.nextDouble()>0.7)&&(world.getBlockState(new BlockPos(x+deltaX, y+deltaY, z+deltaZ)))== Blocks.AIR.getDefaultState()){
-                        world.addParticle((IParticleData) ParticleList.BIG_SMOKE.get(), x+deltaX, y+deltaY, z+deltaZ, 0.03*(random.nextDouble()-0.5), 0.03*(random.nextDouble()-0.5), 0.03*(random.nextDouble()-0.5));
+                        world.addParticle((IParticleData) ParticleRegister.BIG_SMOKE.get(), x+deltaX, y+deltaY, z+deltaZ, 0.03*(random.nextDouble()-0.5), 0.03*(random.nextDouble()-0.5), 0.03*(random.nextDouble()-0.5));
                     }
                 }
             }

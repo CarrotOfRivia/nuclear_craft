@@ -1,7 +1,6 @@
 package com.song.nuclear_craft.entities.AmmoEntities;
 
 import com.song.nuclear_craft.entities.AbstractAmmoEntity;
-import com.song.nuclear_craft.entities.EntityList;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;

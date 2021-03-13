@@ -1,7 +1,7 @@
 package com.song.nuclear_craft.entities.AmmoEntities;
 
 import com.song.nuclear_craft.entities.AbstractAmmoEntity;
-import com.song.nuclear_craft.entities.IncendiaryRocketEntity;
+import com.song.nuclear_craft.entities.rocket_entities.IncendiaryRocketEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;

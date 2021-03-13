@@ -4,7 +4,6 @@ import com.song.nuclear_craft.NuclearCraft;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -13,7 +12,7 @@ public class BlockList {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, NuclearCraft.MODID);
 
     // TO be removed:
-    public static final Block ATOMIC_BOMB = new AtomicBomb().setRegistryName("atomic_bomb");
+//    public static final Block ATOMIC_BOMB = new AtomicBomb().setRegistryName("atomic_bomb");
     public static final Block URANIUM_ORE = new UraniumOre().setRegistryName("uranium_ore");
     public static final Block URANIUM_CENTRIFUGE = new UraniumCentrifuge().setRegistryName("uranium_centrifuge");
 
