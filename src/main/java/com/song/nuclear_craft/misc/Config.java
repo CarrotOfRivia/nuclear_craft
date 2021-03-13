@@ -47,9 +47,17 @@ public class Config {
     public static final GunConfigurable BARRETT_CONFIG = new GunConfigurable();
     public static final GunConfigurable M4A4_CONFIG = new GunConfigurable();
 
+    public static final ForgeConfigSpec.DoubleValue AMMO_BLOCK_BREAK_THRESHOLD;
+    public static final ForgeConfigSpec.DoubleValue AMMO_SILVER_BLOCK_BREAK_THRESHOLD;
+    public static final ForgeConfigSpec.DoubleValue AMMO_TUNGSTEN_BLOCK_BREAK_THRESHOLD;
+
     static {
         ForgeConfigSpec.Builder CONFIG_BUILDER = new ForgeConfigSpec.Builder();
         CONFIG_BUILDER.comment("atomic bomb settings").push("nuclear_craft");
+
+        AMMO_BLOCK_BREAK_THRESHOLD = CONFIG_BUILDER.comment("Normal ammo can break blocks with blast resist lower than this value").defineInRange("ammo_block_break_threshold", 3d, -10, 99999);
+        AMMO_SILVER_BLOCK_BREAK_THRESHOLD = CONFIG_BUILDER.comment("Silver ammo can break blocks with blast resist lower than this value").defineInRange("ammo_silver_block_break_threshold", 6d, -10, 99999);
+        AMMO_TUNGSTEN_BLOCK_BREAK_THRESHOLD = CONFIG_BUILDER.comment("Tungsten ammo can break blocks with blast resist lower than this value").defineInRange("ammo_tungsten_block_break_threshold", 6d, -10, 99999);
 
         NUKE_RADIUS = CONFIG_BUILDER.comment("Atomic bomb explosion radius").defineInRange("nuke_radius", 50f, 0f, 256f);
         HIGH_EXPLOSIVE_RADIUS = CONFIG_BUILDER.comment("High explosive bomb radius").defineInRange("high_explosive", 10f, 0f, 80f);
