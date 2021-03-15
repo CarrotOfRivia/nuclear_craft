@@ -5,7 +5,7 @@ import com.song.nuclear_craft.items.AbstractAmmo;
 import com.song.nuclear_craft.items.Ammo.AmmoSize;
 import com.song.nuclear_craft.items.Ammo.AmmoType;
 import com.song.nuclear_craft.items.ItemList;
-import com.song.nuclear_craft.misc.Config;
+import com.song.nuclear_craft.misc.ConfigCommon;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -124,7 +124,7 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
 
                 if (raytraceresult != null && raytraceresult.getType() == RayTraceResult.Type.ENTITY) {
                     Entity entity = ((EntityRayTraceResult)raytraceresult).getEntity();
-                    Entity indirect = this.func_234616_v_();
+                    Entity indirect = this.getShooter();
                     if (entity instanceof PlayerEntity && indirect instanceof PlayerEntity && !((PlayerEntity)indirect).canAttackPlayer((PlayerEntity)entity)) {
                         raytraceresult = null;
                     }
@@ -171,7 +171,7 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
         }
         double damage = this.baseDamage * getEnergy(this.getMotion().length()) / this.initEnergy;
         // get shooter
-        DamageSource damageSource = new IndirectEntityDamageSource(new ResourceLocation(NuclearCraft.MODID, "bullet").toString(), this, this.func_234616_v_()).setProjectile();
+        DamageSource damageSource = new IndirectEntityDamageSource(new ResourceLocation(NuclearCraft.MODID, "bullet").toString(), this, this.getShooter()).setProjectile();
         boolean result = entity.attackEntityFrom(damageSource, (float) damage);
 
         if (result){
@@ -230,7 +230,7 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
     }
 
     public double getBlockBreakThreshold(){
-        return Config.AMMO_BLOCK_BREAK_THRESHOLD.get();
+        return ConfigCommon.AMMO_BLOCK_BREAK_THRESHOLD.get();
     }
 
     public double getEnergyLoss(double blastResist){

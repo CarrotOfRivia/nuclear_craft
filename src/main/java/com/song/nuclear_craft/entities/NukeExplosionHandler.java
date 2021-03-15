@@ -1,11 +1,9 @@
 package com.song.nuclear_craft.entities;
 
-import com.song.nuclear_craft.misc.Config;
+import com.song.nuclear_craft.misc.ConfigCommon;
 import com.song.nuclear_craft.network.*;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.WoodType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -19,7 +17,6 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -96,7 +93,7 @@ public class NukeExplosionHandler extends Entity {
     }
 
     public static float getBlastRadius(){
-        return Config.NUKE_RADIUS.get().floatValue();
+        return ConfigCommon.NUKE_RADIUS.get().floatValue();
     }
 
     public static int getStageOneTick(){
@@ -154,7 +151,7 @@ public class NukeExplosionHandler extends Entity {
         super.tick();
         if(! world.isRemote()){
             if(age == getStageOneTick()){
-                ExplosionUtils.oldNukeExplode(this.world, null, this.getPosX(), this.getPosY(), this.getPosZ(), getBlastRadius(), false, Config.NUKE_BLAST_POWER.get());
+                ExplosionUtils.oldNukeExplode(this.world, null, this.getPosX(), this.getPosY(), this.getPosZ(), getBlastRadius(), false, ConfigCommon.NUKE_BLAST_POWER.get());
             }
             if(age == getStageTwoTick()){
                 effectNeighbor();

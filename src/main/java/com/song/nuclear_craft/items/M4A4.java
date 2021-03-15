@@ -2,7 +2,7 @@ package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.items.Ammo.AmmoSize;
-import com.song.nuclear_craft.misc.Config;
+import com.song.nuclear_craft.misc.ConfigCommon;
 
 import javax.annotation.Nonnull;
 
@@ -39,12 +39,12 @@ public class M4A4 extends AbstractGunItem{
 
     @Override
     public float getSpeedModifier() {
-        return Config.M4A4_CONFIG.getSpeedModify().get().floatValue();
+        return ConfigCommon.M4A4_CONFIG.getSpeedModify().get().floatValue();
     }
 
     @Override
     public double getDamageModifier() {
-        return Config.M4A4_CONFIG.getDamageModify().get();
+        return ConfigCommon.M4A4_CONFIG.getDamageModify().get();
     }
 
     @Override

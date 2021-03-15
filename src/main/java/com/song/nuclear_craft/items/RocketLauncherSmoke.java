@@ -2,7 +2,7 @@ package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.entities.rocket_entities.SmokeRocketEntity;
-import com.song.nuclear_craft.misc.Config;
+import com.song.nuclear_craft.misc.ConfigCommon;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.FireworkRocketEntity;
@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class RocketLauncherSmoke extends RocketLauncherWithAmmo {
-    private static final int MAX_AMMO = Config.SMOKE_MAX_AMMO.get();
+    private static final int MAX_AMMO = ConfigCommon.SMOKE_MAX_AMMO.get();
     public RocketLauncherSmoke() {
         super(new Item.Properties().maxStackSize(1).group(NuclearCraft.ITEM_GROUP));
         this.coolDown = 5;
@@ -32,7 +32,7 @@ public class RocketLauncherSmoke extends RocketLauncherWithAmmo {
 
     @Override
     protected int getMAX_AMMO() {
-        return Config.SMOKE_MAX_AMMO.get();
+        return ConfigCommon.SMOKE_MAX_AMMO.get();
     }
 
     @Override

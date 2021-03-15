@@ -1,6 +1,6 @@
 package com.song.nuclear_craft.entities.rocket_entities;
 
-import com.song.nuclear_craft.misc.Config;
+import com.song.nuclear_craft.misc.ConfigCommon;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -8,9 +8,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.entity.projectile.SmallFireballEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.RangedInteger;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -21,7 +19,7 @@ import javax.annotation.Nullable;
 import java.util.Random;
 
 public class IncendiaryRocketEntity extends FireworkRocketEntity {
-    public static int N_FIRE_BALLS = Config.INCENDIARY_COUNT.get();
+    public static int N_FIRE_BALLS = ConfigCommon.INCENDIARY_COUNT.get();
     public IncendiaryRocketEntity(EntityType<? extends FireworkRocketEntity> p_i50164_1_, World p_i50164_2_) {
         super(p_i50164_1_, p_i50164_2_);
     }

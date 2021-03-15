@@ -1,6 +1,6 @@
 package com.song.nuclear_craft.entities.rocket_entities;
 
-import com.song.nuclear_craft.misc.Config;
+import com.song.nuclear_craft.misc.ConfigCommon;
 import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
 import com.song.nuclear_craft.network.ParticlePacket;
 import com.song.nuclear_craft.particles.ParticleRegister;
@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
 import java.util.Random;
 
 public class SmokeRocketEntity extends FireworkRocketEntity {
-    public static double SMOKE_RADIUS = Config.SMOKE_RADIUS.get().floatValue();
+    public static double SMOKE_RADIUS = ConfigCommon.SMOKE_RADIUS.get().floatValue();
     public SmokeRocketEntity(EntityType<? extends FireworkRocketEntity> p_i50164_1_, World p_i50164_2_) {
         super(p_i50164_1_, p_i50164_2_);
     }

@@ -2,7 +2,7 @@ package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.entities.rocket_entities.HighExplosiveRocketEntity;
-import com.song.nuclear_craft.misc.Config;
+import com.song.nuclear_craft.misc.ConfigCommon;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.FireworkRocketEntity;
@@ -27,7 +27,7 @@ public class RocketLauncherHighExplosive extends RocketLauncherWithAmmo {
 
     @Override
     protected int getMAX_AMMO() {
-        return Config.HIGH_EXPLOSIVE_MAX_AMMO.get();
+        return ConfigCommon.HIGH_EXPLOSIVE_MAX_AMMO.get();
     }
 
     @Override

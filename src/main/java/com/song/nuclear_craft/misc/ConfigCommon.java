@@ -12,7 +12,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import java.util.HashMap;
 
 @Mod.EventBusSubscriber
-public class Config {
+public class ConfigCommon {
     public static ForgeConfigSpec CONFIG;
 
     public static ForgeConfigSpec.DoubleValue NUKE_RADIUS;

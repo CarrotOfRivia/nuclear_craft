@@ -10,7 +10,8 @@ import com.song.nuclear_craft.items.Ammo.AmmoSize;
 import com.song.nuclear_craft.items.Ammo.AmmoType;
 import com.song.nuclear_craft.items.ItemList;
 import com.song.nuclear_craft.events.ClientEventForgeSubscriber;
-import com.song.nuclear_craft.misc.Config;
+import com.song.nuclear_craft.misc.ConfigClient;
+import com.song.nuclear_craft.misc.ConfigCommon;
 import com.song.nuclear_craft.network.*;
 import com.song.nuclear_craft.particles.*;
 import com.song.nuclear_craft.villagers.PointOfInterestTypes;
@@ -85,7 +86,8 @@ public class NuclearCraft
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.CONFIG);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigCommon.CONFIG);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigClient.CONFIG);
 
         EntityRegister.ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
         ParticleRegister.PARTICLES.register(FMLJavaModLoadingContext.get().getModEventBus());

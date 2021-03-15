@@ -1,7 +1,7 @@
 package com.song.nuclear_craft.entities;
 
 import com.google.common.collect.Lists;
-import com.song.nuclear_craft.misc.Config;
+import com.song.nuclear_craft.misc.ConfigCommon;
 import com.song.nuclear_craft.misc.NukeExplosion;
 import com.song.nuclear_craft.network.MySExplosionPacket;
 import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.Random;
 
 public class ExplosionUtils{
-    public static final float NUKE_RADIUS = Config.NUKE_RADIUS.get().floatValue();
-    public static final double MAX_BLAST_POWER = Config.NUKE_BLAST_POWER.get();
+    public static final float NUKE_RADIUS = ConfigCommon.NUKE_RADIUS.get().floatValue();
+    public static final double MAX_BLAST_POWER = ConfigCommon.NUKE_BLAST_POWER.get();
 
     public static final float Y_SHORTEN=1.5f;
 

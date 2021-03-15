@@ -1,11 +1,9 @@
 package com.song.nuclear_craft.entities.AmmoEntities;
 
 import com.song.nuclear_craft.entities.AbstractAmmoEntity;
-import com.song.nuclear_craft.misc.Config;
+import com.song.nuclear_craft.misc.ConfigCommon;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.FMLPlayMessages;
@@ -26,6 +24,6 @@ public class AmmoNormalEntity extends AbstractAmmoEntity {
 
     @Override
     public double getRicochetEnergyLoss() {
-        return Config.AMMO_NORMAL_RICOCHET_LOSS.get();
+        return ConfigCommon.AMMO_NORMAL_RICOCHET_LOSS.get();
     }
 }

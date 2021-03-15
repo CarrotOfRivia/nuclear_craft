@@ -4,7 +4,7 @@ import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.items.Ammo.AmmoPossibleCombination;
 import com.song.nuclear_craft.items.Ammo.AmmoSize;
 import com.song.nuclear_craft.items.Ammo.AmmoType;
-import com.song.nuclear_craft.misc.Config;
+import com.song.nuclear_craft.misc.ConfigCommon;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -46,15 +46,15 @@ public class AbstractAmmo extends Item {
     }
 
     public double getBaseDamage(){
-        return Config.DAMAGE_MAP.get(size).get(type).get();
+        return ConfigCommon.DAMAGE_MAP.get(size).get(type).get();
     }
 
     public float getBaseSpeed() {
-        return Config.SPEED_MAP.get(size).get(type).get().floatValue();
+        return ConfigCommon.SPEED_MAP.get(size).get(type).get().floatValue();
     }
 
     public double getGravity() {
-        return Config.GRAVITY_MAP.get(size).get(type).get();
+        return ConfigCommon.GRAVITY_MAP.get(size).get(type).get();
     }
 
     @Override
@@ -69,12 +69,12 @@ public class AbstractAmmo extends Item {
         if(AmmoPossibleCombination.SHOTGUN_AMMO.getAmmoTypes().contains(getType())){
             // ShortGun ammo damage: dmg*count
             tooltip.add(new TranslationTextComponent(String.format("tooltip.%s.ammo.base_damage", NuclearCraft.MODID))
-                    .append(new StringTextComponent(String.format(" %.2f x %d", getBaseDamage(), Config.BIRD_SHOT_COUNT_MAP.get(getType()).get()))).mergeStyle(TextFormatting.GRAY));
+                    .appendSibling(new StringTextComponent(String.format(" %.2f x %d", getBaseDamage(), ConfigCommon.BIRD_SHOT_COUNT_MAP.get(getType()).get()))).mergeStyle(TextFormatting.GRAY));
         }
         else {
-            tooltip.add(new TranslationTextComponent(String.format("tooltip.%s.ammo.base_damage", NuclearCraft.MODID)).append(new StringTextComponent(String.format(" %.2f", getBaseDamage())).mergeStyle(TextFormatting.GRAY)));
+            tooltip.add(new TranslationTextComponent(String.format("tooltip.%s.ammo.base_damage", NuclearCraft.MODID)).appendSibling(new StringTextComponent(String.format(" %.2f", getBaseDamage())).mergeStyle(TextFormatting.GRAY)));
         }
-        tooltip.add(new TranslationTextComponent(String.format("tooltip.%s.ammo.base_speed", NuclearCraft.MODID)).append(new StringTextComponent(String.format(" %.2f m/s", 20*getBaseSpeed())).mergeStyle(TextFormatting.GRAY)));
-        tooltip.add(new TranslationTextComponent(String.format("tooltip.%s.ammo.gravity", NuclearCraft.MODID)).append(new StringTextComponent(String.format(" %.2f m/s^2", 400*getGravity()))).mergeStyle(TextFormatting.GRAY));
+        tooltip.add(new TranslationTextComponent(String.format("tooltip.%s.ammo.base_speed", NuclearCraft.MODID)).appendSibling(new StringTextComponent(String.format(" %.2f m/s", 20*getBaseSpeed())).mergeStyle(TextFormatting.GRAY)));
+        tooltip.add(new TranslationTextComponent(String.format("tooltip.%s.ammo.gravity", NuclearCraft.MODID)).appendSibling(new StringTextComponent(String.format(" %.2f m/s^2", 400*getGravity()))).mergeStyle(TextFormatting.GRAY));
     }
 }

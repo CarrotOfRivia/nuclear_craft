@@ -2,8 +2,7 @@ package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.items.Ammo.AmmoSize;
-import com.song.nuclear_craft.misc.Config;
-import com.song.nuclear_craft.misc.SoundEventList;
+import com.song.nuclear_craft.misc.ConfigCommon;
 
 import javax.annotation.Nonnull;
 
@@ -40,12 +39,12 @@ public class Glock extends AbstractGunItem{
 
     @Override
     public float getSpeedModifier() {
-        return Config.GLOCK_CONFIG.getSpeedModify().get().floatValue();
+        return ConfigCommon.GLOCK_CONFIG.getSpeedModify().get().floatValue();
     }
 
     @Override
     public double getDamageModifier() {
-        return Config.GLOCK_CONFIG.getDamageModify().get();
+        return ConfigCommon.GLOCK_CONFIG.getDamageModify().get();
     }
 
     @Override

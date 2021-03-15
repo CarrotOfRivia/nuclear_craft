@@ -1,7 +1,7 @@
 package com.song.nuclear_craft.entities.rocket_entities;
 
 import com.song.nuclear_craft.entities.ExplosionUtils;
-import com.song.nuclear_craft.misc.Config;
+import com.song.nuclear_craft.misc.ConfigCommon;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -16,9 +16,9 @@ import javax.annotation.Nullable;
 
 public class HighExplosiveRocketEntity extends FireworkRocketEntity {
     private LivingEntity boostedEntity;
-    public static final double MAX_BLAST_POWER = Config.HIGH_EXPLOSIVE_BLAST_POWER.get();
+    public static final double MAX_BLAST_POWER = ConfigCommon.HIGH_EXPLOSIVE_BLAST_POWER.get();
 
-    public static float HIGH_EXPLOSIVE_RADIUS = Config.HIGH_EXPLOSIVE_RADIUS.get().floatValue();
+    public static float HIGH_EXPLOSIVE_RADIUS = ConfigCommon.HIGH_EXPLOSIVE_RADIUS.get().floatValue();
     public HighExplosiveRocketEntity(EntityType<? extends FireworkRocketEntity> p_i50164_1_, World p_i50164_2_) {
         super(p_i50164_1_, p_i50164_2_);
     }

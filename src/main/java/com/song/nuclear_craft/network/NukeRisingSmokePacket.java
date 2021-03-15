@@ -1,5 +1,6 @@
 package com.song.nuclear_craft.network;
 
+import com.song.nuclear_craft.misc.ConfigClient;
 import com.song.nuclear_craft.particles.ParticleRegister;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
@@ -49,7 +50,7 @@ public class NukeRisingSmokePacket {
 //            INetHandler handler = context.getNetworkManager().getNetHandler();
             ClientWorld world = Minecraft.getInstance().world;
             Random random = new Random();
-            if(world != null){
+            if(ConfigClient.RENDER_MUSHROOM_CLOUD.get() && world != null){
                 for (int i=0; i<getNumParticles(); i++){
                     double theta = 2*Math.PI*(i+0.2*random.nextDouble())/(getNumParticles());
                     double this_x = packet.x + packet.radius*Math.cos(theta);

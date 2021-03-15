@@ -2,7 +2,7 @@ package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.items.Ammo.AmmoSize;
-import com.song.nuclear_craft.misc.Config;
+import com.song.nuclear_craft.misc.ConfigCommon;
 
 import javax.annotation.Nonnull;
 
@@ -34,12 +34,12 @@ public class USP extends AbstractGunItem{
     }
     @Override
     public float getSpeedModifier() {
-        return Config.USP_CONFIG.getSpeedModify().get().floatValue();
+        return ConfigCommon.USP_CONFIG.getSpeedModify().get().floatValue();
     }
 
     @Override
     public double getDamageModifier() {
-        return Config.USP_CONFIG.getDamageModify().get();
+        return ConfigCommon.USP_CONFIG.getDamageModify().get();
     }
 
     @Override

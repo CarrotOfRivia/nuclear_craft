@@ -2,7 +2,7 @@ package com.song.nuclear_craft.items;
 
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.entities.rocket_entities.WaterDropRocketEntity;
-import com.song.nuclear_craft.misc.Config;
+import com.song.nuclear_craft.misc.ConfigCommon;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.FireworkRocketEntity;
@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class RocketLauncherWaterDrop extends RocketLauncherWithAmmo{
-    private static final int MAX_AMMO = Config.INCENDIARY_MAX_AMMO.get();
+    private static final int MAX_AMMO = ConfigCommon.INCENDIARY_MAX_AMMO.get();
 
     public RocketLauncherWaterDrop() {
         super(new Properties().maxStackSize(1).group(NuclearCraft.ITEM_GROUP));
@@ -33,7 +33,7 @@ public class RocketLauncherWaterDrop extends RocketLauncherWithAmmo{
 
     @Override
     protected int getMAX_AMMO() {
-        return Config.WATER_DROP_MAX_AMMO.get();
+        return ConfigCommon.WATER_DROP_MAX_AMMO.get();
     }
 
     @Override

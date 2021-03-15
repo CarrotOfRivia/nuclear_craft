@@ -1,7 +1,7 @@
 package com.song.nuclear_craft.entities.AmmoEntities;
 
 import com.song.nuclear_craft.entities.AbstractAmmoEntity;
-import com.song.nuclear_craft.misc.Config;
+import com.song.nuclear_craft.misc.ConfigCommon;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -24,11 +24,11 @@ public class AmmoTungstenEntity extends AbstractAmmoEntity {
 
     @Override
     public double getBlockBreakThreshold() {
-        return Config.AMMO_TUNGSTEN_BLOCK_BREAK_THRESHOLD.get();
+        return ConfigCommon.AMMO_TUNGSTEN_BLOCK_BREAK_THRESHOLD.get();
     }
 
     @Override
     public double getRicochetEnergyLoss() {
-        return Config.AMMO_TUNGSTEN_RICOCHET_LOSS.get();
+        return ConfigCommon.AMMO_TUNGSTEN_RICOCHET_LOSS.get();
     }
 }

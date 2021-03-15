@@ -3,7 +3,7 @@ package com.song.nuclear_craft.items;
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.items.Ammo.AmmoSize;
 import com.song.nuclear_craft.items.Ammo.AmmoType;
-import com.song.nuclear_craft.misc.Config;
+import com.song.nuclear_craft.misc.ConfigCommon;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 
@@ -57,7 +57,7 @@ public class Nova extends AbstractGunItem{
 
     @Override
     protected int getBirdShotCount(AmmoType ammoType) {
-        return Config.BIRD_SHOT_COUNT_MAP.get(ammoType).get();
+        return ConfigCommon.BIRD_SHOT_COUNT_MAP.get(ammoType).get();
     }
 
     @Override

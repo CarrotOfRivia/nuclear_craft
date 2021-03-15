@@ -156,4 +156,11 @@ public class ClientEventForgeSubscriber {
         }
     }
 
+    @SubscribeEvent
+    public void onHandRender(final RenderHandEvent event){
+        if(zoomState>0){
+            event.setCanceled(true);
+        }
+    }
+
 }

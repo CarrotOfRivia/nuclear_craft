@@ -259,7 +259,7 @@ public abstract class AbstractGunItem extends Item {
                 NuclearCraftPacketHandler.KEY_BIND.sendToServer(new GunLoadingPacket(itemSlot));
                 }
             Minecraft.getInstance().ingameGUI.setOverlayMessage(new TranslationTextComponent(String.format("item.%s.guns.ammo_left", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).
-                    append(new StringTextComponent(" "+getAmmoCount(stack)).mergeStyle(TextFormatting.GOLD)), false);
+                    appendSibling(new StringTextComponent(" "+getAmmoCount(stack)).mergeStyle(TextFormatting.GOLD)), false);
         }
 
     }
@@ -281,21 +281,21 @@ public abstract class AbstractGunItem extends Item {
         if(hasAmmo(stack)){
             int n_ammo = getAmmoCount(stack);
             tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.ammo_left", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).
-                    append(new StringTextComponent(" "+n_ammo).mergeStyle(TextFormatting.GOLD)));
+                    appendSibling(new StringTextComponent(" "+n_ammo).mergeStyle(TextFormatting.GOLD)));
             tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.ammo_type", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).
-                    append(new StringTextComponent(Objects.requireNonNull(getAmmoType(stack)).getDescription()).mergeStyle(TextFormatting.GOLD)));
+                    appendSibling(new StringTextComponent(Objects.requireNonNull(getAmmoType(stack)).getDescription()).mergeStyle(TextFormatting.GOLD)));
         }
 
         tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.compatible_ammo_size", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY)
-                .append(new StringTextComponent(" "+compatibleSize())));
+                .appendSibling(new StringTextComponent(" "+compatibleSize())));
         tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.damage_modifier", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY)
-                .append(new StringTextComponent(String.format(" %.0f", 100*getDamageModifier())+"%")));
+                .appendSibling(new StringTextComponent(String.format(" %.0f", 100*getDamageModifier())+"%")));
         tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.speed_modifier", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY)
-                .append(new StringTextComponent(String.format(" %.0f", 100*getSpeedModifier())+"%")));
+                .appendSibling(new StringTextComponent(String.format(" %.0f", 100*getSpeedModifier())+"%")));
 
         if(canUseScope()){
             // add scope tutorial
-            tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.use_scope", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).append(new StringTextComponent(" Z")));
+            tooltip.add(new TranslationTextComponent(String.format("item.%s.guns.use_scope", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY).appendSibling(new StringTextComponent(" Z")));
         }
     }
 
