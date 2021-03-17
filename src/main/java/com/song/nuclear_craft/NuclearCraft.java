@@ -1,27 +1,21 @@
 package com.song.nuclear_craft;
 
 import com.song.nuclear_craft.blocks.BlockList;
-import com.song.nuclear_craft.blocks.container.C4BombContainerScreen;
-import com.song.nuclear_craft.blocks.tileentity.TileEntityRegister;
 import com.song.nuclear_craft.blocks.container.ContainerTypeList;
+import com.song.nuclear_craft.blocks.tileentity.TileEntityRegister;
+import com.song.nuclear_craft.client.ClientSetup;
 import com.song.nuclear_craft.entities.EntityRegister;
-import com.song.nuclear_craft.events.ClientEventBusSubscriber;
 import com.song.nuclear_craft.items.Ammo.AmmoSize;
 import com.song.nuclear_craft.items.Ammo.AmmoType;
 import com.song.nuclear_craft.items.ItemList;
-import com.song.nuclear_craft.events.ClientEventForgeSubscriber;
-import com.song.nuclear_craft.misc.ConfigClient;
 import com.song.nuclear_craft.misc.ConfigCommon;
-import com.song.nuclear_craft.network.*;
+import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
 import com.song.nuclear_craft.particles.*;
 import com.song.nuclear_craft.villagers.PointOfInterestTypes;
 import com.song.nuclear_craft.villagers.ProfessionTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.client.renderer.entity.SpriteRenderer;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
@@ -35,8 +29,6 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -47,7 +39,6 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.stream.Collectors;
 
@@ -86,9 +77,6 @@ public class NuclearCraft
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigCommon.CONFIG);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigClient.CONFIG);
-
         EntityRegister.ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
         ParticleRegister.PARTICLES.register(FMLJavaModLoadingContext.get().getModEventBus());
         ItemList.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -102,6 +90,8 @@ public class NuclearCraft
         LOGGER.info("HELLO FROM PREINIT");
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
 
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigCommon.CONFIG);
+
         fixPOITypeBlockStates(PointOfInterestTypes.RIFLE_AMMO_SELLER.get());
         fixPOITypeBlockStates(PointOfInterestTypes.SHOTGUN_AMMO_SELLER.get());
         fixPOITypeBlockStates(PointOfInterestTypes.GUN_SELLER.get());
@@ -110,21 +100,7 @@ public class NuclearCraft
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-        // do something that can only be done on the client
-        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
-        ClientEventForgeSubscriber.gunReload = new KeyBinding("key."+MODID+".load_ammo", GLFW.GLFW_KEY_R, "key."+MODID+".categories"); // keyBinding is a static variable
-        ClientEventForgeSubscriber.zoom = new KeyBinding("key."+MODID+".zoom", GLFW.GLFW_KEY_Z, "key."+MODID+".categories");
-        ClientRegistry.registerKeyBinding(ClientEventForgeSubscriber.gunReload);
-        ClientRegistry.registerKeyBinding(ClientEventForgeSubscriber.zoom);
-
-        ScreenManager.registerFactory(ContainerTypeList.C4_BOMB_CONTAINER_TYPE, C4BombContainerScreen::new);
-
-        RenderingRegistry.registerEntityRenderingHandler(EntityRegister.BULLET_ENTITY.get(),
-                renderManager -> new SpriteRenderer<>(renderManager,  Minecraft.getInstance().getItemRenderer())
-        );
-
-        MinecraftForge.EVENT_BUS.register(new ClientEventForgeSubscriber());
-        MinecraftForge.EVENT_BUS.register(new ClientEventBusSubscriber());
+        ClientSetup.clientSetup(event);
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
