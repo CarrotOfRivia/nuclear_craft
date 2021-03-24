@@ -4,16 +4,15 @@ import com.song.nuclear_craft.items.Ammo.AmmoPossibleCombination;
 import com.song.nuclear_craft.items.Ammo.AmmoSize;
 import com.song.nuclear_craft.items.Ammo.AmmoType;
 import com.song.nuclear_craft.items.GunConfigurable;
+import com.song.nuclear_craft.items.ItemList;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 
 import java.util.HashMap;
+import java.util.Map;
 
-@Mod.EventBusSubscriber
 public class ConfigCommon {
-    public static ForgeConfigSpec CONFIG;
+    public static ForgeConfigSpec COMMON;
 
     public static ForgeConfigSpec.DoubleValue NUKE_RADIUS;
     public static ForgeConfigSpec.DoubleValue HIGH_EXPLOSIVE_RADIUS;
@@ -51,27 +50,42 @@ public class ConfigCommon {
     public static final ForgeConfigSpec.DoubleValue AMMO_SILVER_BLOCK_BREAK_THRESHOLD;
     public static final ForgeConfigSpec.DoubleValue AMMO_TUNGSTEN_BLOCK_BREAK_THRESHOLD;
 
+    public static final HashMap<String, ForgeConfigSpec.IntValue> LEVEL_MAP = new HashMap<>();
+    public static final HashMap<String, ForgeConfigSpec.ConfigValue<String>> PRICE1_MAP = new HashMap<>();
+    public static final HashMap<String, ForgeConfigSpec.ConfigValue<String>> PRICE2_MAP = new HashMap<>();
+    public static final HashMap<String, ForgeConfigSpec.IntValue> PRICE1_MIN = new HashMap<>();
+    public static final HashMap<String, ForgeConfigSpec.IntValue> PRICE2_MIN = new HashMap<>();
+    public static final HashMap<String, ForgeConfigSpec.IntValue> PRICE1_MAX = new HashMap<>();
+    public static final HashMap<String, ForgeConfigSpec.IntValue> PRICE2_MAX = new HashMap<>();
+
+
     static {
         ForgeConfigSpec.Builder CONFIG_BUILDER = new ForgeConfigSpec.Builder();
-        CONFIG_BUILDER.comment("atomic bomb settings").push("nuclear_craft");
 
+        CONFIG_BUILDER.comment("Ammo destroying block settings").push("ammo_break_block");
         AMMO_BLOCK_BREAK_THRESHOLD = CONFIG_BUILDER.comment("Normal ammo can break blocks with blast resist lower than this value").defineInRange("ammo_block_break_threshold", 3d, -10, 99999);
         AMMO_SILVER_BLOCK_BREAK_THRESHOLD = CONFIG_BUILDER.comment("Silver ammo can break blocks with blast resist lower than this value").defineInRange("ammo_silver_block_break_threshold", 6d, -10, 99999);
         AMMO_TUNGSTEN_BLOCK_BREAK_THRESHOLD = CONFIG_BUILDER.comment("Tungsten ammo can break blocks with blast resist lower than this value").defineInRange("ammo_tungsten_block_break_threshold", 6d, -10, 99999);
+        CONFIG_BUILDER.pop();
 
-        NUKE_RADIUS = CONFIG_BUILDER.comment("Atomic bomb explosion radius").defineInRange("nuke_radius", 50f, 0f, 256f);
-        HIGH_EXPLOSIVE_RADIUS = CONFIG_BUILDER.comment("High explosive bomb radius").defineInRange("high_explosive", 10f, 0f, 80f);
-        SMOKE_RADIUS = CONFIG_BUILDER.comment("Smoke bomb radius").defineInRange("smoke_bomb", 30f, 0f, 256f);
-        INCENDIARY_COUNT = CONFIG_BUILDER.comment("Number of flames from incendiary").defineInRange("incendiary_bomb", 100, 0, 10000);
-
+        CONFIG_BUILDER.comment("Rocket ammo number settings").push("rocket_ammo_number");
         HIGH_EXPLOSIVE_MAX_AMMO = CONFIG_BUILDER.comment("Max number of ammo of high explosive rocket launcher").defineInRange("high_explosive_ammo", 1, 0, 32767);
         INCENDIARY_MAX_AMMO = CONFIG_BUILDER.comment("Max number of ammo of incendiary rocket launcher").defineInRange("incendiary_ammo", 1, 0, 32767);
         SMOKE_MAX_AMMO = CONFIG_BUILDER.comment("Max number of ammo of smoke rocket launcher").defineInRange("smoke_ammo", 1, 0, 32767);
         WATER_DROP_MAX_AMMO = CONFIG_BUILDER.comment("Max number of ammo of water drop rocket launcher").defineInRange("water_drop_ammo", 1, 0, 32767);
+        CONFIG_BUILDER.pop();
+
+        CONFIG_BUILDER.comment("Explosion settings").push("explosion");
+        NUKE_RADIUS = CONFIG_BUILDER.comment("Atomic bomb explosion radius").defineInRange("nuke_radius", 50f, 0f, 256f);
+        HIGH_EXPLOSIVE_RADIUS = CONFIG_BUILDER.comment("High explosive bomb radius").defineInRange("high_explosive", 10f, 0f, 80f);
+        SMOKE_RADIUS = CONFIG_BUILDER.comment("Smoke bomb radius").defineInRange("smoke_bomb", 30f, 0f, 256f);
 
         NUKE_BLAST_POWER = CONFIG_BUILDER.comment("Atomic bomb explosion power(i.e. max blast resistance block to break) 3,600,000 for bedrock, 1200 for obsidian, 100 for water").defineInRange("nuke_blast_power", 1500d, 0d, 999999999d);
         HIGH_EXPLOSIVE_BLAST_POWER = CONFIG_BUILDER.comment("High explosive bomb explosion power(i.e. max blast resistance block to break) 3,600,000 for bedrock, 1200 for obsidian, 100 for water").defineInRange("high_explosive_blast_power", 101d, 0d, 999999999d);
+        CONFIG_BUILDER.pop();
 
+        CONFIG_BUILDER.comment("Ricochet, gravity, incendiary fire count").push("misc");
+        INCENDIARY_COUNT = CONFIG_BUILDER.comment("Number of flames from incendiary").defineInRange("incendiary_bomb", 100, 0, 10000);
         AMMO_ANTI_GRAVITY_RICOCHET_LOSS = CONFIG_BUILDER.comment("Energy loss of ammo (Anti-Gravity) after ricochet (bouncing on hard surfaces)")
                 .defineInRange("ammo_anti_gravity_ricochet_loss",0.5d, 0d, 1d);
         AMMO_NORMAL_RICOCHET_LOSS = CONFIG_BUILDER.comment("Energy loss of ammo (Normal) after ricochet (bouncing on hard surfaces)")
@@ -80,8 +94,10 @@ public class ConfigCommon {
                 .defineInRange("ammo_silver_ricochet_loss",0.5d, 0d, 1d);
         AMMO_TUNGSTEN_RICOCHET_LOSS = CONFIG_BUILDER.comment("Energy loss of ammo (TUNGSTEN) after ricochet (bouncing on hard surfaces)")
                 .defineInRange("ammo_tungsten_ricochet_loss",0.5d, 0d, 1d);
+        CONFIG_BUILDER.pop();
 
         // ------------------------ Rifle Ammo Speed and Damage -------------------------- //
+        CONFIG_BUILDER.comment("Rifle Ammo Speed and Damage").push("rifle_ammo");
         for (AmmoSize ammoSize: AmmoPossibleCombination.RIFLE_AMMO.getAmmoSizes()){
             HashMap<AmmoType, ForgeConfigSpec.DoubleValue> thisDamageMap = new HashMap<>();
             HashMap<AmmoType, ForgeConfigSpec.DoubleValue> thisSpeedMap = new HashMap<>();
@@ -96,7 +112,10 @@ public class ConfigCommon {
             SPEED_MAP.put(ammoSize, thisSpeedMap);
             GRAVITY_MAP.put(ammoSize, thisGravityMap);
         }
-        // ------------------------ Short Guns Ammo Speed and Damage -------------------------- //
+        CONFIG_BUILDER.pop();
+
+        // ------------------------ Shotguns Ammo Speed and Damage -------------------------- //
+        CONFIG_BUILDER.comment("Shotguns Ammo Speed, Damage, bird shots").push("shotgun_ammo");
         for (AmmoSize ammoSize: AmmoPossibleCombination.SHOTGUN_AMMO.getAmmoSizes()){
             HashMap<AmmoType, ForgeConfigSpec.DoubleValue> thisDamageMap = new HashMap<>();
             HashMap<AmmoType, ForgeConfigSpec.DoubleValue> thisSpeedMap = new HashMap<>();
@@ -116,8 +135,10 @@ public class ConfigCommon {
         for (AmmoType ammoType: AmmoPossibleCombination.SHOTGUN_AMMO.getAmmoTypes()) {
             BIRD_SHOT_COUNT_MAP.put(ammoType, CONFIG_BUILDER.comment("Number of birdshots in short gun ammo: "+ammoType.getDescription()).defineInRange("n_birdshot_"+ammoType.getRegisterString(), ammoType.getBirdShotCount(), 0, 999999));
         }
+        CONFIG_BUILDER.pop();
 
         // -------------------- Gun Modifiers -----------------------------//
+        CONFIG_BUILDER.comment("Gun Modifiers").push("gun_modifiers");
         AK47_CONFIG.setDamageModify(CONFIG_BUILDER.comment("AK47 damage modify").defineInRange("ak47_damage_modify", 1.7, 0, 999999));
         AK47_CONFIG.setSpeedModify(CONFIG_BUILDER.comment("AK47 speed modify").defineInRange("ak47_speed_modify", 1.5, 0, 999999));
         DESERT_EAGLE_CONFIG.setDamageModify(CONFIG_BUILDER.comment("DESERT_EAGLE damage modify").defineInRange("desert_eagle_damage_modify", 1.4, 0, 999999));
@@ -135,15 +156,56 @@ public class ConfigCommon {
 
         CONFIG_BUILDER.pop();
 
-        CONFIG = CONFIG_BUILDER.build();
-    }
+        CONFIG_BUILDER.comment("Tradings-Rockets").push("tradings");
+        LEVEL_MAP.put("nuclear_craft:rocket_launcher", CONFIG_BUILDER.defineInRange("rocket_launcher_level", 1, 1, 64));
+        PRICE1_MAP.put("nuclear_craft:rocket_launcher", CONFIG_BUILDER.define("rocket_launcher_price1", "minecraft:diamond"));
+        PRICE1_MIN.put("nuclear_craft:rocket_launcher", CONFIG_BUILDER.defineInRange("rocket_launcher_price1_min", 30, 1, 64));
+        PRICE1_MAX.put("nuclear_craft:rocket_launcher", CONFIG_BUILDER.defineInRange("rocket_launcher_price1_max", 40, 1, 64));
+        PRICE2_MAP.put("nuclear_craft:rocket_launcher", CONFIG_BUILDER.define("rocket_launcher_price2", "null"));
+        PRICE2_MIN.put("nuclear_craft:rocket_launcher", CONFIG_BUILDER.defineInRange("rocket_launcher_price2_min", 1, 1, 64));
+        PRICE2_MAX.put("nuclear_craft:rocket_launcher", CONFIG_BUILDER.defineInRange("rocket_launcher_price2_max", 1, 1, 64));
 
-    @SubscribeEvent
-    public static void onLoad(final ModConfig.Loading configEvent) {
+        LEVEL_MAP.put("nuclear_craft:incendiary_rocket", CONFIG_BUILDER.defineInRange("incendiary_rocket_level", 1, 1, 64));
+        PRICE1_MAP.put("nuclear_craft:incendiary_rocket", CONFIG_BUILDER.define("incendiary_rocket_price1", "minecraft:diamond"));
+        PRICE1_MIN.put("nuclear_craft:incendiary_rocket", CONFIG_BUILDER.defineInRange("incendiary_rocket_price1_min", 1, 1, 64));
+        PRICE1_MAX.put("nuclear_craft:incendiary_rocket", CONFIG_BUILDER.defineInRange("incendiary_rocket_price1_max", 2, 1, 64));
+        PRICE2_MAP.put("nuclear_craft:incendiary_rocket", CONFIG_BUILDER.define("incendiary_rocket_price2", "null"));
+        PRICE2_MIN.put("nuclear_craft:incendiary_rocket", CONFIG_BUILDER.defineInRange("incendiary_rocket_price2_min", 1, 1, 64));
+        PRICE2_MAX.put("nuclear_craft:incendiary_rocket", CONFIG_BUILDER.defineInRange("incendiary_rocket_price2_max", 1, 1, 64));
 
-    }
+        LEVEL_MAP.put("nuclear_craft:smoke_rocket", CONFIG_BUILDER.defineInRange("smoke_rocket_level", 2, 1, 64));
+        PRICE1_MAP.put("nuclear_craft:smoke_rocket", CONFIG_BUILDER.define("smoke_rocket_price1", "minecraft:diamond"));
+        PRICE1_MIN.put("nuclear_craft:smoke_rocket", CONFIG_BUILDER.defineInRange("smoke_rocket_price1_min", 2, 1, 64));
+        PRICE1_MAX.put("nuclear_craft:smoke_rocket", CONFIG_BUILDER.defineInRange("smoke_rocket_price1_max", 3, 1, 64));
+        PRICE2_MAP.put("nuclear_craft:smoke_rocket", CONFIG_BUILDER.define("smoke_rocket_price2", "null"));
+        PRICE2_MIN.put("nuclear_craft:smoke_rocket", CONFIG_BUILDER.defineInRange("smoke_rocket_price2_min", 1, 1, 64));
+        PRICE2_MAX.put("nuclear_craft:smoke_rocket", CONFIG_BUILDER.defineInRange("smoke_rocket_price2_max", 1, 1, 64));
 
-    @SubscribeEvent
-    public static void onReload(final ModConfig.Reloading configEvent) {
+        LEVEL_MAP.put("nuclear_craft:high_explosive_rocket", CONFIG_BUILDER.defineInRange("high_explosive_rocket_level", 3, 1, 64));
+        PRICE1_MAP.put("nuclear_craft:high_explosive_rocket", CONFIG_BUILDER.define("high_explosive_rocket_price1", "minecraft:diamond"));
+        PRICE1_MIN.put("nuclear_craft:high_explosive_rocket", CONFIG_BUILDER.defineInRange("high_explosive_rocket_price1_min", 3, 1, 64));
+        PRICE1_MAX.put("nuclear_craft:high_explosive_rocket", CONFIG_BUILDER.defineInRange("high_explosive_rocket_price1_max", 4, 1, 64));
+        PRICE2_MAP.put("nuclear_craft:high_explosive_rocket", CONFIG_BUILDER.define("high_explosive_rocket_price2", "null"));
+        PRICE2_MIN.put("nuclear_craft:high_explosive_rocket", CONFIG_BUILDER.defineInRange("high_explosive_rocket_price2_min", 1, 1, 64));
+        PRICE2_MAX.put("nuclear_craft:high_explosive_rocket", CONFIG_BUILDER.defineInRange("high_explosive_rocket_price2_max", 1, 1, 64));
+
+        LEVEL_MAP.put("nuclear_craft:atomic_bomb_rocket", CONFIG_BUILDER.defineInRange("atomic_bomb_rocket_level", 4, 1, 64));
+        PRICE1_MAP.put("nuclear_craft:atomic_bomb_rocket", CONFIG_BUILDER.define("atomic_bomb_rocket_price1", "minecraft:diamond"));
+        PRICE1_MIN.put("nuclear_craft:atomic_bomb_rocket", CONFIG_BUILDER.defineInRange("atomic_bomb_rocket_price1_min", 40, 1, 64));
+        PRICE1_MAX.put("nuclear_craft:atomic_bomb_rocket", CONFIG_BUILDER.defineInRange("atomic_bomb_rocket_price1_max", 50, 1, 64));
+        PRICE2_MAP.put("nuclear_craft:atomic_bomb_rocket", CONFIG_BUILDER.define("atomic_bomb_rocket_price2", "null"));
+        PRICE2_MIN.put("nuclear_craft:atomic_bomb_rocket", CONFIG_BUILDER.defineInRange("atomic_bomb_rocket_price2_min", 1, 1, 64));
+        PRICE2_MAX.put("nuclear_craft:atomic_bomb_rocket", CONFIG_BUILDER.defineInRange("atomic_bomb_rocket_price2_max", 1, 1, 64));
+
+        LEVEL_MAP.put("nuclear_craft:water_drop_rocket", CONFIG_BUILDER.defineInRange("water_drop_rocket_level", 4, 1, 64));
+        PRICE1_MAP.put("nuclear_craft:water_drop_rocket", CONFIG_BUILDER.define("water_drop_rocket_price1", "minecraft:nether_star"));
+        PRICE1_MIN.put("nuclear_craft:water_drop_rocket", CONFIG_BUILDER.defineInRange("water_drop_rocket_price1_min", 40, 1, 64));
+        PRICE1_MAX.put("nuclear_craft:water_drop_rocket", CONFIG_BUILDER.defineInRange("water_drop_rocket_price1_max", 50, 1, 64));
+        PRICE2_MAP.put("nuclear_craft:water_drop_rocket", CONFIG_BUILDER.define("water_drop_rocket_price2", "null"));
+        PRICE2_MIN.put("nuclear_craft:water_drop_rocket", CONFIG_BUILDER.defineInRange("water_drop_rocket_price2_min", 1, 1, 64));
+        PRICE2_MAX.put("nuclear_craft:water_drop_rocket", CONFIG_BUILDER.defineInRange("water_drop_rocket_price2_max", 1, 1, 64));
+        CONFIG_BUILDER.pop();
+
+        COMMON = CONFIG_BUILDER.build();
     }
 }

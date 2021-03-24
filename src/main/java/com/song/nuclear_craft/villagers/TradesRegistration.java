@@ -5,10 +5,18 @@ import com.song.nuclear_craft.items.Ammo.AmmoPossibleCombination;
 import com.song.nuclear_craft.items.Ammo.AmmoSize;
 import com.song.nuclear_craft.items.Ammo.AmmoType;
 import com.song.nuclear_craft.items.ItemList;
+import com.song.nuclear_craft.misc.ConfigCommon;
+import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistryEntry;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @Mod.EventBusSubscriber(modid = NuclearCraft.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class TradesRegistration {
@@ -77,22 +85,19 @@ public class TradesRegistration {
         }
 
         if (event.getType() == ProfessionTypes.ROCKET_MASTER_PROFESSION.get()){
-            event.getTrades().get(1).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 30,40).
-                    setForSale(ItemList.ROCKET_LAUNCHER.get(), 1, 1).build()));
-            event.getTrades().get(1).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 1,2).
-                    setForSale(ItemList.INCENDIARY_ROCKET.get(), 1, 1).build()));
-
-            event.getTrades().get(2).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 2,3).
-                    setForSale(ItemList.SMOKE_ROCKET.get(), 1, 1).build()));
-
-            event.getTrades().get(3).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 3,4).
-                    setForSale(ItemList.HIGH_EXPLOSIVE_ROCKET.get(), 1, 1).build()));
-
-            event.getTrades().get(4).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 40,50).
-                    setForSale(ItemList.ATOMIC_BOMB_ROCKET.get(), 1, 1).build()));
-
-            event.getTrades().get(5).add((new RandomTradeBuilder(64, 25, 0.05F).setPrice(Items.DIAMOND, 40,50).
-                    setForSale(ItemList.WATER_DROP_ROCKET.get(), 1, 1).build()));
+            for (Item item: Arrays.asList(ItemList.ROCKET_LAUNCHER.get(), ItemList.INCENDIARY_ROCKET.get(), ItemList.SMOKE_ROCKET.get(),
+                    ItemList.HIGH_EXPLOSIVE_ROCKET.get(), ItemList.ATOMIC_BOMB_ROCKET.get(), ItemList.WATER_DROP_ROCKET.get())){
+                String key = item.getRegistryName().toString();
+                String p1 = ConfigCommon.PRICE1_MAP.get(key).get();
+                String p2 = ConfigCommon.PRICE2_MAP.get(key).get();
+                if ((!"null".equals(p1)||(!"null".equals(p2)))){
+                    event.getTrades().get((int)ConfigCommon.LEVEL_MAP.get(key).get()).
+                            add((new RandomTradeBuilder(64, 25, 0.05F).
+                                    setPrice(ForgeRegistries.ITEMS.getValue(new ResourceLocation(p1)), ConfigCommon.PRICE1_MIN.get(key).get(),ConfigCommon.PRICE1_MAX.get(key).get()).
+                                    setPrice2(ForgeRegistries.ITEMS.getValue(new ResourceLocation(p2)), ConfigCommon.PRICE2_MIN.get(key).get(),ConfigCommon.PRICE2_MAX.get(key).get()).
+                                    setForSale(item, 1, 1).build()));
+                }
+            }
         }
 
         if (event.getType() == ProfessionTypes.EXPLOSIVE_MASTER_PROFESSION.get()){

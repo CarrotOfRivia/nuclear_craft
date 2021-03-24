@@ -3,7 +3,7 @@ package com.song.nuclear_craft.misc;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class ConfigClient {
-    public static ForgeConfigSpec CONFIG;
+    public static ForgeConfigSpec CLIENT;
 
     public static ForgeConfigSpec.BooleanValue RENDER_MUSHROOM_CLOUD;
 
@@ -15,6 +15,6 @@ public class ConfigClient {
 
         CONFIG_BUILDER.pop();
 
-        CONFIG = CONFIG_BUILDER.build();
+        CLIENT = CONFIG_BUILDER.build();
     }
 }

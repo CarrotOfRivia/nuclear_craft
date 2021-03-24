@@ -8,6 +8,7 @@ import com.song.nuclear_craft.entities.EntityRegister;
 import com.song.nuclear_craft.items.Ammo.AmmoSize;
 import com.song.nuclear_craft.items.Ammo.AmmoType;
 import com.song.nuclear_craft.items.ItemList;
+import com.song.nuclear_craft.misc.ConfigClient;
 import com.song.nuclear_craft.misc.ConfigCommon;
 import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
 import com.song.nuclear_craft.particles.*;
@@ -83,14 +84,15 @@ public class NuclearCraft
         BlockList.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ProfessionTypes.VILLAGER_PROFESSION.register(FMLJavaModLoadingContext.get().getModEventBus());
         PointOfInterestTypes.POINT_OF_INTEREST_TYPE.register(FMLJavaModLoadingContext.get().getModEventBus());
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigClient.CLIENT);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigCommon.COMMON);
     }
     private void setup(final FMLCommonSetupEvent event)
     {
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT");
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
-
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigCommon.CONFIG);
 
         fixPOITypeBlockStates(PointOfInterestTypes.RIFLE_AMMO_SELLER.get());
         fixPOITypeBlockStates(PointOfInterestTypes.SHOTGUN_AMMO_SELLER.get());
