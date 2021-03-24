@@ -99,6 +99,7 @@ public class ConfigCommon {
         // ------------------------ Rifle Ammo Speed and Damage -------------------------- //
         CONFIG_BUILDER.comment("Rifle Ammo Speed and Damage").push("rifle_ammo");
         for (AmmoSize ammoSize: AmmoPossibleCombination.RIFLE_AMMO.getAmmoSizes()){
+            CONFIG_BUILDER.push(ammoSize.getRegisterString());
             HashMap<AmmoType, ForgeConfigSpec.DoubleValue> thisDamageMap = new HashMap<>();
             HashMap<AmmoType, ForgeConfigSpec.DoubleValue> thisSpeedMap = new HashMap<>();
             HashMap<AmmoType, ForgeConfigSpec.DoubleValue> thisGravityMap = new HashMap<>();
@@ -111,12 +112,14 @@ public class ConfigCommon {
             DAMAGE_MAP.put(ammoSize, thisDamageMap);
             SPEED_MAP.put(ammoSize, thisSpeedMap);
             GRAVITY_MAP.put(ammoSize, thisGravityMap);
+            CONFIG_BUILDER.pop();
         }
         CONFIG_BUILDER.pop();
 
         // ------------------------ Shotguns Ammo Speed and Damage -------------------------- //
         CONFIG_BUILDER.comment("Shotguns Ammo Speed, Damage, bird shots").push("shotgun_ammo");
         for (AmmoSize ammoSize: AmmoPossibleCombination.SHOTGUN_AMMO.getAmmoSizes()){
+            CONFIG_BUILDER.push(ammoSize.getRegisterString());
             HashMap<AmmoType, ForgeConfigSpec.DoubleValue> thisDamageMap = new HashMap<>();
             HashMap<AmmoType, ForgeConfigSpec.DoubleValue> thisSpeedMap = new HashMap<>();
             HashMap<AmmoType, ForgeConfigSpec.DoubleValue> thisGravityMap = new HashMap<>();
@@ -129,6 +132,7 @@ public class ConfigCommon {
             DAMAGE_MAP.put(ammoSize, thisDamageMap);
             SPEED_MAP.put(ammoSize, thisSpeedMap);
             GRAVITY_MAP.put(ammoSize, thisGravityMap);
+            CONFIG_BUILDER.pop();
         }
 
         // -----------------------Short Guns Ammo Shoot Count ------------------------------//
@@ -156,56 +160,63 @@ public class ConfigCommon {
 
         CONFIG_BUILDER.pop();
 
-        CONFIG_BUILDER.comment("Tradings-Rockets").push("tradings");
-        LEVEL_MAP.put("nuclear_craft:rocket_launcher", CONFIG_BUILDER.defineInRange("rocket_launcher_level", 1, 1, 64));
-        PRICE1_MAP.put("nuclear_craft:rocket_launcher", CONFIG_BUILDER.define("rocket_launcher_price1", "minecraft:diamond"));
-        PRICE1_MIN.put("nuclear_craft:rocket_launcher", CONFIG_BUILDER.defineInRange("rocket_launcher_price1_min", 30, 1, 64));
-        PRICE1_MAX.put("nuclear_craft:rocket_launcher", CONFIG_BUILDER.defineInRange("rocket_launcher_price1_max", 40, 1, 64));
-        PRICE2_MAP.put("nuclear_craft:rocket_launcher", CONFIG_BUILDER.define("rocket_launcher_price2", "null"));
-        PRICE2_MIN.put("nuclear_craft:rocket_launcher", CONFIG_BUILDER.defineInRange("rocket_launcher_price2_min", 1, 1, 64));
-        PRICE2_MAX.put("nuclear_craft:rocket_launcher", CONFIG_BUILDER.defineInRange("rocket_launcher_price2_max", 1, 1, 64));
+        CONFIG_BUILDER.comment("Tradings").push("tradings");
+        addTrader("rocket_launcher", 1, "minecraft:diamond", 30, 40, "null", 1, 1, CONFIG_BUILDER);
+        addTrader("incendiary_rocket", 1, "minecraft:diamond", 1, 2, "null", 1, 1, CONFIG_BUILDER);
+        addTrader("smoke_rocket", 2, "minecraft:diamond", 2, 3, "null", 1, 1, CONFIG_BUILDER);
+        addTrader("high_explosive_rocket", 3, "minecraft:diamond", 3, 4, "null", 1, 1, CONFIG_BUILDER);
+        addTrader("atomic_bomb_rocket", 4, "minecraft:diamond", 40, 50, "null", 1, 1, CONFIG_BUILDER);
+        addTrader("water_drop_rocket", 4, "minecraft:nether_star", 40, 50, "null", 1, 1, CONFIG_BUILDER);
 
-        LEVEL_MAP.put("nuclear_craft:incendiary_rocket", CONFIG_BUILDER.defineInRange("incendiary_rocket_level", 1, 1, 64));
-        PRICE1_MAP.put("nuclear_craft:incendiary_rocket", CONFIG_BUILDER.define("incendiary_rocket_price1", "minecraft:diamond"));
-        PRICE1_MIN.put("nuclear_craft:incendiary_rocket", CONFIG_BUILDER.defineInRange("incendiary_rocket_price1_min", 1, 1, 64));
-        PRICE1_MAX.put("nuclear_craft:incendiary_rocket", CONFIG_BUILDER.defineInRange("incendiary_rocket_price1_max", 2, 1, 64));
-        PRICE2_MAP.put("nuclear_craft:incendiary_rocket", CONFIG_BUILDER.define("incendiary_rocket_price2", "null"));
-        PRICE2_MIN.put("nuclear_craft:incendiary_rocket", CONFIG_BUILDER.defineInRange("incendiary_rocket_price2_min", 1, 1, 64));
-        PRICE2_MAX.put("nuclear_craft:incendiary_rocket", CONFIG_BUILDER.defineInRange("incendiary_rocket_price2_max", 1, 1, 64));
+        addTrader("c4_incendiary", 1, "minecraft:diamond", 2, 3, "null", 1, 1, CONFIG_BUILDER);
+        addTrader("c4_smoke", 2, "minecraft:diamond", 4, 5, "null", 1, 1, CONFIG_BUILDER);
+        addTrader("c4_high_explosive", 3, "minecraft:diamond", 5, 10, "null", 1, 1, CONFIG_BUILDER);
+        addTrader("c4_atomic_bomb", 4, "minecraft:diamond", 40, 50, "null", 1, 1, CONFIG_BUILDER);
 
-        LEVEL_MAP.put("nuclear_craft:smoke_rocket", CONFIG_BUILDER.defineInRange("smoke_rocket_level", 2, 1, 64));
-        PRICE1_MAP.put("nuclear_craft:smoke_rocket", CONFIG_BUILDER.define("smoke_rocket_price1", "minecraft:diamond"));
-        PRICE1_MIN.put("nuclear_craft:smoke_rocket", CONFIG_BUILDER.defineInRange("smoke_rocket_price1_min", 2, 1, 64));
-        PRICE1_MAX.put("nuclear_craft:smoke_rocket", CONFIG_BUILDER.defineInRange("smoke_rocket_price1_max", 3, 1, 64));
-        PRICE2_MAP.put("nuclear_craft:smoke_rocket", CONFIG_BUILDER.define("smoke_rocket_price2", "null"));
-        PRICE2_MIN.put("nuclear_craft:smoke_rocket", CONFIG_BUILDER.defineInRange("smoke_rocket_price2_min", 1, 1, 64));
-        PRICE2_MAX.put("nuclear_craft:smoke_rocket", CONFIG_BUILDER.defineInRange("smoke_rocket_price2_max", 1, 1, 64));
+        addTrader("glock", 1, "minecraft:diamond", 10, 10, "null", 1, 1, CONFIG_BUILDER);
+        addTrader("usp", 1, "minecraft:diamond", 10, 10, "null", 1, 1, CONFIG_BUILDER);
+        addTrader("desert_eagle", 2, "minecraft:diamond", 20, 30, "null", 1, 1, CONFIG_BUILDER);
+        addTrader("nova", 2, "minecraft:diamond", 20, 30, "null", 1, 1, CONFIG_BUILDER);
+        addTrader("m4a4", 3, "minecraft:diamond", 30, 40, "null", 1, 1, CONFIG_BUILDER);
+        addTrader("xm1014", 3, "minecraft:diamond", 30, 40, "null", 1, 1, CONFIG_BUILDER);
+        addTrader("ak47", 4, "minecraft:diamond", 40, 50, "null", 1, 1, CONFIG_BUILDER);
+        addTrader("awp", 4, "minecraft:diamond", 40, 50, "null", 1, 1, CONFIG_BUILDER);
+        addTrader("barrett", 5, "minecraft:diamond", 50, 64, "null", 1, 1, CONFIG_BUILDER);
 
-        LEVEL_MAP.put("nuclear_craft:high_explosive_rocket", CONFIG_BUILDER.defineInRange("high_explosive_rocket_level", 3, 1, 64));
-        PRICE1_MAP.put("nuclear_craft:high_explosive_rocket", CONFIG_BUILDER.define("high_explosive_rocket_price1", "minecraft:diamond"));
-        PRICE1_MIN.put("nuclear_craft:high_explosive_rocket", CONFIG_BUILDER.defineInRange("high_explosive_rocket_price1_min", 3, 1, 64));
-        PRICE1_MAX.put("nuclear_craft:high_explosive_rocket", CONFIG_BUILDER.defineInRange("high_explosive_rocket_price1_max", 4, 1, 64));
-        PRICE2_MAP.put("nuclear_craft:high_explosive_rocket", CONFIG_BUILDER.define("high_explosive_rocket_price2", "null"));
-        PRICE2_MIN.put("nuclear_craft:high_explosive_rocket", CONFIG_BUILDER.defineInRange("high_explosive_rocket_price2_min", 1, 1, 64));
-        PRICE2_MAX.put("nuclear_craft:high_explosive_rocket", CONFIG_BUILDER.defineInRange("high_explosive_rocket_price2_max", 1, 1, 64));
+        for (AmmoSize ammoSize: AmmoPossibleCombination.SHOTGUN_AMMO.getAmmoSizes()){
+            addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.SHORT_GUN_NORMAL.getRegisterString(), 1, "minecraft:iron_ingot", 1, 1, "minecraft:gunpowder", 1, 1, CONFIG_BUILDER);
+            addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.SHORT_GUN_BLIGHT.getRegisterString(), 2, "minecraft:iron_ingot", 1, 1, "minecraft:gunpowder", 2, 2, CONFIG_BUILDER);
+            addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.SHORT_GUN_DESOLATOR.getRegisterString(), 3, "minecraft:iron_ingot", 5, 10, "minecraft:gunpowder", 2, 4, CONFIG_BUILDER);
+        }
 
-        LEVEL_MAP.put("nuclear_craft:atomic_bomb_rocket", CONFIG_BUILDER.defineInRange("atomic_bomb_rocket_level", 4, 1, 64));
-        PRICE1_MAP.put("nuclear_craft:atomic_bomb_rocket", CONFIG_BUILDER.define("atomic_bomb_rocket_price1", "minecraft:diamond"));
-        PRICE1_MIN.put("nuclear_craft:atomic_bomb_rocket", CONFIG_BUILDER.defineInRange("atomic_bomb_rocket_price1_min", 40, 1, 64));
-        PRICE1_MAX.put("nuclear_craft:atomic_bomb_rocket", CONFIG_BUILDER.defineInRange("atomic_bomb_rocket_price1_max", 50, 1, 64));
-        PRICE2_MAP.put("nuclear_craft:atomic_bomb_rocket", CONFIG_BUILDER.define("atomic_bomb_rocket_price2", "null"));
-        PRICE2_MIN.put("nuclear_craft:atomic_bomb_rocket", CONFIG_BUILDER.defineInRange("atomic_bomb_rocket_price2_min", 1, 1, 64));
-        PRICE2_MAX.put("nuclear_craft:atomic_bomb_rocket", CONFIG_BUILDER.defineInRange("atomic_bomb_rocket_price2_max", 1, 1, 64));
+        for (AmmoSize ammoSize: AmmoPossibleCombination.RIFLE_AMMO.getAmmoSizes()){
+            addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.NORMAL.getRegisterString(), 1, "minecraft:iron_ingot", 1, 1, "minecraft:gunpowder", 1, 1, CONFIG_BUILDER);
+            addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.INCENDIARY.getRegisterString(), 1, "minecraft:iron_ingot", 1, 1, "minecraft:gunpowder", 2, 2, CONFIG_BUILDER);
 
-        LEVEL_MAP.put("nuclear_craft:water_drop_rocket", CONFIG_BUILDER.defineInRange("water_drop_rocket_level", 4, 1, 64));
-        PRICE1_MAP.put("nuclear_craft:water_drop_rocket", CONFIG_BUILDER.define("water_drop_rocket_price1", "minecraft:nether_star"));
-        PRICE1_MIN.put("nuclear_craft:water_drop_rocket", CONFIG_BUILDER.defineInRange("water_drop_rocket_price1_min", 40, 1, 64));
-        PRICE1_MAX.put("nuclear_craft:water_drop_rocket", CONFIG_BUILDER.defineInRange("water_drop_rocket_price1_max", 50, 1, 64));
-        PRICE2_MAP.put("nuclear_craft:water_drop_rocket", CONFIG_BUILDER.define("water_drop_rocket_price2", "null"));
-        PRICE2_MIN.put("nuclear_craft:water_drop_rocket", CONFIG_BUILDER.defineInRange("water_drop_rocket_price2_min", 1, 1, 64));
-        PRICE2_MAX.put("nuclear_craft:water_drop_rocket", CONFIG_BUILDER.defineInRange("water_drop_rocket_price2_max", 1, 1, 64));
+            addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.ANTI_GRAVITY.getRegisterString(), 2, "minecraft:iron_ingot", 1, 1, "minecraft:gunpowder", 2, 2, CONFIG_BUILDER);
+            addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.SILVER.getRegisterString(), 2, "minecraft:iron_ingot", 1, 1, "minecraft:gunpowder", 2, 2, CONFIG_BUILDER);
+
+            addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.EXPLOSIVE.getRegisterString(), 3, "minecraft:iron_ingot", 2, 2, "minecraft:gunpowder", 10, 10, CONFIG_BUILDER);
+
+            addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.TUNGSTEN.getRegisterString(), 4, "minecraft:iron_ingot", 5, 5, "minecraft:gunpowder", 2, 2, CONFIG_BUILDER);
+
+            addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.NUKE.getRegisterString(), 5, "minecraft:nether_star", 1, 1, "minecraft:gunpowder", 1, 1, CONFIG_BUILDER);
+        }
+
         CONFIG_BUILDER.pop();
 
         COMMON = CONFIG_BUILDER.build();
+    }
+
+    private static void addTrader(String id, int level, String price1, int price1Min, int price1Max, String price2, int price2Min, int price2Max, ForgeConfigSpec.Builder builder){
+        builder.push(id);
+        LEVEL_MAP.put("nuclear_craft:"+id, builder.defineInRange(id+"_level", level, 1, 64));
+        PRICE1_MAP.put("nuclear_craft:"+id, builder.define(id+"_price1", price1));
+        PRICE1_MIN.put("nuclear_craft:"+id, builder.defineInRange(id+"_price1_min", price1Min, 1, 64));
+        PRICE1_MAX.put("nuclear_craft:"+id, builder.defineInRange(id+"_price1_max", price1Max, 1, 64));
+        PRICE2_MAP.put("nuclear_craft:"+id, builder.define(id+"_price2", price2));
+        PRICE2_MIN.put("nuclear_craft:"+id, builder.defineInRange(id+"_price2_min", price2Min, 1, 64));
+        PRICE2_MAX.put("nuclear_craft:"+id, builder.defineInRange(id+"_price2_max", price2Max, 1, 64));
+        builder.pop();
     }
 }
