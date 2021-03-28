@@ -54,8 +54,8 @@ public class NukeDownSmokePacket {
                 for (int i=0; i<getNumParticles(); i++){
                     double theta = 2*Math.PI*random.nextDouble();
                     double speedModifier = 2*random.nextDouble();
-                    world.addParticle((IParticleData) ParticleRegister.DOWN_SMOKE.get(), packet.x, packet.y, packet.z,
-                            speedModifier*packet.radius*Math.cos(theta)/20,0,speedModifier*packet.radius*Math.sin(theta)/20);
+                    world.addParticle((IParticleData) ParticleRegister.SHOCK_WAVE.get(), packet.x, packet.y, packet.z,
+                            speedModifier*packet.radius*Math.cos(theta)/25,0,speedModifier*packet.radius*Math.sin(theta)/25);
                 }
             }
         }));

@@ -167,8 +167,9 @@ public class NuclearCraft
             Minecraft.getInstance().particles.registerFactory(ParticleRegister.NUKE_PARTICLE_SMOKE.get(), BigSmokeParticle.NukeParticleFactory::new);
             Minecraft.getInstance().particles.registerFactory(ParticleRegister.NUKE_PARTICLE_FIRE.get(), BigSmokeParticle.NukeParticleFactory::new);
             Minecraft.getInstance().particles.registerFactory(ParticleRegister.BIG_SMOKE.get(), BigSmokeParticle.BigSmokeFactory::new);
-            Minecraft.getInstance().particles.registerFactory(ParticleRegister.RESTRICTED_HEIGHT_SMOKE_PARTICLE.get(), RestrictedSmokeParticle.Factory::new);
-            Minecraft.getInstance().particles.registerFactory(ParticleRegister.DOWN_SMOKE.get(), DownSmoke.Factory::new);
+            Minecraft.getInstance().particles.registerFactory(ParticleRegister.RESTRICTED_HEIGHT_SMOKE_PARTICLE.get(), RestrictedSmokeParticle.RestrictedHeightFactory::new);
+            Minecraft.getInstance().particles.registerFactory(ParticleRegister.MUSHROOM_SMOKE_PARTICLE.get(), RestrictedSmokeParticle.MushroomFactory::new);
+            Minecraft.getInstance().particles.registerFactory(ParticleRegister.SHOCK_WAVE.get(), ShockWaveParticle.Factory::new);
 
             Minecraft.getInstance().particles.registerFactory(ParticleRegister.EXPLODE_CORE.get(), ExplodeCoreParticle.Factory::new);
         }

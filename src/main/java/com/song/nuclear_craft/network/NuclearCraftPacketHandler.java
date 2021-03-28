@@ -38,7 +38,7 @@ public class NuclearCraftPacketHandler {
         C4_SETTING_CHANNEL.registerMessage(channel_id++, C4BombSynPacket.class, C4BombSynPacket::encode, C4BombSynPacket::new, C4BombSynPacket::handle);
         C4_SETTING_CHANNEL.registerMessage(channel_id++, SoundPacket.class, SoundPacket::encode, SoundPacket::new, SoundPacket::handle);
         PARTICLE_CHANNEL.registerMessage(channel_id++, ParticlePacket.class, ParticlePacket::encode, ParticlePacket::new, ParticlePacket::handle);
-        PARTICLE_CHANNEL.registerMessage(channel_id++, NukeCoreSmokePacket.class, NukeCoreSmokePacket::encode, NukeCoreSmokePacket::new, NukeCoreSmokePacket::handle);
+        PARTICLE_CHANNEL.registerMessage(channel_id++, ShockWaveParticleChannel.class, ShockWaveParticleChannel::encode, ShockWaveParticleChannel::new, ShockWaveParticleChannel::handle);
         PARTICLE_CHANNEL.registerMessage(channel_id++, NukeRisingSmokePacket.class, NukeRisingSmokePacket::encode, NukeRisingSmokePacket::new, NukeRisingSmokePacket::handle);
         PARTICLE_CHANNEL.registerMessage(channel_id++, NukeMushroomCloudPacket.class, NukeMushroomCloudPacket::encode, NukeMushroomCloudPacket::new, NukeMushroomCloudPacket::handle);
         PARTICLE_CHANNEL.registerMessage(channel_id++, NukeDownSmokePacket.class, NukeDownSmokePacket::encode, NukeDownSmokePacket::new, NukeDownSmokePacket::handle);

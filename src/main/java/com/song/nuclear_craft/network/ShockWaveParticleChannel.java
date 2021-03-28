@@ -1,6 +1,5 @@
 package com.song.nuclear_craft.network;
 
-import com.song.nuclear_craft.entities.rocket_entities.SmokeRocketEntity;
 import com.song.nuclear_craft.particles.ParticleRegister;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
@@ -13,20 +12,20 @@ import net.minecraftforge.fml.network.NetworkEvent;
 import java.util.Random;
 import java.util.function.Supplier;
 
-public class NukeCoreSmokePacket {
+public class ShockWaveParticleChannel {
     public double x;
     public double y;
     public double z;
     public double radius;
 
-    public NukeCoreSmokePacket(double x, double y, double z, double radius){
+    public ShockWaveParticleChannel(double x, double y, double z, double radius){
         this.x = x;
         this.y = y;
         this.z = z;
         this.radius = radius;
     }
 
-    public NukeCoreSmokePacket(final PacketBuffer packetBuffer){
+    public ShockWaveParticleChannel(final PacketBuffer packetBuffer){
         this.x = packetBuffer.readDouble();
         this.y = packetBuffer.readDouble();
         this.z = packetBuffer.readDouble();
@@ -41,10 +40,10 @@ public class NukeCoreSmokePacket {
     }
 
     public static int getNumParticles(){
-        return 100;
+        return 500;
     }
 
-    public static void handle(NukeCoreSmokePacket packet, Supplier<NetworkEvent.Context> ctx){
+    public static void handle(ShockWaveParticleChannel packet, Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(()-> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
 //            NetworkEvent.Context context = ctx.get();
 //            INetHandler handler = context.getNetworkManager().getNetHandler();
@@ -52,12 +51,10 @@ public class NukeCoreSmokePacket {
             if(world != null){
                 Random random = new Random();
                 for (int i=0; i<getNumParticles(); i++){
-                    double phi = 2 * Math.PI * random.nextDouble();
-                    double theta = Math.PI * random.nextDouble();
-                    double this_x = packet.x + packet.radius*Math.sin(theta)*Math.cos(phi);
-                    double this_z = packet.z + packet.radius*Math.sin(theta)*Math.sin(phi);
-                    double this_y = packet.y + packet.radius*Math.cos(theta);
-                    world.addParticle((IParticleData) ParticleRegister.RESTRICTED_HEIGHT_SMOKE_PARTICLE.get(), this_x, this_y, this_z, 0,0,0);
+                    double theta = 2 * Math.PI * i / getNumParticles();
+                    double this_x = packet.radius*Math.sin(theta);
+                    double this_z = packet.radius*Math.cos(theta);
+                    world.addParticle((IParticleData) ParticleRegister.SHOCK_WAVE.get(), packet.x+this_x, packet.y, packet.z+this_z, this_x/25,0,this_z/25);
                 }
             }
         }));

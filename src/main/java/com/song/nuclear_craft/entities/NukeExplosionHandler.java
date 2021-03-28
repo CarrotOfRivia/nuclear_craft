@@ -108,7 +108,33 @@ public class NukeExplosionHandler extends Entity {
         return 560;
     }
 
-    public void effectNeighbor(){
+    public void shockWave(){
+        if(! this.world.isRemote()){
+            float multiplier = 2.0f;
+            int effectiveHeight=15;
+            int effectRadius = (int) (multiplier*getBlastRadius());
+            for (int dx = -effectRadius; dx<=effectRadius; dx++){
+                int yMax = (int) Math.sqrt(effectRadius*effectRadius-dx*dx);
+                for(int dz = -yMax; dz<=yMax; dz++){
+                    int y = this.world.getHeight(Heightmap.Type.WORLD_SURFACE, (int)this.getPosX()+dx, (int)this.getPosZ()+dz);
+                    BlockPos interested = new BlockPos((int)this.getPosX()+dx, y-1, (int)this.getPosZ()+dz);
+                    if(y-this.getPosY()<effectiveHeight || y-this.getPosY()>-effectiveHeight){
+                        while (y-this.getPosY()>-effectiveHeight){
+                            BlockPos interested1 = new BlockPos((int)this.getPosX()+dx, y-1, (int)this.getPosZ()+dz);
+                            BlockState blockState = world.getBlockState(interested);
+                            world.destroyBlock(interested1, false);
+                            if(blockState.getMaterial() != Material.WOOD && blockState.getMaterial() != Material.LEAVES){
+                                break;
+                            }
+                            y--;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void effectCore(){
         if(! this.world.isRemote()){
             float multiplier = 2.0f;
             int effectiveHeight=15;
@@ -129,17 +155,6 @@ public class NukeExplosionHandler extends Entity {
                             world.setBlockState(interested, Blocks.LAVA.getDefaultState());
                         }
                     }
-                    else if(y-this.getPosY()<effectiveHeight || y-this.getPosY()>-effectiveHeight){
-                        while (y-this.getPosY()>-effectiveHeight){
-                            BlockPos interested1 = new BlockPos((int)this.getPosX()+dx, y-1, (int)this.getPosZ()+dz);
-                            BlockState blockState = world.getBlockState(interested);
-                            world.destroyBlock(interested1, false);
-                            if(blockState.getMaterial() != Material.WOOD && blockState.getMaterial() != Material.LEAVES){
-                                break;
-                            }
-                            y--;
-                        }
-                    }
                 }
             }
         }
@@ -152,10 +167,13 @@ public class NukeExplosionHandler extends Entity {
         if(! world.isRemote()){
             if(age == getStageOneTick()){
                 ExplosionUtils.oldNukeExplode(this.world, null, this.getPosX(), this.getPosY(), this.getPosZ(), getBlastRadius(), false, ConfigCommon.NUKE_BLAST_POWER.get());
+                effectCore();
             }
-            if(age == getStageTwoTick()){
-                effectNeighbor();
-//                NuclearCraftPacketHandler.PARTICLE_CHANNEL.send(PacketDistributor.ALL.noArg(), new NukeCoreSmokePacket(this.getPosX(), this.getPosY(), this.getPosZ(), 0.25*getBlastRadius()));
+            if(age == getStageTwoTick() - 15){
+                NuclearCraftPacketHandler.PARTICLE_CHANNEL.send(PacketDistributor.ALL.noArg(), new ShockWaveParticleChannel(this.getPosX(), this.getPosY(), this.getPosZ(), getBlastRadius()));
+            }
+            if(age == getStageTwoTick() + 10){
+                shockWave();
             }
 
             if(age>=getStageTwoTick() && age%10==0){

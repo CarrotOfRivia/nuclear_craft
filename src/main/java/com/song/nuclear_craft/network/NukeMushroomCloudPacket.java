@@ -55,7 +55,7 @@ public class NukeMushroomCloudPacket {
                     double theta = 2 * Math.PI * random.nextDouble();
                     double xDelta = packet.radius*Math.cos(theta);
                     double zDelta = packet.radius*Math.sin(theta);
-                    world.addParticle((IParticleData) ParticleRegister.RESTRICTED_HEIGHT_SMOKE_PARTICLE.get(), packet.x+xDelta, packet.y+2*packet.radius*random.nextDouble(), packet.z+zDelta,
+                    world.addParticle((IParticleData) ParticleRegister.MUSHROOM_SMOKE_PARTICLE.get(), packet.x+xDelta, packet.y+2*packet.radius*random.nextDouble(), packet.z+zDelta,
                             xDelta/200,0,zDelta/200);
                 }
             }
