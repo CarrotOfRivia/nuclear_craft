@@ -58,6 +58,7 @@ public class ShockWaveParticle extends SpriteTexturedParticle {
             float radius = NukeExplosionHandler.getBlastRadius();
             ShockWaveParticle downSmoke = new ShockWaveParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, radius/2);
             downSmoke.selectSpriteRandomly(this.iAnimatedSprite);
+            downSmoke.setColor(74/256f, 82/256f, 76/256f);
             return downSmoke;
         }
     }

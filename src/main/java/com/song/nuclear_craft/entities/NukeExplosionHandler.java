@@ -1,5 +1,6 @@
 package com.song.nuclear_craft.entities;
 
+import com.song.nuclear_craft.effects.EffectRegister;
 import com.song.nuclear_craft.misc.ConfigCommon;
 import com.song.nuclear_craft.network.*;
 import net.minecraft.block.BlockState;
@@ -76,7 +77,7 @@ public class NukeExplosionHandler extends Entity {
             // Applying vision effect
             for (PlayerEntity player : world.getPlayers()) {
                 if (getDistanceSquare(player) < getVisionEffectDist()) {
-                    player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, 1600, 0));
+                    player.addPotionEffect(new EffectInstance(EffectRegister.RADIOACTIVE.get(), 1600, 1));
                 }
             }
 

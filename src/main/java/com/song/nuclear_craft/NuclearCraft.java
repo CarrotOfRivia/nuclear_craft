@@ -4,6 +4,7 @@ import com.song.nuclear_craft.blocks.BlockList;
 import com.song.nuclear_craft.blocks.container.ContainerTypeList;
 import com.song.nuclear_craft.blocks.tileentity.TileEntityRegister;
 import com.song.nuclear_craft.client.ClientSetup;
+import com.song.nuclear_craft.effects.EffectRegister;
 import com.song.nuclear_craft.entities.EntityRegister;
 import com.song.nuclear_craft.items.Ammo.AmmoSize;
 import com.song.nuclear_craft.items.Ammo.AmmoType;
@@ -84,6 +85,7 @@ public class NuclearCraft
         BlockList.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ProfessionTypes.VILLAGER_PROFESSION.register(FMLJavaModLoadingContext.get().getModEventBus());
         PointOfInterestTypes.POINT_OF_INTEREST_TYPE.register(FMLJavaModLoadingContext.get().getModEventBus());
+        EffectRegister.EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigClient.CLIENT);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigCommon.COMMON);

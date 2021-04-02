@@ -23,6 +23,11 @@ public class ExplodeCoreParticle extends SpriteTexturedParticle {
         super(world, x, y, z, motionX, motionY, motionZ);
     }
 
+    @Override
+    public int getBrightnessForRender(float partialTick) {
+        return 15728880;
+    }
+
     protected ExplodeCoreParticle(ClientWorld world, double x, double y, double z, double x_speed, double y_speed, double z_speed, int age, int maxAge, int maxSizeAge, float scale1, float scale2, float scale3){
         super(world, x, y, z, x_speed, y_speed, z_speed);
         this.age = age;

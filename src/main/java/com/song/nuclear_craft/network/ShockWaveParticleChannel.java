@@ -1,5 +1,6 @@
 package com.song.nuclear_craft.network;
 
+import com.song.nuclear_craft.entities.NukeExplosionHandler;
 import com.song.nuclear_craft.particles.ParticleRegister;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
@@ -40,7 +41,7 @@ public class ShockWaveParticleChannel {
     }
 
     public static int getNumParticles(){
-        return 500;
+        return (int) (10* NukeExplosionHandler.getBlastRadius());
     }
 
     public static void handle(ShockWaveParticleChannel packet, Supplier<NetworkEvent.Context> ctx){

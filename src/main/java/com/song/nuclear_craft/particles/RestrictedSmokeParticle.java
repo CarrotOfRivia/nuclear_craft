@@ -74,6 +74,11 @@ public class RestrictedSmokeParticle extends SpriteTexturedParticle {
         }
     }
 
+    @Override
+    public int getBrightnessForRender(float partialTick) {
+        return 15728880;
+    }
+
     public static class MushroomFactory implements IParticleFactory<BasicParticleType> {
         private final IAnimatedSprite iAnimatedSprite;
 
