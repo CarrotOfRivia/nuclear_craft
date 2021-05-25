@@ -93,5 +93,15 @@
     "category": "player",
     "subtitle": "nuclear_craft.subtitle.nova",
     "sounds": ["nuclear_craft:nova"]
+  },
+  "defusing": {
+    "category": "player",
+    "subtitle": "nuclear_craft.subtitle.defusing",
+    "sounds": ["nuclear_craft:defusing"]
+  },
+  "defused": {
+    "category": "player",
+    "subtitle": "nuclear_craft.subtitle.defused",
+    "sounds": ["nuclear_craft:defused"]
   }
 }

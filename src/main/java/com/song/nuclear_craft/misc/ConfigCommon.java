@@ -58,6 +58,12 @@ public class ConfigCommon {
     public static final HashMap<String, ForgeConfigSpec.IntValue> PRICE1_MAX = new HashMap<>();
     public static final HashMap<String, ForgeConfigSpec.IntValue> PRICE2_MAX = new HashMap<>();
 
+    public static final ForgeConfigSpec.IntValue WOOD_DEFUSE_KIT_TIME;
+    public static final ForgeConfigSpec.IntValue IRON_DEFUSE_KIT_TIME;
+    public static final ForgeConfigSpec.IntValue GOLD_DEFUSE_KIT_TIME;
+    public static final ForgeConfigSpec.IntValue DIAMOND_DEFUSE_KIT_TIME;
+    public static final ForgeConfigSpec.IntValue NETHERITE_DEFUSE_KIT_TIME;
+
 
     static {
         ForgeConfigSpec.Builder CONFIG_BUILDER = new ForgeConfigSpec.Builder();
@@ -169,9 +175,15 @@ public class ConfigCommon {
         addTrader("water_drop_rocket", 4, "minecraft:nether_star", 40, 50, "null", 1, 1, CONFIG_BUILDER);
 
         addTrader("c4_incendiary", 1, "minecraft:diamond", 2, 3, "null", 1, 1, CONFIG_BUILDER);
+        addTrader("wood_defuse_kit", 1, "minecraft:wood", 2, 3, "null", 1, 1, CONFIG_BUILDER);
         addTrader("c4_smoke", 2, "minecraft:diamond", 4, 5, "null", 1, 1, CONFIG_BUILDER);
+        addTrader("iron_defuse_kit", 2, "minecraft:iron_ingot", 5, 8, "null", 1, 1, CONFIG_BUILDER);
         addTrader("c4_high_explosive", 3, "minecraft:diamond", 5, 10, "null", 1, 1, CONFIG_BUILDER);
+        addTrader("gold_defuse_kit", 3, "minecraft:gold_ingot", 5, 8, "null", 1, 1, CONFIG_BUILDER);
         addTrader("c4_atomic_bomb", 4, "minecraft:diamond", 40, 50, "null", 1, 1, CONFIG_BUILDER);
+        addTrader("diamond_defuse_kit", 4, "minecraft:diamond", 5, 8, "null", 1, 1, CONFIG_BUILDER);
+        addTrader("netherite_defuse_kit", 5, "minecraft:netherite_ingot", 5, 8, "null", 1, 1, CONFIG_BUILDER);
+
 
         addTrader("glock", 1, "minecraft:diamond", 10, 10, "null", 1, 1, CONFIG_BUILDER);
         addTrader("usp", 1, "minecraft:diamond", 10, 10, "null", 1, 1, CONFIG_BUILDER);
@@ -203,6 +215,14 @@ public class ConfigCommon {
             addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.NUKE.getRegisterString(), 5, "minecraft:nether_star", 1, 1, "minecraft:gunpowder", 1, 1, CONFIG_BUILDER);
         }
 
+        CONFIG_BUILDER.pop();
+
+        CONFIG_BUILDER.comment("Defuse Time (in tick, 20ticks = 1 second)").push("defuse_time");
+        WOOD_DEFUSE_KIT_TIME = CONFIG_BUILDER.defineInRange("wood_defuse_kit_time", 400, 1, 999999999);
+        IRON_DEFUSE_KIT_TIME = CONFIG_BUILDER.defineInRange("iron_defuse_kit_time", 200, 1, 999999999);
+        GOLD_DEFUSE_KIT_TIME = CONFIG_BUILDER.defineInRange("gold_defuse_kit_time", 60, 1, 999999999);
+        DIAMOND_DEFUSE_KIT_TIME = CONFIG_BUILDER.defineInRange("diamond_defuse_kit_time", 150, 1, 999999999);
+        NETHERITE_DEFUSE_KIT_TIME = CONFIG_BUILDER.defineInRange("netherite_defuse_kit_time", 100, 1, 999999999);
         CONFIG_BUILDER.pop();
 
         COMMON = CONFIG_BUILDER.build();

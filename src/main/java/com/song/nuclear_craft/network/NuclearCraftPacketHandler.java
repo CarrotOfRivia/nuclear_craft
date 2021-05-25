@@ -44,6 +44,7 @@ public class NuclearCraftPacketHandler {
         PARTICLE_CHANNEL.registerMessage(channel_id++, NukeDownSmokePacket.class, NukeDownSmokePacket::encode, NukeDownSmokePacket::new, NukeDownSmokePacket::handle);
         KEY_BIND.registerMessage(channel_id++, GunLoadingPacket.class, GunLoadingPacket::encode, GunLoadingPacket::new, GunLoadingPacket::handle);
         C4_SETTING_CHANNEL.registerMessage(channel_id++, C4BombSettingPacket.class, C4BombSettingPacket::encode, C4BombSettingPacket::new, C4BombSettingPacket::handle);
+        C4_SETTING_CHANNEL.registerMessage(channel_id++, BombDefuseProgressPacket.class, BombDefuseProgressPacket::encode, BombDefuseProgressPacket::new, BombDefuseProgressPacket::handle);
     }
 
 }

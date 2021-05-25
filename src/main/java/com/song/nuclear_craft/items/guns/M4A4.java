@@ -1,72 +1,59 @@
-package com.song.nuclear_craft.items;
+package com.song.nuclear_craft.items.guns;
 
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.items.Ammo.AmmoSize;
-import com.song.nuclear_craft.items.Ammo.AmmoType;
 import com.song.nuclear_craft.misc.ConfigCommon;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
-public class Nova extends AbstractGunItem{
-    public Nova() {
+public class M4A4 extends AbstractGunItem{
+    public M4A4(){
         super(new Properties().maxStackSize(1).group(NuclearCraft.ITEM_GROUP));
     }
 
     @Override
     public int getCoolDown() {
-        return 20;
+        return 0;
     }
 
     @Override
     public String getShootActionString() {
-        return "nova";
+        return "m4a4";
     }
 
     @Override
     public int maxAmmo() {
-        return 8;
+        return 30;
     }
 
     @Override
     public int getLoadTime() {
-        return 6;
+        return 60;
     }
 
     @Nonnull
     @Override
     public AmmoSize compatibleSize() {
-        return AmmoSize.SIZE_12_GA;
+        return AmmoSize.SIZE_556;
     }
 
     @Override
     public float getSpeedModifier() {
-        return 1.1f;
+        return ConfigCommon.M4A4_CONFIG.getSpeedModify().get().floatValue();
     }
 
     @Override
     public double getDamageModifier() {
-        return 1.2;
+        return ConfigCommon.M4A4_CONFIG.getDamageModify().get();
     }
 
     @Override
     public String getReloadSound() {
-        return "xm1014_reload";
+        return "m4a4_reload";
     }
 
     @Override
-    protected int getBirdShotCount(AmmoType ammoType) {
-        return ConfigCommon.BIRD_SHOT_COUNT_MAP.get(ammoType).get();
-    }
-
-    @Override
-    protected float getInaccuracy(World world, PlayerEntity playerEntity) {
-        return 3f;
-    }
-
-    @Override
-    protected int getAmmoCountPerLoad() {
-        return 1;
+    protected double getGunSoundDist() {
+        return 26;
     }
 }

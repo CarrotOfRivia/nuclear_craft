@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "rrr",
+    "r#r",
+    "rrr"
+  ],
+  "key": {
+    "#": {
+      "item": "nuclear_craft:wood_defuse_kit"
+    },
+    "r": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "nuclear_craft:iron_defuse_kit"
+  }
+}

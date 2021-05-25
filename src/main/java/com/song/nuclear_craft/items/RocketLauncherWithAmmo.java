@@ -111,7 +111,7 @@ public abstract class RocketLauncherWithAmmo extends Item {
         tooltip.add(new StringTextComponent(""+n_ammo).mergeStyle(TextFormatting.GOLD));
     }
 
-    protected void addAmmo(ItemStack ammo, ItemStack rocket, int itemSlot, Entity entityIn){
+    public void addAmmo(ItemStack ammo, ItemStack rocket, int itemSlot, Entity entityIn){
         if (getBoundedAmmo() != null){
             if(ammo.getItem().getRegistryName().equals(getBoundedAmmo().getRegistryName())){
                 int n_ammo = getAmmoCount(rocket);

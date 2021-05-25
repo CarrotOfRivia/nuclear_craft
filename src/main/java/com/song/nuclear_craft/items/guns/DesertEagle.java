@@ -1,64 +1,61 @@
-package com.song.nuclear_craft.items;
+package com.song.nuclear_craft.items.guns;
 
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.items.Ammo.AmmoSize;
+import com.song.nuclear_craft.items.guns.AbstractGunItem;
 import com.song.nuclear_craft.misc.ConfigCommon;
 
 import javax.annotation.Nonnull;
 
-public class Barrett extends AbstractGunItem{
-    public Barrett(){
+public class DesertEagle extends AbstractGunItem {
+
+    public DesertEagle() {
         super(new Properties().maxStackSize(1).group(NuclearCraft.ITEM_GROUP));
     }
 
     @Override
     public int getCoolDown() {
-        return 40;
+        return 10;
     }
 
     @Override
     public int maxAmmo() {
-        return 5;
+        return 7;
     }
 
     @Override
     public int getLoadTime() {
-        return 64;
+        return 40;
+    }
+
+    @Override
+    public String getShootActionString() {
+        return "desert_eagle";
+    }
+
+    @Override
+    public float getSpeedModifier() {
+        return ConfigCommon.DESERT_EAGLE_CONFIG.getSpeedModify().get().floatValue();
+    }
+
+    @Override
+    public double getDamageModifier() {
+        return ConfigCommon.DESERT_EAGLE_CONFIG.getDamageModify().get();
+    }
+
+    @Override
+    public String getReloadSound() {
+        return "de_reload_empty";
     }
 
     @Nonnull
     @Override
     public AmmoSize compatibleSize() {
-        return AmmoSize.SIZE_127;
-    }
-
-    @Override
-    public String getShootActionString() {
-        return "barrett";
-    }
-
-    @Override
-    public float getSpeedModifier() {
-        return ConfigCommon.BARRETT_CONFIG.getSpeedModify().get().floatValue();
-    }
-
-    @Override
-    public double getDamageModifier() {
-        return ConfigCommon.BARRETT_CONFIG.getDamageModify().get();
-    }
-
-    @Override
-    public String getReloadSound() {
-        return "awp_reload";
-    }
-
-    @Override
-    public boolean canUseScope() {
-        return true;
+        return AmmoSize.SIZE_9MM;
     }
 
     @Override
     protected double getGunSoundDist() {
-        return 70;
+        return 45;
     }
 }

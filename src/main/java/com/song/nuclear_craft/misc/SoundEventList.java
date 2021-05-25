@@ -24,4 +24,7 @@ public class SoundEventList {
     public static SoundEvent XM1014 = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "xm1014"));
     public static SoundEvent XM1014_RELOAD = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "xm1014_reload"));
     public static SoundEvent NOVA = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "nova"));
+
+    public static SoundEvent DEFUSING = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "defusing"));
+    public static SoundEvent DEFUSED = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "defused"));
 }

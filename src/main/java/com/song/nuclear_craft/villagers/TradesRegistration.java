@@ -93,7 +93,8 @@ public class TradesRegistration {
         }
 
         if (event.getType() == ProfessionTypes.EXPLOSIVE_MASTER_PROFESSION.get()){
-            for (Item item: Arrays.asList(ItemList.C4_INCENDIARY, ItemList.C4_SMOKE, ItemList.C4_HIGH_EXPLOSIVE, ItemList.C4_ATOMIC_BOMB)){
+            for (Item item: Arrays.asList(ItemList.C4_INCENDIARY, ItemList.C4_SMOKE, ItemList.C4_HIGH_EXPLOSIVE, ItemList.C4_ATOMIC_BOMB, ItemList.WOOD_DEFUSE_KIT.get(),
+                    ItemList.GOLD_DEFUSE_KIT.get(), ItemList.DIAMOND_DEFUSE_KIT.get(), ItemList.IRON_DEFUSE_KIT.get(), ItemList.NETHERITE_DEFUSE_KIT.get())){
                 String key = Objects.requireNonNull(item.getRegistryName()).toString();
                 String p1 = ConfigCommon.PRICE1_MAP.get(key).get();
                 String p2 = ConfigCommon.PRICE2_MAP.get(key).get();

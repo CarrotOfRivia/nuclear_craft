@@ -18,10 +18,10 @@ public class BlockList {
 
 
     // True added blocks from here:
-    public static final C4AtomicBomb C4_ATOMIC_BOMB = new C4AtomicBomb(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1f, 3f));
-    public static final C4HighExplosive C4_HIGH_EXPLOSIVE = new C4HighExplosive(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1f, 3f));
-    public static final C4Incendiary C4_INCENDIARY = new C4Incendiary(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1f, 3f));
-    public static final C4Smoke C4_SMOKE = new C4Smoke(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1f, 3f));
+    public static final C4AtomicBomb C4_ATOMIC_BOMB = new C4AtomicBomb(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(-1.0F, 3600000.0F));
+    public static final C4HighExplosive C4_HIGH_EXPLOSIVE = new C4HighExplosive(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(-1.0F, 3600000.0F));
+    public static final C4Incendiary C4_INCENDIARY = new C4Incendiary(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(-1.0F, 3600000.0F));
+    public static final C4Smoke C4_SMOKE = new C4Smoke(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(-1.0F, 3600000.0F));
 
     public static final RegistryObject<Block> STATUE_OF_LIBERTY = BLOCKS.register("statue_of_liberty", ()-> new Statue(AbstractBlock.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> STATUE_OF_RIFLE_AMMO = BLOCKS.register("statue_of_rifle_ammo", ()-> new Statue(AbstractBlock.Properties.create(Material.ROCK)));

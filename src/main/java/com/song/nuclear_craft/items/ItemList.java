@@ -3,9 +3,10 @@ package com.song.nuclear_craft.items;
 import com.song.nuclear_craft.blocks.BlockList;
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.items.Ammo.*;
+import com.song.nuclear_craft.items.defuse_kit.*;
+import com.song.nuclear_craft.items.guns.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -54,9 +55,17 @@ public class ItemList {
     public static final RegistryObject<Ak47> AK47 = ITEMS.register("ak47", Ak47::new);
     public static final RegistryObject<Awp> AWP = ITEMS.register("awp", Awp::new);
     public static final RegistryObject<Barrett> BARRETT = ITEMS.register("barrett", Barrett::new);
-    public static final RegistryObject<M4A4> M4A4 = ITEMS.register("m4a4", M4A4::new);
+    public static final RegistryObject<com.song.nuclear_craft.items.guns.M4A4> M4A4 = ITEMS.register("m4a4", M4A4::new);
     public static final RegistryObject<XM1014> XM1014 = ITEMS.register("xm1014", XM1014::new);
     public static final RegistryObject<Nova> NOVA = ITEMS.register("nova", Nova::new);
+
+    //Defuse Kit
+    public static final RegistryObject<DefuseKit> WOOD_DEFUSE_KIT = ITEMS.register("wood_defuse_kit", WoodDefuseKit::new);
+    public static final RegistryObject<DefuseKit> IRON_DEFUSE_KIT = ITEMS.register("iron_defuse_kit", IronDefuseKit::new);
+    public static final RegistryObject<DefuseKit> GOLD_DEFUSE_KIT = ITEMS.register("gold_defuse_kit", GoldDefuseKit::new);
+    public static final RegistryObject<DefuseKit> DIAMOND_DEFUSE_KIT = ITEMS.register("diamond_defuse_kit", DiamondDefuseKit::new);
+    public static final RegistryObject<DefuseKit> NETHERITE_DEFUSE_KIT = ITEMS.register("netherite_defuse_kit", NetheriteDefuseKit::new);
+
 
     public static final HashMap<AmmoSize, HashMap<AmmoType, RegistryObject<AbstractAmmo>>> AMMO_REGISTRIES_TYPE = new HashMap<>();
     public static final HashMap<AmmoType, RegistryObject<AbstractAmmo>> BIRD_SHOT_MAP = new HashMap<>();

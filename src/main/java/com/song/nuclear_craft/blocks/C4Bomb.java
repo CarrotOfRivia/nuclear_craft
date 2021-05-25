@@ -1,6 +1,9 @@
 package com.song.nuclear_craft.blocks;
 
 import com.song.nuclear_craft.blocks.tileentity.C4BombTileEntity;
+import com.song.nuclear_craft.items.defuse_kit.DefuseKit;
+import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
+import com.song.nuclear_craft.network.SoundPacket;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFaceBlock;
@@ -19,10 +22,13 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import javax.annotation.Nullable;
+import java.util.Objects;
 
 public abstract class C4Bomb extends HorizontalFaceBlock {
     protected static final VoxelShape FLOOR_H_X = Block.makeCuboidShape(4.125, 0, 1, 12, 4, 15);
@@ -110,15 +116,37 @@ public abstract class C4Bomb extends HorizontalFaceBlock {
 
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (worldIn.isRemote) {
-            return ActionResultType.SUCCESS;
-        } else {
-            TileEntity tileentity = worldIn.getTileEntity(pos);
-            if (tileentity instanceof C4BombTileEntity) {
-                ((C4BombTileEntity) tileentity).synToClient();
-                NetworkHooks.openGui((ServerPlayerEntity) player, (C4BombTileEntity)tileentity, pos);
+        ItemStack itemStack = player.getHeldItem(Hand.MAIN_HAND);
+        if(itemStack.getItem() instanceof DefuseKit){
+            if(! worldIn.isRemote()){
+                C4BombTileEntity c4BombTileEntity = (C4BombTileEntity)worldIn.getTileEntity(pos);
+                if(c4BombTileEntity != null && c4BombTileEntity.currentDefuseStatus<0){
+                    c4BombTileEntity.currentDefuseStatus = 0;
+                    c4BombTileEntity.defuseTime = ((DefuseKit)(itemStack.getItem())).getDefuseTick();
+                    c4BombTileEntity.defusingEntityID = player.getEntityId();
+                    c4BombTileEntity.defusingTool = Objects.requireNonNull(itemStack.getItem().getRegistryName()).toString();
+                    NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), 21, worldIn.getDimensionKey())),
+                            new SoundPacket(pos, "defusing"));
+                }
             }
-            return ActionResultType.CONSUME;
+            return ActionResultType.PASS;
         }
+        else {
+            if (worldIn.isRemote) {
+                return ActionResultType.SUCCESS;
+            } else {
+                TileEntity tileentity = worldIn.getTileEntity(pos);
+                if (tileentity instanceof C4BombTileEntity) {
+                    ((C4BombTileEntity) tileentity).synToClient();
+                    NetworkHooks.openGui((ServerPlayerEntity) player, (C4BombTileEntity)tileentity, pos);
+                }
+                return ActionResultType.CONSUME;
+            }
+        }
+    }
+
+    @Override
+    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
+        return true;
     }
 }

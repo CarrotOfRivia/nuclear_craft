@@ -1,4 +1,4 @@
-package com.song.nuclear_craft.items;
+package com.song.nuclear_craft.items.guns;
 
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.items.Ammo.AmmoSize;
@@ -6,55 +6,54 @@ import com.song.nuclear_craft.misc.ConfigCommon;
 
 import javax.annotation.Nonnull;
 
-public class DesertEagle extends AbstractGunItem{
-
-    public DesertEagle() {
+public class Ak47 extends AbstractGunItem{
+    public Ak47() {
         super(new Properties().maxStackSize(1).group(NuclearCraft.ITEM_GROUP));
     }
 
     @Override
     public int getCoolDown() {
-        return 10;
+        return 0;
     }
 
     @Override
     public int maxAmmo() {
-        return 7;
+        return 30;
     }
 
     @Override
     public int getLoadTime() {
-        return 40;
-    }
-
-    @Override
-    public String getShootActionString() {
-        return "desert_eagle";
-    }
-
-    @Override
-    public float getSpeedModifier() {
-        return ConfigCommon.DESERT_EAGLE_CONFIG.getSpeedModify().get().floatValue();
-    }
-
-    @Override
-    public double getDamageModifier() {
-        return ConfigCommon.DESERT_EAGLE_CONFIG.getDamageModify().get();
-    }
-
-    @Override
-    public String getReloadSound() {
-        return "de_reload_empty";
+        return 64;
     }
 
     @Nonnull
     @Override
     public AmmoSize compatibleSize() {
-        return AmmoSize.SIZE_9MM;
+        return AmmoSize.SIZE_762;
+    }
+
+    @Override
+    public String getShootActionString() {
+        return "ak47";
+    }
+
+    @Override
+    public float getSpeedModifier() {
+        return ConfigCommon.AK47_CONFIG.getSpeedModify().get().floatValue();
+    }
+
+    @Override
+    public double getDamageModifier() {
+        return ConfigCommon.AK47_CONFIG.getDamageModify().get();
+    }
+
+    @Override
+    public String getReloadSound() {
+        return "ak47_reload";
     }
 
     @Override
     protected double getGunSoundDist() {
-        return 45;
+        return 30;
     }
 }

@@ -1,72 +1,64 @@
-package com.song.nuclear_craft.items;
+package com.song.nuclear_craft.items.guns;
 
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.items.Ammo.AmmoSize;
-import com.song.nuclear_craft.items.Ammo.AmmoType;
 import com.song.nuclear_craft.misc.ConfigCommon;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
-public class XM1014 extends AbstractGunItem{
-    public XM1014() {
+public class Awp extends AbstractGunItem{
+    public Awp(){
         super(new Properties().maxStackSize(1).group(NuclearCraft.ITEM_GROUP));
     }
 
     @Override
     public int getCoolDown() {
-        return 10;
+        return 40;
     }
 
     @Override
     public String getShootActionString() {
-        return "xm1014";
+        return "awp";
     }
 
     @Override
     public int maxAmmo() {
-        return 7;
+        return 10;
     }
 
     @Override
     public int getLoadTime() {
-        return 6;
+        return 64;
     }
 
     @Nonnull
     @Override
     public AmmoSize compatibleSize() {
-        return AmmoSize.SIZE_12_GA;
+        return AmmoSize.SIZE_762;
     }
 
     @Override
     public float getSpeedModifier() {
-        return 1f;
+        return ConfigCommon.AWP_CONFIG.getSpeedModify().get().floatValue();
     }
 
     @Override
     public double getDamageModifier() {
-        return 1;
+        return ConfigCommon.AWP_CONFIG.getDamageModify().get();
     }
 
     @Override
     public String getReloadSound() {
-        return "xm1014_reload";
+        return "awp_reload";
     }
 
     @Override
-    protected int getBirdShotCount(AmmoType ammoType) {
-        return ConfigCommon.BIRD_SHOT_COUNT_MAP.get(ammoType).get();
+    public boolean canUseScope() {
+        return true;
     }
 
     @Override
-    protected float getInaccuracy(World world, PlayerEntity playerEntity) {
-        return 5f;
-    }
-
-    @Override
-    protected int getAmmoCountPerLoad() {
-        return 1;
+    protected double getGunSoundDist() {
+        return 50;
     }
 }

@@ -185,7 +185,7 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
     @Override
     protected void onImpact(RayTraceResult result) {
         double kEBefore = this.energy;
-        // do hack to remove impact in super.tick()
+        // do this hack to remove impact in super.tick()
         if(isMyImpact&&!world.isRemote){
             super.onImpact(result);
         }

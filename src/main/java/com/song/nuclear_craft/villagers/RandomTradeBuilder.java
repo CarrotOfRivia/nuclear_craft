@@ -180,7 +180,7 @@ public class RandomTradeBuilder {
 
     public static Function<Random, ItemStack> createFunction(Item item, int min, int max)
     {
-        return (random) -> new ItemStack(item, random.nextInt(max) + min);
+        return (random) -> new ItemStack(item, random.nextInt(max-min) + min);
     }
 
     // --- registering stuff ---

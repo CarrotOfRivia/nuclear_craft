@@ -84,6 +84,12 @@
   "item.nuclear_craft.ammo_12_ga_short_gun_blight": "Blight Shotgun Ammo",
   "item.nuclear_craft.ammo_12_ga_short_gun_desolator": "Desolator Shotgun Ammo",
 
+  "item.nuclear_craft.wood_defuse_kit": "Wood Defuse Kit",
+  "item.nuclear_craft.iron_defuse_kit": "Iron Defuse Kit",
+  "item.nuclear_craft.gold_defuse_kit": "Gold Defuse Kit",
+  "item.nuclear_craft.diamond_defuse_kit": "Diamond Defuse Kit",
+  "item.nuclear_craft.netherite_defuse_kit": "Netherite Defuse Kit",
+
   "item.nuclear_craft.guns.compatible_ammo_size": "Compatible Ammo Size:",
   "item.nuclear_craft.guns.use_scope": "Use scope to zoom in, default key is:",
 

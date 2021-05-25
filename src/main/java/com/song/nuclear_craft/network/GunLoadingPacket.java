@@ -1,16 +1,11 @@
 package com.song.nuclear_craft.network;
 
-import com.song.nuclear_craft.blocks.tileentity.C4BombTileEntity;
-import com.song.nuclear_craft.items.AbstractGunItem;
+import com.song.nuclear_craft.items.guns.AbstractGunItem;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.INetHandler;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.ServerPlayNetHandler;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;

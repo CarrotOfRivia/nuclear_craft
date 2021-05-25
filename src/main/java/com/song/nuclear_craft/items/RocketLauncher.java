@@ -52,7 +52,7 @@ public class RocketLauncher extends RocketLauncherWithAmmo {
     }
 
     @Override
-    protected void addAmmo(ItemStack ammo, ItemStack rocket, int itemSlot, Entity entityIn) {
+    public void addAmmo(ItemStack ammo, ItemStack rocket, int itemSlot, Entity entityIn) {
         String ammoRegistryName = Objects.requireNonNull(ammo.getItem().getRegistryName()).toString();
         ItemStack itemStack;
         if(ammo.getItem() == ItemList.ATOMIC_BOMB_ROCKET.get()){
