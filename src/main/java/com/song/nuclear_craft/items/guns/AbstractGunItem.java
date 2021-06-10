@@ -63,6 +63,8 @@ public abstract class AbstractGunItem extends Item {
                 for(int i = 0; i< getBirdShotCount(ammoType); i++){
                     AbstractAmmoEntity entity = getAmmoEntity(gunItem, playerIn, lookVec, toBeFired, worldIn, ammoItem, ammoType, ammoSize);
                     entity.shoot(lookVec.x, lookVec.y, lookVec.z, ammoItem.getBaseSpeed()*getSpeedModifier(), getInaccuracy(worldIn, playerIn));
+                    // one tick to avoid shooting yourself
+                    entity.tick();
                     worldIn.addEntity(entity);
                 }
 
