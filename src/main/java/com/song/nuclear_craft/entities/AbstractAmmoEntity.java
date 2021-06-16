@@ -10,6 +10,7 @@ import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
@@ -169,6 +170,12 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
             // bullets do not destroy themselves (for short guns)
             return;
         }
+
+        if(entity instanceof LivingEntity){
+            // for proper shotgun and machine gun behaviour
+            entity.hurtResistantTime=0;
+        }
+
         double damage = this.baseDamage * getEnergy(this.getMotion().length()) / this.initEnergy;
         // get shooter
         DamageSource damageSource = new IndirectEntityDamageSource(new ResourceLocation(NuclearCraft.MODID, "bullet").toString(), this, this.getShooter()).setProjectile();
@@ -221,6 +228,7 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
     }
 
     protected void teleportToHitPoint(RayTraceResult rayTraceResult){
+        // necessary for proper ricochet behaviour
         Vector3d hitResult = rayTraceResult.getHitVec();
         this.setPosition(hitResult.x, hitResult.y, hitResult.z);
     }

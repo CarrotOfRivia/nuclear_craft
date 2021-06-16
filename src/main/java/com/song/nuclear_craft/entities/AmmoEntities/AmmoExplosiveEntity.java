@@ -5,6 +5,7 @@ import com.song.nuclear_craft.entities.ExplosionUtils;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.FMLPlayMessages;
@@ -25,6 +26,9 @@ public class AmmoExplosiveEntity extends AbstractAmmoEntity {
     @Override
     protected void onImpact(RayTraceResult result) {
         super.onImpact(result);
+        if(result.getType()== RayTraceResult.Type.ENTITY && ((EntityRayTraceResult)result).getEntity() instanceof AbstractAmmoEntity){
+            return;
+        }
         teleportToHitPoint(result);
         if (!world.isRemote){
             ExplosionUtils.oldNukeExplode(world, this, this.getPosX(), this.getPosY(), this.getPosZ(), 5, false, 20);

@@ -62,7 +62,7 @@ public class TradesRegistration {
 
         if (event.getType() == ProfessionTypes.GUN_SELLER_PROFESSION.get()){
             for (Item item: Arrays.asList(ItemList.GLOCK.get(), ItemList.USP.get(), ItemList.DESERT_EAGLE.get(), ItemList.NOVA.get(), ItemList.M4A4.get(), ItemList.XM1014.get(),
-                    ItemList.AK47.get(), ItemList.AWP.get(), ItemList.BARRETT.get())){
+                    ItemList.AK47.get(), ItemList.AWP.get(), ItemList.BARRETT.get(), ItemList.P90.get())){
                 String key = Objects.requireNonNull(item.getRegistryName()).toString();
                 String p1 = ConfigCommon.PRICE1_MAP.get(key).get();
                 String p2 = ConfigCommon.PRICE2_MAP.get(key).get();

@@ -70,6 +70,10 @@ public class SoundPlayMethods {
                 world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.XM1014_RELOAD, SoundCategory.PLAYERS, 1.5f, 1.0f, false); break;
             case "nova":
                 world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.NOVA, SoundCategory.PLAYERS, 0.25f, 1.0f, false); break;
+            case "p90":
+                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.P90, SoundCategory.PLAYERS, 1f, 1.0f, false); break;
+            case "p90_reload":
+                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.P90_RELOAD, SoundCategory.PLAYERS, 1f, 1.0f, false); break;
             case "defusing":
                 world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.DEFUSING, SoundCategory.PLAYERS, 5f, 1.0f, false); break;
             case "defused":

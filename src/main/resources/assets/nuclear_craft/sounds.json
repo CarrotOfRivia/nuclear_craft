@@ -94,6 +94,16 @@
     "subtitle": "nuclear_craft.subtitle.nova",
     "sounds": ["nuclear_craft:nova"]
   },
+  "p90": {
+    "category": "player",
+    "subtitle": "nuclear_craft.subtitle.p90",
+    "sounds": ["nuclear_craft:p90"]
+  },
+  "p90_reload": {
+    "category": "player",
+    "subtitle": "nuclear_craft.subtitle.p90_reload",
+    "sounds": ["nuclear_craft:p90_reload"]
+  },
   "defusing": {
     "category": "player",
     "subtitle": "nuclear_craft.subtitle.defusing",

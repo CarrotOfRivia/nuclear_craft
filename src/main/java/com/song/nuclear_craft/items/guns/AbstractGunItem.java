@@ -68,9 +68,10 @@ public abstract class AbstractGunItem extends Item {
                     worldIn.addEntity(entity);
                 }
 
-                BlockPos pos = playerIn.getPosition();
-                NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), getGunSoundDist(), playerIn.world.getDimensionKey())),
-                        new SoundPacket(pos, getShootActionString()));
+                BlockPos playerPos = playerIn.getPosition();
+                NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(
+                        playerPos.getX(), playerPos.getY(), playerPos.getZ(), getGunSoundDist(), playerIn.world.getDimensionKey())),
+                        new SoundPacket(playerPos, getShootActionString()));
 
                 shrinkAmmoNBT(heldItemStack);
                 return ActionResult.func_233538_a_(heldItemStack, worldIn.isRemote());
@@ -84,7 +85,7 @@ public abstract class AbstractGunItem extends Item {
         return super.onItemRightClick(worldIn, playerIn, handIn);
     }
 
-    private AbstractAmmoEntity getAmmoEntity(AbstractGunItem gunItem, PlayerEntity playerIn, Vector3d lookVec, ItemStack toBeFired, World worldIn, AbstractAmmo ammoItem, AmmoType ammoType, AmmoSize ammoSize){
+    protected AbstractAmmoEntity getAmmoEntity(AbstractGunItem gunItem, PlayerEntity playerIn, Vector3d lookVec, ItemStack toBeFired, World worldIn, AbstractAmmo ammoItem, AmmoType ammoType, AmmoSize ammoSize){
         // We add 0.1m to avoid player from shooting themselves when they are running in their shooting direction
         AbstractAmmoEntity entity = gunItem.getAmmoEntity(playerIn.getPosX()+lookVec.x*0.1, playerIn.getPosYEye() - (double)0.15F+lookVec.y*0.1, playerIn.getPosZ()+lookVec.z*0.1, worldIn, toBeFired, playerIn, ammoType, ammoSize);
         entity.setSilent(true);
@@ -100,7 +101,7 @@ public abstract class AbstractGunItem extends Item {
     }
 
     protected int getBirdShotCount(AmmoType ammoType){
-        // Number of ammo entities per shoot, used for short guns
+        // Number of ammo entities per shoot, only used for shotguns! If you want it shoots faster, see "AbstractMachineGunItem"
         return 1;
     }
 

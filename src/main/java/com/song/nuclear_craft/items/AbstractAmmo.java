@@ -18,6 +18,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 public class AbstractAmmo extends Item {
     private final AmmoSize size;
@@ -50,7 +51,8 @@ public class AbstractAmmo extends Item {
     }
 
     public float getBaseSpeed() {
-        return ConfigCommon.SPEED_MAP.get(size).get(type).get().floatValue();
+        // speed will have a 1% fluctuation
+        return ConfigCommon.SPEED_MAP.get(size).get(type).get().floatValue() * (1+0.01f*random.nextFloat());
     }
 
     public double getGravity() {

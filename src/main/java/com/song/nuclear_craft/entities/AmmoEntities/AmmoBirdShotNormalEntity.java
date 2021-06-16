@@ -25,12 +25,4 @@ public class AmmoBirdShotNormalEntity extends AbstractAmmoEntity {
         super(x, y, z, world, itemStack, shooter);
     }
 
-    @Override
-    protected void onEntityHit(@Nonnull EntityRayTraceResult entityRayTraceResult) {
-        super.onEntityHit(entityRayTraceResult);
-        Entity entity = entityRayTraceResult.getEntity();
-        if(entity instanceof LivingEntity){
-            ((LivingEntity)entity).hurtResistantTime=0;
-        }
-    }
 }

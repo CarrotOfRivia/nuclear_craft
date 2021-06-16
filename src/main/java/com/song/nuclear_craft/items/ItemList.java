@@ -58,6 +58,7 @@ public class ItemList {
     public static final RegistryObject<com.song.nuclear_craft.items.guns.M4A4> M4A4 = ITEMS.register("m4a4", M4A4::new);
     public static final RegistryObject<XM1014> XM1014 = ITEMS.register("xm1014", XM1014::new);
     public static final RegistryObject<Nova> NOVA = ITEMS.register("nova", Nova::new);
+    public static final RegistryObject<P90> P90 = ITEMS.register("p90", P90::new);
 
     //Defuse Kit
     public static final RegistryObject<DefuseKit> WOOD_DEFUSE_KIT = ITEMS.register("wood_defuse_kit", WoodDefuseKit::new);

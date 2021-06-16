@@ -29,7 +29,7 @@ public class AmmoPossibleCombination {
     }
 
     static {
-        RIFLE_AMMO.addAmmoSizes(AmmoSize.SIZE_9MM, AmmoSize.SIZE_127, AmmoSize.SIZE_556, AmmoSize.SIZE_762);
+        RIFLE_AMMO.addAmmoSizes(AmmoSize.SIZE_9MM, AmmoSize.SIZE_127, AmmoSize.SIZE_556, AmmoSize.SIZE_762, AmmoSize.SIZE_570);
         RIFLE_AMMO.addAmmoTypes(AmmoType.ANTI_GRAVITY, AmmoType.EXPLOSIVE, AmmoType.INCENDIARY, AmmoType.NORMAL,
                 AmmoType.NUKE, AmmoType.SILVER, AmmoType.TUNGSTEN);
 

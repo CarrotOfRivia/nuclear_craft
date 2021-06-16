@@ -45,6 +45,7 @@ public class ConfigCommon {
     public static final GunConfigurable AWP_CONFIG = new GunConfigurable();
     public static final GunConfigurable BARRETT_CONFIG = new GunConfigurable();
     public static final GunConfigurable M4A4_CONFIG = new GunConfigurable();
+    public static final GunConfigurable P90_CONFIG = new GunConfigurable();
 
     public static final ForgeConfigSpec.DoubleValue AMMO_BLOCK_BREAK_THRESHOLD;
     public static final ForgeConfigSpec.DoubleValue AMMO_SILVER_BLOCK_BREAK_THRESHOLD;
@@ -163,17 +164,22 @@ public class ConfigCommon {
         BARRETT_CONFIG.setSpeedModify(CONFIG_BUILDER.comment("BARRETT speed modify").defineInRange("barrett_speed_modify", 4.0, 0, 999999));
         M4A4_CONFIG.setDamageModify(CONFIG_BUILDER.comment("M4A4 damage modify").defineInRange("m4a4_damage_modify", 1.3, 0, 999999));
         M4A4_CONFIG.setSpeedModify(CONFIG_BUILDER.comment("M4A4 speed modify").defineInRange("m4a4_speed_modify", 1.35, 0, 999999));
+        P90_CONFIG.setDamageModify(CONFIG_BUILDER.comment("P90 damage modify").defineInRange("P90_damage_modify", 1.3, 0, 999999));
+        P90_CONFIG.setSpeedModify(CONFIG_BUILDER.comment("P90 speed modify").defineInRange("P90_speed_modify", 1.35, 0, 999999));
 
         CONFIG_BUILDER.pop();
 
         CONFIG_BUILDER.comment("Tradings").push("tradings");
+        CONFIG_BUILDER.comment("ROCKET_MASTER_PROFESSION: Rockets.").push("rocket_master_profession");
         addTrader("rocket_launcher", 1, "minecraft:diamond", 30, 40, "null", 1, 1, CONFIG_BUILDER);
         addTrader("incendiary_rocket", 1, "minecraft:diamond", 1, 2, "null", 1, 1, CONFIG_BUILDER);
         addTrader("smoke_rocket", 2, "minecraft:diamond", 2, 3, "null", 1, 1, CONFIG_BUILDER);
         addTrader("high_explosive_rocket", 3, "minecraft:diamond", 3, 4, "null", 1, 1, CONFIG_BUILDER);
         addTrader("atomic_bomb_rocket", 4, "minecraft:diamond", 40, 50, "null", 1, 1, CONFIG_BUILDER);
         addTrader("water_drop_rocket", 4, "minecraft:nether_star", 40, 50, "null", 1, 1, CONFIG_BUILDER);
+        CONFIG_BUILDER.pop();
 
+        CONFIG_BUILDER.comment("EXPLOSIVE_MASTER_PROFESSION: C4 explosives").push("explosive_master_profession");
         addTrader("c4_incendiary", 1, "minecraft:diamond", 2, 3, "null", 1, 1, CONFIG_BUILDER);
         addTrader("wood_defuse_kit", 1, "minecraft:wood", 2, 3, "null", 1, 1, CONFIG_BUILDER);
         addTrader("c4_smoke", 2, "minecraft:diamond", 4, 5, "null", 1, 1, CONFIG_BUILDER);
@@ -183,8 +189,9 @@ public class ConfigCommon {
         addTrader("c4_atomic_bomb", 4, "minecraft:diamond", 40, 50, "null", 1, 1, CONFIG_BUILDER);
         addTrader("diamond_defuse_kit", 4, "minecraft:diamond", 5, 8, "null", 1, 1, CONFIG_BUILDER);
         addTrader("netherite_defuse_kit", 5, "minecraft:netherite_ingot", 5, 8, "null", 1, 1, CONFIG_BUILDER);
+        CONFIG_BUILDER.pop();
 
-
+        CONFIG_BUILDER.comment("GUN_SELLER_PROFESSION: guns").push("gun_seller_profession");
         addTrader("glock", 1, "minecraft:diamond", 10, 10, "null", 1, 1, CONFIG_BUILDER);
         addTrader("usp", 1, "minecraft:diamond", 10, 10, "null", 1, 1, CONFIG_BUILDER);
         addTrader("desert_eagle", 2, "minecraft:diamond", 20, 30, "null", 1, 1, CONFIG_BUILDER);
@@ -194,13 +201,18 @@ public class ConfigCommon {
         addTrader("ak47", 4, "minecraft:diamond", 40, 50, "null", 1, 1, CONFIG_BUILDER);
         addTrader("awp", 4, "minecraft:diamond", 40, 50, "null", 1, 1, CONFIG_BUILDER);
         addTrader("barrett", 5, "minecraft:diamond", 50, 64, "null", 1, 1, CONFIG_BUILDER);
+        addTrader("p90", 3, "minecraft:diamond", 30, 50, "null", 1, 1, CONFIG_BUILDER);
+        CONFIG_BUILDER.pop();
 
+        CONFIG_BUILDER.comment("SHOTGUN_AMMO_SELLER_PROFESSION: Shotgun ammo").push("shotgun_ammo_seller_profession");
         for (AmmoSize ammoSize: AmmoPossibleCombination.SHOTGUN_AMMO.getAmmoSizes()){
             addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.SHORT_GUN_NORMAL.getRegisterString(), 1, "minecraft:iron_ingot", 1, 1, "minecraft:gunpowder", 1, 1, CONFIG_BUILDER);
             addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.SHORT_GUN_BLIGHT.getRegisterString(), 2, "minecraft:iron_ingot", 1, 1, "minecraft:gunpowder", 2, 2, CONFIG_BUILDER);
             addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.SHORT_GUN_DESOLATOR.getRegisterString(), 3, "minecraft:iron_ingot", 5, 10, "minecraft:gunpowder", 2, 4, CONFIG_BUILDER);
         }
+        CONFIG_BUILDER.pop();
 
+        CONFIG_BUILDER.comment("RIFLE_AMMO_SELLER_PROFESSION: Rifle ammo").push("rifle_ammo_seller_profession");
         for (AmmoSize ammoSize: AmmoPossibleCombination.RIFLE_AMMO.getAmmoSizes()){
             addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.NORMAL.getRegisterString(), 1, "minecraft:iron_ingot", 1, 1, "minecraft:gunpowder", 1, 1, CONFIG_BUILDER);
             addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.INCENDIARY.getRegisterString(), 1, "minecraft:iron_ingot", 1, 1, "minecraft:gunpowder", 2, 2, CONFIG_BUILDER);
@@ -214,10 +226,10 @@ public class ConfigCommon {
 
             addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.NUKE.getRegisterString(), 5, "minecraft:nether_star", 1, 1, "minecraft:gunpowder", 1, 1, CONFIG_BUILDER);
         }
-
+        CONFIG_BUILDER.pop();
         CONFIG_BUILDER.pop();
 
-        CONFIG_BUILDER.comment("Defuse Time (in tick, 20ticks = 1 second)").push("defuse_time");
+        CONFIG_BUILDER.comment("Defuse Time (in ticks, 20ticks = 1 second)").push("defuse_time");
         WOOD_DEFUSE_KIT_TIME = CONFIG_BUILDER.defineInRange("wood_defuse_kit_time", 400, 1, 999999999);
         IRON_DEFUSE_KIT_TIME = CONFIG_BUILDER.defineInRange("iron_defuse_kit_time", 200, 1, 999999999);
         GOLD_DEFUSE_KIT_TIME = CONFIG_BUILDER.defineInRange("gold_defuse_kit_time", 60, 1, 999999999);
