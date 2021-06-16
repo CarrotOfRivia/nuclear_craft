@@ -39,6 +39,11 @@
   "subtitle": "nuclear_craft.subtitle.glock",
   "sounds": ["nuclear_craft:glock"]
   },
+  "fn57": {
+    "category": "player",
+    "subtitle": "nuclear_craft.subtitle.fn57",
+    "sounds": ["nuclear_craft:fn57"]
+  },
   "ak47": {
     "category": "player",
     "subtitle": "nuclear_craft.subtitle.ak47",

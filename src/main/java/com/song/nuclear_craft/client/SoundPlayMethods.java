@@ -48,6 +48,8 @@ public class SoundPlayMethods {
                 world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.DE_RELOAD_EMPTY, SoundCategory.PLAYERS, 1f, 1.0f, false); break;
             case "glock":
                 world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.GLOCK, SoundCategory.PLAYERS, 0.25f, 1.0f, false); break;
+            case "fn57":
+                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.FN57, SoundCategory.PLAYERS, 0.4f, 1.0f, false); break;
             case "usp":
                 world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventList.USP, SoundCategory.PLAYERS, 0.25f, 1.0f, false); break;
             case "ak47":

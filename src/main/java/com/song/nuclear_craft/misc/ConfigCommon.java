@@ -41,6 +41,7 @@ public class ConfigCommon {
     public static final GunConfigurable AK47_CONFIG = new GunConfigurable();
     public static final GunConfigurable DESERT_EAGLE_CONFIG = new GunConfigurable();
     public static final GunConfigurable GLOCK_CONFIG = new GunConfigurable();
+    public static final GunConfigurable FN57_CONFIG = new GunConfigurable();
     public static final GunConfigurable USP_CONFIG = new GunConfigurable();
     public static final GunConfigurable AWP_CONFIG = new GunConfigurable();
     public static final GunConfigurable BARRETT_CONFIG = new GunConfigurable();
@@ -156,6 +157,8 @@ public class ConfigCommon {
         DESERT_EAGLE_CONFIG.setSpeedModify(CONFIG_BUILDER.comment("DESERT_EAGLE speed modify").defineInRange("desert_eagle_speed_modify", 1.4, 0, 999999));
         GLOCK_CONFIG.setDamageModify(CONFIG_BUILDER.comment("GLOCK damage modify").defineInRange("glock_damage_modify", 1.1, 0, 999999));
         GLOCK_CONFIG.setSpeedModify(CONFIG_BUILDER.comment("GLOCK speed modify").defineInRange("glock_speed_modify", 1.0, 0, 999999));
+        FN57_CONFIG.setDamageModify(CONFIG_BUILDER.comment("FN57 damage modify").defineInRange("fn57_damage_modify", 1.1, 0, 999999));
+        FN57_CONFIG.setSpeedModify(CONFIG_BUILDER.comment("FN57 speed modify").defineInRange("fn57_speed_modify", 1.1, 0, 999999));
         USP_CONFIG.setDamageModify(CONFIG_BUILDER.comment("USP damage modify").defineInRange("usp_damage_modify", 1.0, 0, 999999));
         USP_CONFIG.setSpeedModify(CONFIG_BUILDER.comment("USP speed modify").defineInRange("usp_speed_modify", 1.0, 0, 999999));
         AWP_CONFIG.setDamageModify(CONFIG_BUILDER.comment("AWP damage modify").defineInRange("awp_damage_modify", 3.0, 0, 999999));
@@ -193,6 +196,7 @@ public class ConfigCommon {
 
         CONFIG_BUILDER.comment("GUN_SELLER_PROFESSION: guns").push("gun_seller_profession");
         addTrader("glock", 1, "minecraft:diamond", 10, 10, "null", 1, 1, CONFIG_BUILDER);
+        addTrader("fn57", 1, "minecraft:diamond", 10, 10, "null", 1, 1, CONFIG_BUILDER);
         addTrader("usp", 1, "minecraft:diamond", 10, 10, "null", 1, 1, CONFIG_BUILDER);
         addTrader("desert_eagle", 2, "minecraft:diamond", 20, 30, "null", 1, 1, CONFIG_BUILDER);
         addTrader("nova", 2, "minecraft:diamond", 20, 30, "null", 1, 1, CONFIG_BUILDER);

@@ -12,6 +12,7 @@ public class SoundEventList {
     public static SoundEvent NO_AMMO = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "no_ammo"));
     public static SoundEvent DE_RELOAD_EMPTY = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "de_reload_empty"));
     public static SoundEvent GLOCK = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "glock"));
+    public static SoundEvent FN57 = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "fn57"));
     public static SoundEvent USP = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "usp"));
     public static SoundEvent AK47 = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "ak47"));
     public static SoundEvent AK47_RELOAD = new SoundEvent(new ResourceLocation(NuclearCraft.MODID, "ak47_reload"));

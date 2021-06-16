@@ -51,6 +51,7 @@ public class ItemList {
     // Guns and bullets
     public static final RegistryObject<DesertEagle> DESERT_EAGLE = ITEMS.register("desert_eagle", DesertEagle::new);
     public static final RegistryObject<Glock> GLOCK = ITEMS.register("glock", Glock::new);
+    public static final RegistryObject<FN57> FN57 = ITEMS.register("fn57", FN57::new);
     public static final RegistryObject<USP> USP = ITEMS.register("usp", USP::new);
     public static final RegistryObject<Ak47> AK47 = ITEMS.register("ak47", Ak47::new);
     public static final RegistryObject<Awp> AWP = ITEMS.register("awp", Awp::new);
