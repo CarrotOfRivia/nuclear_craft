@@ -52,7 +52,7 @@ public class AbstractAmmo extends Item {
 
     public float getBaseSpeed() {
         // speed will have a 1% fluctuation
-        return ConfigCommon.SPEED_MAP.get(size).get(type).get().floatValue() * (1+0.01f*random.nextFloat());
+        return ConfigCommon.SPEED_MAP.get(size).get(type).get().floatValue();
     }
 
     public double getGravity() {

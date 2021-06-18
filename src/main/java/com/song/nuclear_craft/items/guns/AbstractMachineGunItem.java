@@ -42,7 +42,7 @@ public abstract class AbstractMachineGunItem extends AbstractGunItem{
                 BlockPos playerPos = playerIn.getPosition();
                 for(int i = 0; i< getNumShoots(); i++){
                     AbstractAmmoEntity entity = getAmmoEntity(gunItem, playerIn, lookVec, toBeFired, worldIn, ammoItem, ammoType, ammoSize);
-                    entity.shoot(lookVec.x, lookVec.y, lookVec.z, ammoItem.getBaseSpeed()*getSpeedModifier(), getInaccuracy(worldIn, playerIn));
+                    entity.shoot(lookVec.x, lookVec.y, lookVec.z, ammoItem.getBaseSpeed()*getSpeedModifier()*(1+0.01f*random.nextFloat()), getInaccuracy(worldIn, playerIn));
                     // one tick to avoid shooting yourself
                     entity.tick();
                     worldIn.addEntity(entity);

@@ -14,6 +14,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.HashMap;
 import java.util.Objects;
 
+import static com.song.nuclear_craft.misc.Util.getAmmoRegisterString;
+
 public class ItemList {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, NuclearCraft.MODID);
 
@@ -76,7 +78,8 @@ public class ItemList {
         for (AmmoSize ammoSize : AmmoPossibleCombination.RIFLE_AMMO.getAmmoSizes()) {
             HashMap<AmmoType, RegistryObject<AbstractAmmo>> tmp = new HashMap<>();
             for (AmmoType ammoType: AmmoPossibleCombination.RIFLE_AMMO.getAmmoTypes()){
-                tmp.put(ammoType, ITEMS.register("ammo_"+ammoSize.getRegisterString()+"_"+ammoType.getRegisterString(), ()->new AbstractAmmo(new Item.Properties().group(NuclearCraft.AMMO_ITEM_GROUP), ammoSize, ammoType)));
+                tmp.put(ammoType, ITEMS.register(getAmmoRegisterString(ammoSize, ammoType),
+                        ()->new AbstractAmmo(new Item.Properties().group(NuclearCraft.AMMO_ITEM_GROUP), ammoSize, ammoType)));
             }
             AMMO_REGISTRIES_TYPE.put(ammoSize, tmp);
         }
@@ -84,7 +87,7 @@ public class ItemList {
         for (AmmoSize ammoSize : AmmoPossibleCombination.SHOTGUN_AMMO.getAmmoSizes()) {
             HashMap<AmmoType, RegistryObject<AbstractAmmo>> tmp = new HashMap<>();
             for (AmmoType ammoType: AmmoPossibleCombination.SHOTGUN_AMMO.getAmmoTypes()){
-                tmp.put(ammoType, ITEMS.register("ammo_"+ammoSize.getRegisterString()+"_"+ammoType.getRegisterString(),
+                tmp.put(ammoType, ITEMS.register(getAmmoRegisterString(ammoSize, ammoType),
                         ()->new AbstractAmmo(new Item.Properties().group(NuclearCraft.AMMO_ITEM_GROUP), ammoSize, ammoType, 1)));
             }
             AMMO_REGISTRIES_TYPE.put(ammoSize, tmp);

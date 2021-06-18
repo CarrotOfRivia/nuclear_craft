@@ -4,12 +4,11 @@ import com.song.nuclear_craft.items.Ammo.AmmoPossibleCombination;
 import com.song.nuclear_craft.items.Ammo.AmmoSize;
 import com.song.nuclear_craft.items.Ammo.AmmoType;
 import com.song.nuclear_craft.items.GunConfigurable;
-import com.song.nuclear_craft.items.ItemList;
-import net.minecraft.item.Item;
+import com.song.nuclear_craft.villagers.NCTradingRecipe;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ConfigCommon {
     public static ForgeConfigSpec COMMON;
@@ -59,6 +58,7 @@ public class ConfigCommon {
     public static final HashMap<String, ForgeConfigSpec.IntValue> PRICE2_MIN = new HashMap<>();
     public static final HashMap<String, ForgeConfigSpec.IntValue> PRICE1_MAX = new HashMap<>();
     public static final HashMap<String, ForgeConfigSpec.IntValue> PRICE2_MAX = new HashMap<>();
+    public static final ArrayList<NCTradingRecipe> NCTradings = new ArrayList<>();
 
     public static final ForgeConfigSpec.IntValue WOOD_DEFUSE_KIT_TIME;
     public static final ForgeConfigSpec.IntValue IRON_DEFUSE_KIT_TIME;
@@ -173,62 +173,62 @@ public class ConfigCommon {
         CONFIG_BUILDER.pop();
 
         CONFIG_BUILDER.comment("Tradings").push("tradings");
-        CONFIG_BUILDER.comment("ROCKET_MASTER_PROFESSION: Rockets.").push("rocket_master_profession");
-        addTrader("rocket_launcher", 1, "minecraft:diamond", 30, 40, "null", 1, 1, CONFIG_BUILDER);
-        addTrader("incendiary_rocket", 1, "minecraft:diamond", 1, 2, "null", 1, 1, CONFIG_BUILDER);
-        addTrader("smoke_rocket", 2, "minecraft:diamond", 2, 3, "null", 1, 1, CONFIG_BUILDER);
-        addTrader("high_explosive_rocket", 3, "minecraft:diamond", 3, 4, "null", 1, 1, CONFIG_BUILDER);
-        addTrader("atomic_bomb_rocket", 4, "minecraft:diamond", 40, 50, "null", 1, 1, CONFIG_BUILDER);
-        addTrader("water_drop_rocket", 4, "minecraft:nether_star", 40, 50, "null", 1, 1, CONFIG_BUILDER);
+        CONFIG_BUILDER.comment("ROCKET_MASTER_PROFESSION: Rockets.").push("rocket_master");
+        addTrader("rocket_master","rocket_launcher", 1, "minecraft:diamond", 30, 40, "null", 1, 1, 1, 1,CONFIG_BUILDER);
+        addTrader("rocket_master","incendiary_rocket", 1, "minecraft:diamond", 1, 2, "null", 1, 1,1, 1, CONFIG_BUILDER);
+        addTrader("rocket_master","smoke_rocket", 2, "minecraft:diamond", 2, 3, "null", 1, 1,1, 1, CONFIG_BUILDER);
+        addTrader("rocket_master","high_explosive_rocket", 3, "minecraft:diamond", 3, 4, "null", 1, 1, 1, 1,CONFIG_BUILDER);
+        addTrader("rocket_master","atomic_bomb_rocket", 4, "minecraft:diamond", 40, 50, "null", 1, 1, 1, 1,CONFIG_BUILDER);
+        addTrader("rocket_master","water_drop_rocket", 4, "minecraft:nether_star", 40, 50, "null", 1, 1, 1, 1,CONFIG_BUILDER);
         CONFIG_BUILDER.pop();
 
-        CONFIG_BUILDER.comment("EXPLOSIVE_MASTER_PROFESSION: C4 explosives").push("explosive_master_profession");
-        addTrader("c4_incendiary", 1, "minecraft:diamond", 2, 3, "null", 1, 1, CONFIG_BUILDER);
-        addTrader("wood_defuse_kit", 1, "minecraft:wood", 2, 3, "null", 1, 1, CONFIG_BUILDER);
-        addTrader("c4_smoke", 2, "minecraft:diamond", 4, 5, "null", 1, 1, CONFIG_BUILDER);
-        addTrader("iron_defuse_kit", 2, "minecraft:iron_ingot", 5, 8, "null", 1, 1, CONFIG_BUILDER);
-        addTrader("c4_high_explosive", 3, "minecraft:diamond", 5, 10, "null", 1, 1, CONFIG_BUILDER);
-        addTrader("gold_defuse_kit", 3, "minecraft:gold_ingot", 5, 8, "null", 1, 1, CONFIG_BUILDER);
-        addTrader("c4_atomic_bomb", 4, "minecraft:diamond", 40, 50, "null", 1, 1, CONFIG_BUILDER);
-        addTrader("diamond_defuse_kit", 4, "minecraft:diamond", 5, 8, "null", 1, 1, CONFIG_BUILDER);
-        addTrader("netherite_defuse_kit", 5, "minecraft:netherite_ingot", 5, 8, "null", 1, 1, CONFIG_BUILDER);
+        CONFIG_BUILDER.comment("EXPLOSIVE_MASTER_PROFESSION: C4 explosives").push("explosive_master");
+        addTrader("explosive_master","c4_incendiary", 1, "minecraft:diamond", 2, 3, "null", 1, 1, 1, 1,CONFIG_BUILDER);
+        addTrader("explosive_master","wood_defuse_kit", 1, "minecraft:stick", 10, 13, "null", 1, 1, 1, 1,CONFIG_BUILDER);
+        addTrader("explosive_master","c4_smoke", 2, "minecraft:diamond", 4, 5, "null", 1, 1, 1, 1,CONFIG_BUILDER);
+        addTrader("explosive_master","iron_defuse_kit", 2, "minecraft:iron_ingot", 5, 8, "null", 1, 1, 1, 1,CONFIG_BUILDER);
+        addTrader("explosive_master","c4_high_explosive", 3, "minecraft:diamond", 5, 10, "null", 1, 1, 1, 1,CONFIG_BUILDER);
+        addTrader("explosive_master","gold_defuse_kit", 3, "minecraft:gold_ingot", 5, 8, "null", 1, 1,1, 1 ,CONFIG_BUILDER);
+        addTrader("explosive_master","c4_atomic_bomb", 4, "minecraft:diamond", 40, 50, "null", 1, 1, 1, 1,CONFIG_BUILDER);
+        addTrader("explosive_master","diamond_defuse_kit", 4, "minecraft:diamond", 5, 8, "null", 1, 1, 1, 1,CONFIG_BUILDER);
+        addTrader("explosive_master","netherite_defuse_kit", 5, "minecraft:netherite_ingot", 5, 8, "null", 1, 1,1, 1, CONFIG_BUILDER);
         CONFIG_BUILDER.pop();
 
-        CONFIG_BUILDER.comment("GUN_SELLER_PROFESSION: guns").push("gun_seller_profession");
-        addTrader("glock", 1, "minecraft:diamond", 10, 10, "null", 1, 1, CONFIG_BUILDER);
-        addTrader("fn57", 1, "minecraft:diamond", 10, 10, "null", 1, 1, CONFIG_BUILDER);
-        addTrader("usp", 1, "minecraft:diamond", 10, 10, "null", 1, 1, CONFIG_BUILDER);
-        addTrader("desert_eagle", 2, "minecraft:diamond", 20, 30, "null", 1, 1, CONFIG_BUILDER);
-        addTrader("nova", 2, "minecraft:diamond", 20, 30, "null", 1, 1, CONFIG_BUILDER);
-        addTrader("m4a4", 3, "minecraft:diamond", 30, 40, "null", 1, 1, CONFIG_BUILDER);
-        addTrader("xm1014", 3, "minecraft:diamond", 30, 40, "null", 1, 1, CONFIG_BUILDER);
-        addTrader("ak47", 4, "minecraft:diamond", 40, 50, "null", 1, 1, CONFIG_BUILDER);
-        addTrader("awp", 4, "minecraft:diamond", 40, 50, "null", 1, 1, CONFIG_BUILDER);
-        addTrader("barrett", 5, "minecraft:diamond", 50, 64, "null", 1, 1, CONFIG_BUILDER);
-        addTrader("p90", 3, "minecraft:diamond", 30, 50, "null", 1, 1, CONFIG_BUILDER);
+        CONFIG_BUILDER.comment("GUN_SELLER_PROFESSION: guns").push("gun_seller");
+        addTrader("gun_seller","glock", 1, "minecraft:diamond", 10, 10, "null", 1, 1, 1, 1,CONFIG_BUILDER);
+        addTrader("gun_seller","fn57", 1, "minecraft:diamond", 10, 10, "null", 1, 1,1, 1, CONFIG_BUILDER);
+        addTrader("gun_seller","usp", 1, "minecraft:diamond", 10, 10, "null", 1, 1,1, 1, CONFIG_BUILDER);
+        addTrader("gun_seller","desert_eagle", 2, "minecraft:diamond", 20, 30, "null", 1, 1,1, 1, CONFIG_BUILDER);
+        addTrader("gun_seller","nova", 2, "minecraft:diamond", 20, 30, "null", 1, 1, 1, 1,CONFIG_BUILDER);
+        addTrader("gun_seller","m4a4", 3, "minecraft:diamond", 30, 40, "null", 1, 1,1, 1, CONFIG_BUILDER);
+        addTrader("gun_seller","xm1014", 3, "minecraft:diamond", 30, 40, "null", 1, 1, 1, 1,CONFIG_BUILDER);
+        addTrader("gun_seller","ak47", 4, "minecraft:diamond", 40, 50, "null", 1, 1,1, 1, CONFIG_BUILDER);
+        addTrader("gun_seller","awp", 4, "minecraft:diamond", 40, 50, "null", 1, 1, 1, 1,CONFIG_BUILDER);
+        addTrader("gun_seller","barrett", 5, "minecraft:diamond", 50, 64, "null", 1, 1, 1, 1,CONFIG_BUILDER);
+        addTrader("gun_seller","p90", 3, "minecraft:diamond", 30, 50, "null", 1, 1,1, 1, CONFIG_BUILDER);
         CONFIG_BUILDER.pop();
 
-        CONFIG_BUILDER.comment("SHOTGUN_AMMO_SELLER_PROFESSION: Shotgun ammo").push("shotgun_ammo_seller_profession");
+        CONFIG_BUILDER.comment("SHOTGUN_AMMO_SELLER_PROFESSION: Shotgun ammo").push("shotgun_ammo_seller");
         for (AmmoSize ammoSize: AmmoPossibleCombination.SHOTGUN_AMMO.getAmmoSizes()){
-            addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.SHORT_GUN_NORMAL.getRegisterString(), 1, "minecraft:iron_ingot", 1, 1, "minecraft:gunpowder", 1, 1, CONFIG_BUILDER);
-            addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.SHORT_GUN_BLIGHT.getRegisterString(), 2, "minecraft:iron_ingot", 1, 1, "minecraft:gunpowder", 2, 2, CONFIG_BUILDER);
-            addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.SHORT_GUN_DESOLATOR.getRegisterString(), 3, "minecraft:iron_ingot", 5, 10, "minecraft:gunpowder", 2, 4, CONFIG_BUILDER);
+            addTrader("shotgun_ammo_seller","ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.SHORT_GUN_NORMAL.getRegisterString(), 1, "minecraft:iron_ingot", 1, 1, "minecraft:gunpowder", 1, 1, 6, 10, CONFIG_BUILDER);
+            addTrader("shotgun_ammo_seller","ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.SHORT_GUN_BLIGHT.getRegisterString(), 2, "minecraft:iron_ingot", 1, 1, "minecraft:gunpowder", 2, 2, 6, 10, CONFIG_BUILDER);
+            addTrader("shotgun_ammo_seller","ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.SHORT_GUN_DESOLATOR.getRegisterString(), 3, "minecraft:iron_ingot", 5, 10, "minecraft:gunpowder", 2, 4, 6, 10, CONFIG_BUILDER);
         }
         CONFIG_BUILDER.pop();
 
-        CONFIG_BUILDER.comment("RIFLE_AMMO_SELLER_PROFESSION: Rifle ammo").push("rifle_ammo_seller_profession");
+        CONFIG_BUILDER.comment("RIFLE_AMMO_SELLER_PROFESSION: Rifle ammo").push("rifle_ammo_seller");
         for (AmmoSize ammoSize: AmmoPossibleCombination.RIFLE_AMMO.getAmmoSizes()){
-            addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.NORMAL.getRegisterString(), 1, "minecraft:iron_ingot", 1, 1, "minecraft:gunpowder", 1, 1, CONFIG_BUILDER);
-            addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.INCENDIARY.getRegisterString(), 1, "minecraft:iron_ingot", 1, 1, "minecraft:gunpowder", 2, 2, CONFIG_BUILDER);
+            addTrader("rifle_ammo_seller","ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.NORMAL.getRegisterString(), 1, "minecraft:iron_ingot", 1, 1, "minecraft:gunpowder", 1, 1, 6, 10, CONFIG_BUILDER);
+            addTrader("rifle_ammo_seller","ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.INCENDIARY.getRegisterString(), 1, "minecraft:iron_ingot", 1, 1, "minecraft:gunpowder", 2, 2, 6, 10, CONFIG_BUILDER);
 
-            addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.ANTI_GRAVITY.getRegisterString(), 2, "minecraft:iron_ingot", 1, 1, "minecraft:gunpowder", 2, 2, CONFIG_BUILDER);
-            addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.SILVER.getRegisterString(), 2, "minecraft:iron_ingot", 1, 1, "minecraft:gunpowder", 2, 2, CONFIG_BUILDER);
+            addTrader("rifle_ammo_seller","ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.ANTI_GRAVITY.getRegisterString(), 2, "minecraft:iron_ingot", 1, 1, "minecraft:gunpowder", 2, 2, 6, 10, CONFIG_BUILDER);
+            addTrader("rifle_ammo_seller","ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.SILVER.getRegisterString(), 2, "minecraft:iron_ingot", 1, 1, "minecraft:gunpowder", 2, 2, 6, 10,CONFIG_BUILDER);
 
-            addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.EXPLOSIVE.getRegisterString(), 3, "minecraft:iron_ingot", 2, 2, "minecraft:gunpowder", 10, 10, CONFIG_BUILDER);
+            addTrader("rifle_ammo_seller","ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.EXPLOSIVE.getRegisterString(), 3, "minecraft:iron_ingot", 2, 2, "minecraft:gunpowder", 10, 10,6, 10, CONFIG_BUILDER);
 
-            addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.TUNGSTEN.getRegisterString(), 4, "minecraft:iron_ingot", 5, 5, "minecraft:gunpowder", 2, 2, CONFIG_BUILDER);
+            addTrader("rifle_ammo_seller","ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.TUNGSTEN.getRegisterString(), 4, "minecraft:iron_ingot", 5, 5, "minecraft:gunpowder", 2, 2,6, 10, CONFIG_BUILDER);
 
-            addTrader("ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.NUKE.getRegisterString(), 5, "minecraft:nether_star", 1, 1, "minecraft:gunpowder", 1, 1, CONFIG_BUILDER);
+            addTrader("rifle_ammo_seller","ammo_"+ammoSize.getRegisterString()+"_"+AmmoType.NUKE.getRegisterString(), 5, "minecraft:nether_star", 1, 1, "minecraft:gunpowder", 1, 1, 60, 64,CONFIG_BUILDER);
         }
         CONFIG_BUILDER.pop();
         CONFIG_BUILDER.pop();
@@ -244,15 +244,20 @@ public class ConfigCommon {
         COMMON = CONFIG_BUILDER.build();
     }
 
-    private static void addTrader(String id, int level, String price1, int price1Min, int price1Max, String price2, int price2Min, int price2Max, ForgeConfigSpec.Builder builder){
-        builder.push(id);
-        LEVEL_MAP.put("nuclear_craft:"+id, builder.defineInRange(id+"_level", level, 1, 64));
-        PRICE1_MAP.put("nuclear_craft:"+id, builder.define(id+"_price1", price1));
-        PRICE1_MIN.put("nuclear_craft:"+id, builder.defineInRange(id+"_price1_min", price1Min, 1, 64));
-        PRICE1_MAX.put("nuclear_craft:"+id, builder.defineInRange(id+"_price1_max", price1Max, 1, 64));
-        PRICE2_MAP.put("nuclear_craft:"+id, builder.define(id+"_price2", price2));
-        PRICE2_MIN.put("nuclear_craft:"+id, builder.defineInRange(id+"_price2_min", price2Min, 1, 64));
-        PRICE2_MAX.put("nuclear_craft:"+id, builder.defineInRange(id+"_price2_max", price2Max, 1, 64));
+    private static void addTrader(String profession, String output, int level, String price1, int price1Min, int price1Max, String price2, int price2Min, int price2Max, int outputMin, int outputMax, ForgeConfigSpec.Builder builder){
+        builder.push(output);
+        NCTradings.add(new NCTradingRecipe(
+                builder.define(output+"_price1", price1),
+                builder.define(output+"_price2", price2),
+                builder.define(output+"_output", Util.getResourceString(output)),
+                builder.define(output+"_profession", Util.getResourceString(profession)),
+                builder.defineInRange(output+"_price1_min", price1Min, 1, 64),
+                builder.defineInRange(output+"_price1_max", price1Max, 1, 64),
+                builder.defineInRange(output+"_price2_min", price2Min, 1, 64),
+                builder.defineInRange(output+"_price2_max", price2Max, 1, 64),
+                builder.defineInRange(output+"_output_min", outputMin, 1, 64),
+                builder.defineInRange(output+"_output_max", outputMax, 1, 64),
+                builder.defineInRange(output+"_level", level, 1, 64)));
         builder.pop();
     }
 }
