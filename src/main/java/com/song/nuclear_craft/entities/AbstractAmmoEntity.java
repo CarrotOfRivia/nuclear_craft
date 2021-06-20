@@ -205,7 +205,7 @@ public class AbstractAmmoEntity extends ProjectileItemEntity {
 
     @Override
     protected boolean func_230298_a_(Entity p_230298_1_) {
-        return super.func_230298_a_(p_230298_1_)||((this.piercedEntities == null || !this.piercedEntities.contains(p_230298_1_.getEntityId())));
+        return super.func_230298_a_(p_230298_1_)&&((this.piercedEntities == null || !this.piercedEntities.contains(p_230298_1_.getEntityId())));
     }
 
     @Override
