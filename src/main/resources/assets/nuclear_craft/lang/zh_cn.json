@@ -49,6 +49,8 @@
   "item.nuclear_craft.barrett": "巴雷特 M82A1",
   "item.nuclear_craft.xm1014": "XM1014",
   "item.nuclear_craft.nova": "新星",
+  "item.nuclear_craft.fn57": "FN57",
+  "item.nuclear_craft.p90": "P90",
 
   "item.nuclear_craft.ammo_9mm_normal": "9毫米 常规 子弹",
   "item.nuclear_craft.ammo_test": "9毫米 测试 子弹",
@@ -80,6 +82,13 @@
   "item.nuclear_craft.ammo_556_nuke": "5.56毫米 微型核爆 子弹",
   "item.nuclear_craft.ammo_556_silver": "5.56毫米 银制穿甲 子弹",
   "item.nuclear_craft.ammo_556_tungsten": "5.56毫米 钨芯穿甲 子弹",
+  "item.nuclear_craft.ammo_570_normal": "5.70毫米 常规 子弹",
+  "item.nuclear_craft.ammo_570_anti_gravity": "5.70毫米 反重力 子弹",
+  "item.nuclear_craft.ammo_570_explosive": "5.70毫米 高爆 子弹",
+  "item.nuclear_craft.ammo_570_incendiary": "5.70毫米 燃烧 子弹",
+  "item.nuclear_craft.ammo_570_nuke": "5.70毫米 微型核爆 子弹",
+  "item.nuclear_craft.ammo_570_silver": "5.70毫米 银制穿甲 子弹",
+  "item.nuclear_craft.ammo_570_tungsten": "5.70毫米 钨芯穿甲 子弹",
   "item.nuclear_craft.ammo_12_ga_short_gun_normal": "常规 霰弹",
   "item.nuclear_craft.ammo_12_ga_short_gun_blight": "枯萎 霰弹",
   "item.nuclear_craft.ammo_12_ga_short_gun_desolator": "辐射 霰弹",
@@ -116,4 +125,37 @@
   "entity.minecraft.villager.nuclear_craft.gun_seller": "枪械商人",
   "entity.minecraft.villager.nuclear_craft.rocket_master": "火箭商人",
   "entity.minecraft.villager.nuclear_craft.explosive_master": "炸弹专家"
+  
+  "effect.nuclear_craft.radioactive": "辐射",
+  "death.attack.radioactive": "%1$s 使用核能时玩脱了。",
+
+  "title.nuclear_craft.trading": "交易",
+
+  "nuclear_craft.subtitle.c4_beep": "C4炸弹：嘀嘀声",
+  "nuclear_craft.subtitle.defusing": "拆弹中",
+  "nuclear_craft.subtitle.defused": "C4炸弹：被拆除",
+
+  "nuclear_craft.subtitle.loading": "装填中",
+  "nuclear_craft.subtitle.de_reload_empty": "装填中",
+  "nuclear_craft.subtitle.awp_reload": "装填中",
+  "nuclear_craft.subtitle.ak47_reload": "装填中",
+  "nuclear_craft.subtitle.xm1014_reload": "装填中",
+  "nuclear_craft.subtitle.p90_reload": "装填中",
+  "nuclear_craft.subtitle.m4a4_reload": "装填中",
+
+  "nuclear_craft.subtitle.no_ammo": "弹夹空",
+  "nuclear_craft.subtitle.desert_eagle": "沙漠之鹰：开火",
+  "nuclear_craft.subtitle.usp": "USP：开火",
+  "nuclear_craft.subtitle.glock": "格洛克：开火",
+  "nuclear_craft.subtitle.fn57": "FN57：开火",
+  "nuclear_craft.subtitle.ak47": "AK47：开火",
+  "nuclear_craft.subtitle.awp": "AWP：开火",
+  "nuclear_craft.subtitle.barrett": "巴雷特M82A1：开火",
+  "nuclear_craft.subtitle.xm1014": "XM1014：开火",
+  "nuclear_craft.subtitle.nova": "新星：开火",
+  "nuclear_craft.subtitle.p90": "P90：开火",
+  "nuclear_craft.subtitle.m4a4": "M4A4：开火",
+
+  "nuclear_craft.subtitle.zoom": "开镜",
+  "nuclear_craft.subtitle.bomb_planted": "炸弹已被安置"
 }
