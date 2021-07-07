@@ -16,7 +16,7 @@ logoFile="logo.png" #optional
 # A text field displayed in the mod UI
 credits="Models are mainly created with Blockbench"
 # A text field displayed in the mod UI
-authors="Primary_stu" #optional
+authors="Primary_stu, MikhailTapio" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
 EXPLODE Everything!
