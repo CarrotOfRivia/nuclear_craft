@@ -8,7 +8,7 @@
   "item.nuclear_craft.atomic_bomb_rocket": "原子火箭弹",
   "item.nuclear_craft.incendiary_rocket": "燃烧火箭弹",
   "item.nuclear_craft.smoke_rocket": "烟雾火箭弹",
-  "item.nuclear_craft.water_drop_rocket": "水火箭弹",
+  "item.nuclear_craft.water_drop_rocket": "水滴火箭弹",
   "item.nuclear_craft.high_explosive_rocket": "高爆火箭弹",
   "item.nuclear_craft.rocket_launcher": "火箭发射器",
   "item.nuclear_craft.rocket_launcher.tooltip": "用于发射火箭",
@@ -124,7 +124,7 @@
   "entity.minecraft.villager.nuclear_craft.shotgun_ammo_seller": "霰弹商人",
   "entity.minecraft.villager.nuclear_craft.gun_seller": "枪械商人",
   "entity.minecraft.villager.nuclear_craft.rocket_master": "火箭商人",
-  "entity.minecraft.villager.nuclear_craft.explosive_master": "炸弹专家"
+  "entity.minecraft.villager.nuclear_craft.explosive_master": "炸弹专家",
   
   "effect.nuclear_craft.radioactive": "辐射",
   "death.attack.radioactive": "%1$s 使用核能时玩脱了。",
