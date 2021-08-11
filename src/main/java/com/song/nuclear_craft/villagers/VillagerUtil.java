@@ -1,18 +1,19 @@
 package com.song.nuclear_craft.villagers;
 
+import com.google.common.collect.ImmutableSet;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.ai.village.poi.PoiType;
+import net.minecraft.world.entity.npc.VillagerProfession;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
+
+import javax.annotation.Nullable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Set;
-import javax.annotation.Nullable;
-import com.google.common.collect.ImmutableSet;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.merchant.villager.VillagerProfession;
-import net.minecraft.item.Item;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.village.PointOfInterestType;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 /**
  * Author: CAS_ual_TY
@@ -25,15 +26,15 @@ public class VillagerUtil
 
     static
     {
-        VillagerUtil.blockStatesInjector = ObfuscationReflectionHelper.findMethod(PointOfInterestType.class, "func_221052_a", PointOfInterestType.class);
+        VillagerUtil.blockStatesInjector = ObfuscationReflectionHelper.findMethod(PoiType.class, "registerBlockStates", PoiType.class);
     }
 
     public static Set<BlockState> getAllStates(Block block)
     {
-        return ImmutableSet.copyOf(block.getStateContainer().getValidStates());
+        return ImmutableSet.copyOf(block.getStateDefinition().getPossibleStates());
     }
 
-    public static void fixPOITypeBlockStates(PointOfInterestType poiType)
+    public static void fixPOITypeBlockStates(PoiType poiType)
     {
         try
         {
@@ -45,12 +46,12 @@ public class VillagerUtil
         }
     }
 
-    public static PointOfInterestType pointOfInterestType(String p1, Set<BlockState> p2, int p3, int p4)
+    public static PoiType pointOfInterestType(String p1, Set<BlockState> p2, int p3, int p4)
     {
         try
         {
             //          Constructor<PointOfInterestType> c = (Constructor<PointOfInterestType>)PointOfInterestType.class.getDeclaredConstructors()[1];
-            Constructor<PointOfInterestType> c = PointOfInterestType.class.getDeclaredConstructor(String.class, Set.class, Integer.TYPE, Integer.TYPE);
+            Constructor<PoiType> c = PoiType.class.getDeclaredConstructor(String.class, Set.class, Integer.TYPE, Integer.TYPE);
             c.setAccessible(true);
             return c.newInstance(p1, p2, p3, p4);
         }
@@ -82,11 +83,11 @@ public class VillagerUtil
         return null;
     }
 
-    public static VillagerProfession villagerProfession(String p1, PointOfInterestType p2, ImmutableSet<Item> p3, ImmutableSet<Block> p4, @Nullable SoundEvent p5)
+    public static VillagerProfession villagerProfession(String p1, PoiType p2, ImmutableSet<Item> p3, ImmutableSet<Block> p4, @Nullable SoundEvent p5)
     {
         try
         {
-            Constructor<VillagerProfession> c = VillagerProfession.class.getDeclaredConstructor(String.class, PointOfInterestType.class, ImmutableSet.class, ImmutableSet.class, SoundEvent.class);
+            Constructor<VillagerProfession> c = VillagerProfession.class.getDeclaredConstructor(String.class, PoiType.class, ImmutableSet.class, ImmutableSet.class, SoundEvent.class);
             c.setAccessible(true);
             return c.newInstance(p1, p2, p3, p4, p5);
         }

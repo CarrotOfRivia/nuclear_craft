@@ -1,26 +1,24 @@
 package com.song.nuclear_craft.entities.AmmoEntities;
 
 import com.song.nuclear_craft.entities.AbstractAmmoEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.FMLPlayMessages;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
 
 public class TestAmmoEntity extends AbstractAmmoEntity {
 
 
-    public TestAmmoEntity(EntityType<? extends AbstractAmmoEntity> type, World world) {
+    public TestAmmoEntity(EntityType<? extends AbstractAmmoEntity> type, Level world) {
         super(type, world);
     }
 
-    public TestAmmoEntity(FMLPlayMessages.SpawnEntity entity, World world) {
+    public TestAmmoEntity(FMLPlayMessages.SpawnEntity entity, Level world) {
         super(entity, world);
     }
 
-    public TestAmmoEntity(double x, double y, double z, World world, ItemStack itemStack, PlayerEntity shooter) {
+    public TestAmmoEntity(double x, double y, double z, Level world, ItemStack itemStack, Player shooter) {
         super(x, y, z, world, itemStack, shooter);
     }
 

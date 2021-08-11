@@ -1,10 +1,10 @@
 package com.song.nuclear_craft.network;
 
 import com.song.nuclear_craft.entities.ExplosionUtils;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -21,14 +21,14 @@ public class MySExplosionPacket {
         this.z = z;
     }
 
-    public MySExplosionPacket(final PacketBuffer packetBuffer){
+    public MySExplosionPacket(final FriendlyByteBuf packetBuffer){
         this.radius = packetBuffer.readDouble();
         this.x = packetBuffer.readDouble();
         this.y = packetBuffer.readDouble();
         this.z = packetBuffer.readDouble();
     }
 
-    public void encode(final PacketBuffer packetBuffer){
+    public void encode(final FriendlyByteBuf packetBuffer){
         packetBuffer.writeDouble(this.radius);
         packetBuffer.writeDouble(this.x);
         packetBuffer.writeDouble(this.y);

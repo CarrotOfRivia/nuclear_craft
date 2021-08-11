@@ -1,15 +1,13 @@
 package com.song.nuclear_craft.network;
 
 import com.song.nuclear_craft.blocks.tileentity.C4BombTileEntity;
-import net.minecraft.network.INetHandler;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.network.play.ServerPlayNetHandler;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketListener;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.network.ServerGamePacketListenerImpl;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -26,27 +24,27 @@ public class C4BombSettingPacket {
         this.action = action;
     }
 
-    public C4BombSettingPacket(final PacketBuffer packetBuffer){
+    public C4BombSettingPacket(final FriendlyByteBuf packetBuffer){
         this.x = packetBuffer.readDouble();
         this.y = packetBuffer.readDouble();
         this.z = packetBuffer.readDouble();
-        this.action = packetBuffer.readString(32767);
+        this.action = packetBuffer.readUtf(32767);
     }
 
-    public void encode(final PacketBuffer packetBuffer){
+    public void encode(final FriendlyByteBuf packetBuffer){
         packetBuffer.writeDouble(this.x);
         packetBuffer.writeDouble(this.y);
         packetBuffer.writeDouble(this.z);
-        packetBuffer.writeString(this.action);
+        packetBuffer.writeUtf(this.action);
     }
 
     public static void handle(C4BombSettingPacket packet, Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(()-> {
             NetworkEvent.Context context = ctx.get();
-            INetHandler handler = context.getNetworkManager().getNetHandler();
-            if (handler instanceof ServerPlayNetHandler){
-                ServerWorld world = (ServerWorld) ((ServerPlayNetHandler) handler).player.world;
-                TileEntity entity = world.getTileEntity(new BlockPos(packet.x, packet.y, packet.z));
+            PacketListener handler = context.getNetworkManager().getPacketListener();
+            if (handler instanceof ServerGamePacketListenerImpl){
+                ServerLevel world = (ServerLevel) ((ServerGamePacketListenerImpl) handler).player.level;
+                BlockEntity entity = world.getBlockEntity(new BlockPos(packet.x, packet.y, packet.z));
                 if (!(entity instanceof C4BombTileEntity)){
                     throw new IllegalArgumentException("entity should be C4bomb, but not: "+entity);
                 }

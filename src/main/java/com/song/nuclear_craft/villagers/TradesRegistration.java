@@ -1,22 +1,14 @@
 package com.song.nuclear_craft.villagers;
 
 import com.song.nuclear_craft.NuclearCraft;
-import com.song.nuclear_craft.items.Ammo.AmmoPossibleCombination;
-import com.song.nuclear_craft.items.Ammo.AmmoSize;
-import com.song.nuclear_craft.items.Ammo.AmmoType;
-import com.song.nuclear_craft.items.ItemList;
 import com.song.nuclear_craft.misc.ConfigCommon;
-import net.minecraft.entity.merchant.villager.VillagerProfession;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid = NuclearCraft.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class TradesRegistration {

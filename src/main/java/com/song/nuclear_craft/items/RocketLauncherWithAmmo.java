@@ -5,25 +5,25 @@ import com.song.nuclear_craft.events.ClientEventForgeSubscriber;
 import com.song.nuclear_craft.network.GunLoadingPacket;
 import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
 import com.song.nuclear_craft.network.SoundPacket;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.FireworkRocketEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.FireworkRocketEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -44,32 +44,32 @@ public abstract class RocketLauncherWithAmmo extends Item {
 
     @Nonnull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, @Nonnull PlayerEntity playerIn, @Nonnull Hand handIn) {
+    public InteractionResultHolder<ItemStack> use(Level worldIn, @Nonnull Player playerIn, @Nonnull InteractionHand handIn) {
         enterCD(playerIn);
         ItemStack toBeFired = new ItemStack(getBoundedAmmo());
-        toBeFired.getOrCreateChildTag("Fireworks").putByte("Flight", (byte) 127);
+        toBeFired.getOrCreateTagElement("Fireworks").putByte("Flight", (byte) 127);
 
-        ItemStack thisItemStack = playerIn.getHeldItem(handIn);
+        ItemStack thisItemStack = playerIn.getItemInHand(handIn);
 
-        if (!worldIn.isRemote){
-            FireworkRocketEntity entity = getEntity(worldIn, toBeFired, playerIn, playerIn.getPosX(), playerIn.getPosYEye() - (double)0.15F, playerIn.getPosZ(), true);
-            Vector3d vec3d = playerIn.getLookVec();
+        if (!worldIn.isClientSide){
+            FireworkRocketEntity entity = getEntity(worldIn, toBeFired, playerIn, playerIn.getX(), playerIn.getEyeY() - (double)0.15F, playerIn.getZ(), true);
+            Vec3 vec3d = playerIn.getLookAngle();
             entity.shoot(vec3d.x, vec3d.y, vec3d.z, 5f, 0);
-            worldIn.addEntity(entity);
-            worldIn.playSound(null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), SoundEvents.ITEM_CROSSBOW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.f);
+            worldIn.addFreshEntity(entity);
+            worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.CROSSBOW_SHOOT, SoundSource.PLAYERS, 1.0F, 1.f);
         }
         if (playerIn.isCreative()){
-            return ActionResult.func_233538_a_(thisItemStack, worldIn.isRemote());
+            return InteractionResultHolder.sidedSuccess(thisItemStack, worldIn.isClientSide());
         }
         else {
             return afterFire(worldIn, thisItemStack);
         }
     }
 
-    protected abstract FireworkRocketEntity getEntity(World worldIn, ItemStack toBeFired, Entity playerIn, double x, double y, double z, boolean p_i231582_10_);
+    protected abstract FireworkRocketEntity getEntity(Level worldIn, ItemStack toBeFired, Entity playerIn, double x, double y, double z, boolean p_i231582_10_);
 
     protected int getAmmoCount(ItemStack itemStack){
-        CompoundNBT compoundnbt = itemStack.getOrCreateTag();
+        CompoundTag compoundnbt = itemStack.getOrCreateTag();
         if(! compoundnbt.contains("ammo")){
             compoundnbt.putInt("ammo", this.getMAX_AMMO());
         }
@@ -77,7 +77,7 @@ public abstract class RocketLauncherWithAmmo extends Item {
     }
 
     protected void addAmmoCount(ItemStack itemStack, int n){
-        CompoundNBT compoundnbt = itemStack.getOrCreateTag();
+        CompoundTag compoundnbt = itemStack.getOrCreateTag();
         assert compoundnbt.contains("ammo");
         compoundnbt.putInt("ammo", n+compoundnbt.getInt("ammo"));
     }
@@ -86,29 +86,29 @@ public abstract class RocketLauncherWithAmmo extends Item {
         addAmmoCount(itemStack, -getAmmoCount(itemStack));
     }
 
-    protected ActionResult<ItemStack>  afterFire(World worldIn, ItemStack thisItemStack){
-        CompoundNBT compoundnbt = thisItemStack.getOrCreateTag();
+    protected InteractionResultHolder<ItemStack>  afterFire(Level worldIn, ItemStack thisItemStack){
+        CompoundTag compoundnbt = thisItemStack.getOrCreateTag();
         if(! compoundnbt.contains("ammo")){
             compoundnbt.putInt("ammo", this.getMAX_AMMO());
         }
-        if(!worldIn.isRemote){
+        if(!worldIn.isClientSide){
             int n_ammo = compoundnbt.getInt("ammo");
             n_ammo --;
             compoundnbt.putInt("ammo", n_ammo);
         }
         if (compoundnbt.getInt("ammo") <= 0){
-            return ActionResult.func_233538_a_(new ItemStack(ItemList.ROCKET_LAUNCHER.get()), worldIn.isRemote());
+            return InteractionResultHolder.sidedSuccess(new ItemStack(ItemList.ROCKET_LAUNCHER.get()), worldIn.isClientSide());
         }
         else {
-            return ActionResult.func_233538_a_(thisItemStack, worldIn.isRemote());
+            return InteractionResultHolder.sidedSuccess(thisItemStack, worldIn.isClientSide());
         }
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         int n_ammo = getAmmoCount(stack);
-        tooltip.add(new TranslationTextComponent(String.format("item.%s.rocket_launcher.ammo_left", NuclearCraft.MODID)).mergeStyle(TextFormatting.GRAY));
-        tooltip.add(new StringTextComponent(""+n_ammo).mergeStyle(TextFormatting.GOLD));
+        tooltip.add(new TranslatableComponent(String.format("item.%s.rocket_launcher.ammo_left", NuclearCraft.MODID)).withStyle(ChatFormatting.GRAY));
+        tooltip.add(new TextComponent(""+n_ammo).withStyle(ChatFormatting.GOLD));
     }
 
     public void addAmmo(ItemStack ammo, ItemStack rocket, int itemSlot, Entity entityIn){
@@ -119,21 +119,21 @@ public abstract class RocketLauncherWithAmmo extends Item {
                     int n_loaded = Math.min(getMAX_AMMO()-n_ammo, ammo.getCount());
                     ammo.shrink(n_loaded);
                     addAmmoCount(rocket, n_loaded);
-                    BlockPos pos = entityIn.getPosition();
-                    NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), 20, entityIn.world.getDimensionKey())),
+                    BlockPos pos = entityIn.blockPosition();
+                    NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), 20, entityIn.level.dimension())),
                             new SoundPacket(pos, "rocket_load"));
-                    ((PlayerEntity) entityIn).getCooldownTracker().setCooldown(rocket.getItem(), 20);
+                    ((Player) entityIn).getCooldowns().addCooldown(rocket.getItem(), 20);
                 }
             }
         }
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+    public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         // loading ammo
         super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
-        if(isSelected && worldIn.isRemote){
-            if(ClientEventForgeSubscriber.gunReload.isPressed() && (entityIn instanceof PlayerEntity)){
+        if(isSelected && worldIn.isClientSide){
+            if(ClientEventForgeSubscriber.gunReload.consumeClick() && (entityIn instanceof Player)){
                 NuclearCraftPacketHandler.KEY_BIND.sendToServer(new GunLoadingPacket(itemSlot));
             }
         }
@@ -146,7 +146,7 @@ public abstract class RocketLauncherWithAmmo extends Item {
 //        }
     }
 
-    protected void enterCD(PlayerEntity playerEntity){
-        playerEntity.getCooldownTracker().setCooldown(this, coolDown);
+    protected void enterCD(Player playerEntity){
+        playerEntity.getCooldowns().addCooldown(this, coolDown);
     }
 }

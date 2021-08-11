@@ -2,12 +2,12 @@ package com.song.nuclear_craft.network;
 
 import com.song.nuclear_craft.blocks.tileentity.C4BombTileEntity;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -30,21 +30,21 @@ public class C4BombSynPacket {
         this.is_active = is_active;
     }
 
-    public C4BombSynPacket(final PacketBuffer packetBuffer){
+    public C4BombSynPacket(final FriendlyByteBuf packetBuffer){
         this.x = packetBuffer.readDouble();
         this.y = packetBuffer.readDouble();
         this.z = packetBuffer.readDouble();
-        this.inputPanel = packetBuffer.readString();
+        this.inputPanel = packetBuffer.readUtf();
         this.fuse_age = packetBuffer.readInt();
         this.explode_time = packetBuffer.readInt();
         this.is_active = packetBuffer.readBoolean();
     }
 
-    public void encode(final PacketBuffer packetBuffer){
+    public void encode(final FriendlyByteBuf packetBuffer){
         packetBuffer.writeDouble(this.x);
         packetBuffer.writeDouble(this.y);
         packetBuffer.writeDouble(this.z);
-        packetBuffer.writeString(this.inputPanel);
+        packetBuffer.writeUtf(this.inputPanel);
         packetBuffer.writeInt(fuse_age);
         packetBuffer.writeInt(explode_time);
         packetBuffer.writeBoolean(is_active);
@@ -54,7 +54,7 @@ public class C4BombSynPacket {
         ctx.get().enqueueWork(()-> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
 //            NetworkEvent.Context context = ctx.get();
 //            INetHandler handler = context.getNetworkManager().getNetHandler();
-            TileEntity entity = Minecraft.getInstance().world.getTileEntity(new BlockPos(packet.x, packet.y, packet.z));
+            BlockEntity entity = Minecraft.getInstance().level.getBlockEntity(new BlockPos(packet.x, packet.y, packet.z));
             if (entity instanceof C4BombTileEntity){
                 ((C4BombTileEntity) entity).setAttr(packet.inputPanel, packet.fuse_age, packet.explode_time, packet.is_active);
             }

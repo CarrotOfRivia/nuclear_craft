@@ -1,11 +1,11 @@
 package com.song.nuclear_craft.network;
 
 import com.song.nuclear_craft.client.SoundPlayMethods;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -22,18 +22,18 @@ public class SoundPacket {
         this.action = action;
     }
 
-    public SoundPacket(final PacketBuffer packetBuffer){
+    public SoundPacket(final FriendlyByteBuf packetBuffer){
         this.x = packetBuffer.readDouble();
         this.y = packetBuffer.readDouble();
         this.z = packetBuffer.readDouble();
-        this.action = packetBuffer.readString(32767);
+        this.action = packetBuffer.readUtf(32767);
     }
 
-    public void encode(final PacketBuffer packetBuffer){
+    public void encode(final FriendlyByteBuf packetBuffer){
         packetBuffer.writeDouble(this.x);
         packetBuffer.writeDouble(this.y);
         packetBuffer.writeDouble(this.z);
-        packetBuffer.writeString(this.action);
+        packetBuffer.writeUtf(this.action);
     }
 
     public static void handle(SoundPacket packet, Supplier<NetworkEvent.Context> ctx){

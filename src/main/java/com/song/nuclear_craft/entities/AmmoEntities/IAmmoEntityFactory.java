@@ -2,12 +2,12 @@ package com.song.nuclear_craft.entities.AmmoEntities;
 
 import com.song.nuclear_craft.entities.AbstractAmmoEntity;
 import com.song.nuclear_craft.items.Ammo.AmmoType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public interface IAmmoEntityFactory {
-    AbstractAmmoEntity create(double x, double y, double z, World world, ItemStack toBeFired, PlayerEntity shooter);
+    AbstractAmmoEntity create(double x, double y, double z, Level world, ItemStack toBeFired, Player shooter);
 
     static IAmmoEntityFactory getAmmoEntityFactory(AmmoType ammoType){
         switch (ammoType){

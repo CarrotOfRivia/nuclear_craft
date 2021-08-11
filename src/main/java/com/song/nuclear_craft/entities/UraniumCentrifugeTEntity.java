@@ -1,30 +1,27 @@
 package com.song.nuclear_craft.entities;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.FurnaceContainer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.AbstractCookingRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-
-@Deprecated
-public class UraniumCentrifugeTEntity extends AbstractFurnaceTileEntity {
-    public UraniumCentrifugeTEntity() {
-        super(TileEntityType.FURNACE, IRecipeType.SMELTING);
-    }
-
-    @Override
-    protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent("container.uranium_centrifuge");
-    }
-
-    @Override
-    protected Container createMenu(int id, PlayerInventory player) {
-        return new FurnaceContainer(id, player, this, this.furnaceData);
-    }
-}
+//import net.minecraft.network.chat.Component;
+//import net.minecraft.network.chat.TranslatableComponent;
+//import net.minecraft.world.entity.player.Inventory;
+//import net.minecraft.world.inventory.AbstractContainerMenu;
+//import net.minecraft.world.inventory.FurnaceMenu;
+//import net.minecraft.world.item.crafting.RecipeType;
+//import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
+//import net.minecraft.world.level.block.entity.BlockEntityType;
+//
+//@Deprecated
+//public class UraniumCentrifugeTEntity extends AbstractFurnaceBlockEntity {
+//    public UraniumCentrifugeTEntity() {
+//        super(BlockEntityType.FURNACE, RecipeType.SMELTING);
+//    }
+//
+//    @Override
+//    protected Component getDefaultName() {
+//        return new TranslatableComponent("container.uranium_centrifuge");
+//    }
+//
+//    @Override
+//    protected AbstractContainerMenu createMenu(int id, Inventory player) {
+//        return new FurnaceMenu(id, player, this, this.dataAccess);
+//    }
+//}

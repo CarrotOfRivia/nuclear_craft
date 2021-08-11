@@ -1,9 +1,6 @@
 package com.song.nuclear_craft.items.defuse_kit;
 
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemTier;
-import net.minecraft.item.TieredItem;
+import net.minecraft.world.item.Item;
 
 public abstract class DefuseKit extends Item {
 

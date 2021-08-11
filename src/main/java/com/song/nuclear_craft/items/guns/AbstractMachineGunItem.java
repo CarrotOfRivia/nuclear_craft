@@ -6,14 +6,14 @@ import com.song.nuclear_craft.items.Ammo.AmmoSize;
 import com.song.nuclear_craft.items.Ammo.AmmoType;
 import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
 import com.song.nuclear_craft.network.SoundPacket;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 
@@ -25,42 +25,42 @@ public abstract class AbstractMachineGunItem extends AbstractGunItem{
 
     @Nonnull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, PlayerEntity playerIn, @Nonnull Hand handIn) {
-        ItemStack heldItemStack = playerIn.getHeldItem(handIn);
+    public InteractionResultHolder<ItemStack> use(@Nonnull Level worldIn, Player playerIn, @Nonnull InteractionHand handIn) {
+        ItemStack heldItemStack = playerIn.getItemInHand(handIn);
         if (heldItemStack.getItem() instanceof AbstractGunItem){
             AbstractGunItem gunItem = (AbstractGunItem) heldItemStack.getItem();
-            if((!worldIn.isRemote)&&(hasAmmo(heldItemStack))){
+            if((!worldIn.isClientSide)&&(hasAmmo(heldItemStack))){
                 AmmoType ammoType = getAmmoType(heldItemStack);
                 assert ammoType != null;
                 AmmoSize ammoSize = compatibleSize();
                 if(gunItem.getCoolDown()>0){
-                    playerIn.getCooldownTracker().setCooldown(heldItemStack.getItem(), gunItem.getCoolDown());
+                    playerIn.getCooldowns().addCooldown(heldItemStack.getItem(), gunItem.getCoolDown());
                 }
                 AbstractAmmo ammoItem = gunItem.getAmmoItem(ammoType, ammoSize);
                 ItemStack toBeFired = new ItemStack(ammoItem);
-                Vector3d lookVec = playerIn.getLookVec();
-                BlockPos playerPos = playerIn.getPosition();
+                Vec3 lookVec = playerIn.getLookAngle();
+                BlockPos playerPos = playerIn.blockPosition();
                 for(int i = 0; i< getNumShoots(); i++){
                     AbstractAmmoEntity entity = getAmmoEntity(gunItem, playerIn, lookVec, toBeFired, worldIn, ammoItem, ammoType, ammoSize);
                     entity.shoot(lookVec.x, lookVec.y, lookVec.z, ammoItem.getBaseSpeed()*getSpeedModifier()*(1+0.01f*random.nextFloat()), getInaccuracy(worldIn, playerIn));
                     // one tick to avoid shooting yourself
                     entity.tick();
-                    worldIn.addEntity(entity);
+                    worldIn.addFreshEntity(entity);
 
                     shrinkAmmoNBT(heldItemStack);
                 }
                 NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(
-                        playerPos.getX(), playerPos.getY(), playerPos.getZ(), getGunSoundDist(), playerIn.world.getDimensionKey())),
+                        playerPos.getX(), playerPos.getY(), playerPos.getZ(), getGunSoundDist(), playerIn.level.dimension())),
                         new SoundPacket(playerPos, getShootActionString()));
-                return ActionResult.func_233538_a_(heldItemStack, worldIn.isRemote());
+                return InteractionResultHolder.sidedSuccess(heldItemStack, worldIn.isClientSide());
             }
-            else if(! worldIn.isRemote){
-                BlockPos pos = playerIn.getPosition();
-                NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), 4, playerIn.world.getDimensionKey())),
+            else if(! worldIn.isClientSide){
+                BlockPos pos = playerIn.blockPosition();
+                NuclearCraftPacketHandler.C4_SETTING_CHANNEL.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), 4, playerIn.level.dimension())),
                         new SoundPacket(pos, "no_ammo"));
             }
         }
-        return super.onItemRightClick(worldIn, playerIn, handIn);
+        return super.use(worldIn, playerIn, handIn);
     }
 
     protected abstract int getNumShoots();

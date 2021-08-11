@@ -1,11 +1,11 @@
 package com.song.nuclear_craft.network;
 
 import com.song.nuclear_craft.client.C4Defuse;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -24,7 +24,7 @@ public class BombDefuseProgressPacket {
         this.defuseTick = defuseTick;
     }
 
-    public BombDefuseProgressPacket(final PacketBuffer packetBuffer){
+    public BombDefuseProgressPacket(final FriendlyByteBuf packetBuffer){
         this.x = packetBuffer.readDouble();
         this.y = packetBuffer.readDouble();
         this.z = packetBuffer.readDouble();
@@ -32,7 +32,7 @@ public class BombDefuseProgressPacket {
         this.defuseTick = packetBuffer.readInt();
     }
 
-    public void encode(final PacketBuffer packetBuffer){
+    public void encode(final FriendlyByteBuf packetBuffer){
         packetBuffer.writeDouble(this.x);
         packetBuffer.writeDouble(this.y);
         packetBuffer.writeDouble(this.z);

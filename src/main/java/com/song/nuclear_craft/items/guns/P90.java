@@ -4,15 +4,17 @@ import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.items.Ammo.AmmoSize;
 import com.song.nuclear_craft.items.Ammo.AmmoType;
 import com.song.nuclear_craft.misc.ConfigCommon;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class P90 extends AbstractMachineGunItem{
     public P90() {
-        super(new Properties().maxStackSize(1).group(NuclearCraft.ITEM_GROUP));
+        super(new Properties().stacksTo(1).tab(NuclearCraft.ITEM_GROUP));
     }
 
     @Override
@@ -62,7 +64,7 @@ public class P90 extends AbstractMachineGunItem{
     }
 
     @Override
-    protected float getInaccuracy(World world, PlayerEntity playerEntity) {
+    protected float getInaccuracy(Level world, Player playerEntity) {
         return 0.5f;
     }
 }

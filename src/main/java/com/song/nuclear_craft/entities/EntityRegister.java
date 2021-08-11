@@ -1,12 +1,10 @@
 package com.song.nuclear_craft.entities;
 
 import com.song.nuclear_craft.NuclearCraft;
-import com.song.nuclear_craft.entities.AmmoEntities.AmmoAntiGravityEntity;
-import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -16,13 +14,13 @@ public class EntityRegister {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, NuclearCraft.MODID);
     // Bullets
 
-    public static final RegistryObject<EntityType<AbstractAmmoEntity>> BULLET_ENTITY = ENTITIES.register("anti_gravity_ammo", ()->EntityType.Builder.<AbstractAmmoEntity>create(AbstractAmmoEntity::new, EntityClassification.MISC).
-            size(0.01f, 0.01f).setCustomClientFactory(AbstractAmmoEntity::new).build(new ResourceLocation(NuclearCraft.MODID, "anti_gravity_ammo").toString()));
+    public static final RegistryObject<EntityType<AbstractAmmoEntity>> BULLET_ENTITY = ENTITIES.register("anti_gravity_ammo", ()->EntityType.Builder.<AbstractAmmoEntity>of(AbstractAmmoEntity::new, MobCategory.MISC).
+            sized(0.01f, 0.01f).setCustomClientFactory(AbstractAmmoEntity::new).build(new ResourceLocation(NuclearCraft.MODID, "anti_gravity_ammo").toString()));
 //    public static final EntityType<? extends AbstractAmmoEntity> BULLET_ENTITY = EntityType.Builder.<AbstractAmmoEntity>create(AbstractAmmoEntity::new, EntityClassification.MISC).
-//            size(0.1f, 0.1f).func_233606_a_(4).func_233608_b_(10).setCustomClientFactory(AbstractAmmoEntity::new).build(null);
+//            size(0.1f, 0.1f).clientTrackingRange(4).updateInterval(10).setCustomClientFactory(AbstractAmmoEntity::new).build(null);
 
-    public static final RegistryObject<EntityType<NukeExplosionHandler>> NUKE_EXPLOSION_HANDLER_TYPE = ENTITIES.register("nuke_explosion_handler", ()->EntityType.Builder.<NukeExplosionHandler>create(NukeExplosionHandler::new, EntityClassification.MISC).
-            size(0.01f, 0.01f).build(new ResourceLocation(NuclearCraft.MODID, "nuke_explosion_handler").toString()));
+    public static final RegistryObject<EntityType<NukeExplosionHandler>> NUKE_EXPLOSION_HANDLER_TYPE = ENTITIES.register("nuke_explosion_handler", ()->EntityType.Builder.<NukeExplosionHandler>of(NukeExplosionHandler::new, MobCategory.MISC).
+            sized(0.01f, 0.01f).build(new ResourceLocation(NuclearCraft.MODID, "nuke_explosion_handler").toString()));
 
 
 }

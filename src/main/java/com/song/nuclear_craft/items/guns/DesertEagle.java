@@ -7,10 +7,12 @@ import com.song.nuclear_craft.misc.ConfigCommon;
 
 import javax.annotation.Nonnull;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class DesertEagle extends AbstractGunItem {
 
     public DesertEagle() {
-        super(new Properties().maxStackSize(1).group(NuclearCraft.ITEM_GROUP));
+        super(new Properties().stacksTo(1).tab(NuclearCraft.ITEM_GROUP));
     }
 
     @Override

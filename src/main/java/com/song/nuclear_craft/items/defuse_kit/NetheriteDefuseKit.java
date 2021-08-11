@@ -3,9 +3,11 @@ package com.song.nuclear_craft.items.defuse_kit;
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.misc.ConfigCommon;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class NetheriteDefuseKit extends DefuseKit{
     public NetheriteDefuseKit() {
-        super(new Properties().maxStackSize(1).group(NuclearCraft.ITEM_GROUP).maxDamage(500));
+        super(new Properties().stacksTo(1).tab(NuclearCraft.ITEM_GROUP).durability(500));
     }
 
     @Override

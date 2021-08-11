@@ -1,19 +1,19 @@
 package com.song.nuclear_craft.entities.rocket_entities;
 
 import com.song.nuclear_craft.entities.ExplosionUtils;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.projectile.FireworkRocketEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.projectile.FireworkRocketEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3i;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.core.Vec3i;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 
@@ -21,27 +21,27 @@ public class WaterDropRocketEntity extends FireworkRocketEntity {
     private int meltCD = 7;
     private final int maxLife;
     private int age = 0;
-    public WaterDropRocketEntity(World world, ItemStack itemStack, Entity entity, double v, double v1, double v2, boolean b) {
+    public WaterDropRocketEntity(Level world, ItemStack itemStack, Entity entity, double v, double v1, double v2, boolean b) {
         super(world, itemStack, entity, v, v1, v2, b);
         this.maxLife = 10000;
     }
 
-    public WaterDropRocketEntity(World world, ItemStack itemStack, Entity entity, double v, double v1, double v2, boolean b, int maxLife){
+    public WaterDropRocketEntity(Level world, ItemStack itemStack, Entity entity, double v, double v1, double v2, boolean b, int maxLife){
         super(world, itemStack, entity, v, v1, v2, b);
         this.maxLife = maxLife;
     }
 
     @Override
-    protected void onEntityHit(EntityRayTraceResult rayTraceResult) {
-        Vector3d hitPoint = rayTraceResult.getHitVec();
-        meltDown(world, hitPoint.x, hitPoint.y, hitPoint.z);
+    protected void onHitEntity(EntityHitResult rayTraceResult) {
+        Vec3 hitPoint = rayTraceResult.getLocation();
+        meltDown(level, hitPoint.x, hitPoint.y, hitPoint.z);
         meltCD=2;
     }
 
     @Override
-    protected void func_230299_a_(BlockRayTraceResult rayTraceResult) {
-        Vector3d hitPoint = rayTraceResult.getHitVec();
-        meltDown(world, hitPoint.x, hitPoint.y, hitPoint.z);
+    protected void onHitBlock(BlockHitResult rayTraceResult) {
+        Vec3 hitPoint = rayTraceResult.getLocation();
+        meltDown(level, hitPoint.x, hitPoint.y, hitPoint.z);
         meltCD=2;
     }
 
@@ -49,46 +49,46 @@ public class WaterDropRocketEntity extends FireworkRocketEntity {
     public void tick() {
         super.tick();
         if(--meltCD == 0){
-            meltDown(world, this.getPosX(), this.getPosY(), this.getPosZ());
+            meltDown(level, this.getX(), this.getY(), this.getZ());
             meltCD = 2;
         }
 
-        if(!world.isRemote){
+        if(!level.isClientSide){
             age ++;
-            if(this.getPosY() > 300 && this.getMotion().getY()>0){
-                this.remove();
+            if(this.getY() > 300 && this.getDeltaMovement().y()>0){
+                this.setRemoved(RemovalReason.KILLED);
             }
             if(this.age > maxLife){
-                this.remove();
+                this.setRemoved(RemovalReason.KILLED);
             }
         }
     }
 
-    private void meltDown(World world, double x, double y, double z){
-        if(! world.isRemote){
+    private void meltDown(Level world, double x, double y, double z){
+        if(! world.isClientSide){
             float radius = 10f;
             List<BlockPos> affectedBlockPositions = ExplosionUtils.getAffectedBlockPositions(world, x, y, z, radius, 3600002);
             for(BlockPos blockPos: affectedBlockPositions){
-                if(blockPos.withinDistance(new Vector3i(x, y, z), radius/4)){
-                    world.setBlockState(blockPos, Blocks.AIR.getDefaultState());
+                if(blockPos.closerThan(new Vec3i(x, y, z), radius/4)){
+                    world.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState());
                     continue;
                 }
                 Block block = world.getBlockState(blockPos).getBlock();
                 if(block == Blocks.STONE){
-                    world.setBlockState(blockPos, Blocks.BLACKSTONE.getDefaultState());
+                    world.setBlockAndUpdate(blockPos, Blocks.BLACKSTONE.defaultBlockState());
                 }
                 else if(BlockTags.LOGS.contains(block)){
-                    world.setBlockState(blockPos, Blocks.COAL_BLOCK.getDefaultState());
+                    world.setBlockAndUpdate(blockPos, Blocks.COAL_BLOCK.defaultBlockState());
                 }
                 else if(block == Blocks.BEDROCK){
-                    world.setBlockState(blockPos, Blocks.OBSIDIAN.getDefaultState());
+                    world.setBlockAndUpdate(blockPos, Blocks.OBSIDIAN.defaultBlockState());
                 }
                 else {
-                    if(this.rand.nextFloat()<0.95){
-                        world.setBlockState(blockPos, Blocks.AIR.getDefaultState());
+                    if(this.random.nextFloat()<0.95){
+                        world.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState());
                     }
                     else {
-                        world.setBlockState(blockPos, Blocks.LAVA.getDefaultState().with(BlockStateProperties.LEVEL_0_15, 15));
+                        world.setBlockAndUpdate(blockPos, Blocks.LAVA.defaultBlockState().setValue(BlockStateProperties.LEVEL, 15));
                     }
                 }
             }

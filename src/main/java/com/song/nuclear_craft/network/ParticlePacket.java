@@ -3,11 +3,11 @@ package com.song.nuclear_craft.network;
 import com.song.nuclear_craft.entities.rocket_entities.SmokeRocketEntity;
 import com.song.nuclear_craft.particles.ParticleRegister;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.IParticleData;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -24,18 +24,18 @@ public class ParticlePacket {
         this.action = action;
     }
 
-    public ParticlePacket(final PacketBuffer packetBuffer){
+    public ParticlePacket(final FriendlyByteBuf packetBuffer){
         this.x = packetBuffer.readDouble();
         this.y = packetBuffer.readDouble();
         this.z = packetBuffer.readDouble();
-        this.action = packetBuffer.readString();
+        this.action = packetBuffer.readUtf();
     }
 
-    public void encode(final PacketBuffer packetBuffer){
+    public void encode(final FriendlyByteBuf packetBuffer){
         packetBuffer.writeDouble(this.x);
         packetBuffer.writeDouble(this.y);
         packetBuffer.writeDouble(this.z);
-        packetBuffer.writeString(this.action);
+        packetBuffer.writeUtf(this.action);
     }
 
     public static void handle(ParticlePacket packet, Supplier<NetworkEvent.Context> ctx){
@@ -46,8 +46,8 @@ public class ParticlePacket {
                 case "smoke_bomb":
                     SmokeRocketEntity.generateSmoke(packet.x, packet.y, packet.z); break;
                 case "nuke_core":
-                    if (Minecraft.getInstance().world != null){
-                        Minecraft.getInstance().world.addParticle((IParticleData) ParticleRegister.EXPLODE_CORE.get(), packet.x, packet.y, packet.z, 0, 0,0);
+                    if (Minecraft.getInstance().level != null){
+                        Minecraft.getInstance().level.addParticle((ParticleOptions) ParticleRegister.EXPLODE_CORE.get(), packet.x, packet.y, packet.z, 0, 0,0);
                     }
                     break;
                 default:

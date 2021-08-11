@@ -15,16 +15,16 @@ import com.song.nuclear_craft.network.NuclearCraftPacketHandler;
 import com.song.nuclear_craft.particles.*;
 import com.song.nuclear_craft.villagers.PointOfInterestTypes;
 import com.song.nuclear_craft.villagers.ProfessionTypes;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.EntityType;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleType;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -37,8 +37,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fmlserverevents.FMLServerStartingEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -53,15 +53,15 @@ public class NuclearCraft
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
     public static final String MODID = "nuclear_craft";
-    public static final ItemGroup ITEM_GROUP = new ItemGroup("weapons") {
+    public static final CreativeModeTab ITEM_GROUP = new CreativeModeTab("weapons") {
         @Override
-        public ItemStack createIcon() {
+        public ItemStack makeIcon() {
             return new ItemStack(ItemList.ATOMIC_BOMB_ROCKET.get());
         }
     };
-    public static final ItemGroup AMMO_ITEM_GROUP = new ItemGroup("bullets") {
+    public static final CreativeModeTab AMMO_ITEM_GROUP = new CreativeModeTab("bullets") {
         @Override
-        public ItemStack createIcon() {
+        public ItemStack makeIcon() {
             return new ItemStack(ItemList.AMMO_REGISTRIES_TYPE.get(AmmoSize.SIZE_127).get(AmmoType.NORMAL).get());
         }
     };
@@ -86,6 +86,7 @@ public class NuclearCraft
         ProfessionTypes.VILLAGER_PROFESSION.register(FMLJavaModLoadingContext.get().getModEventBus());
         PointOfInterestTypes.POINT_OF_INTEREST_TYPE.register(FMLJavaModLoadingContext.get().getModEventBus());
         EffectRegister.EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        TileEntityRegister.TILE_ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigClient.CLIENT);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigCommon.COMMON);
@@ -152,10 +153,8 @@ public class NuclearCraft
         }
 
         @SubscribeEvent
-        public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event){
+        public static void onTileEntityRegistry(final RegistryEvent.Register<BlockEntityType<?>> event){
             // Tile Entities
-            event.getRegistry().registerAll(TileEntityRegister.C4_ATOMIC_BOMB_TE_TYPE, TileEntityRegister.C4_HIGH_EXPLOSIVE_TE_TYPE,
-                    TileEntityRegister.C4_INCENDIARY_TE_TYPE, TileEntityRegister.C4_SMOKE_TE_TYPE);
         }
 
         @SubscribeEvent
@@ -166,18 +165,18 @@ public class NuclearCraft
 
         @SubscribeEvent
         public static void onParticleFactoryRegistry(final ParticleFactoryRegisterEvent event){
-            Minecraft.getInstance().particles.registerFactory(ParticleRegister.NUKE_PARTICLE_SMOKE.get(), BigSmokeParticle.NukeParticleFactory::new);
-            Minecraft.getInstance().particles.registerFactory(ParticleRegister.NUKE_PARTICLE_FIRE.get(), BigSmokeParticle.NukeParticleFactory::new);
-            Minecraft.getInstance().particles.registerFactory(ParticleRegister.BIG_SMOKE.get(), BigSmokeParticle.BigSmokeFactory::new);
-            Minecraft.getInstance().particles.registerFactory(ParticleRegister.RESTRICTED_HEIGHT_SMOKE_PARTICLE.get(), RestrictedSmokeParticle.RestrictedHeightFactory::new);
-            Minecraft.getInstance().particles.registerFactory(ParticleRegister.MUSHROOM_SMOKE_PARTICLE.get(), RestrictedSmokeParticle.MushroomFactory::new);
-            Minecraft.getInstance().particles.registerFactory(ParticleRegister.SHOCK_WAVE.get(), ShockWaveParticle.Factory::new);
+            Minecraft.getInstance().particleEngine.register(ParticleRegister.NUKE_PARTICLE_SMOKE.get(), BigSmokeParticle.NukeParticleFactory::new);
+            Minecraft.getInstance().particleEngine.register(ParticleRegister.NUKE_PARTICLE_FIRE.get(), BigSmokeParticle.NukeParticleFactory::new);
+            Minecraft.getInstance().particleEngine.register(ParticleRegister.BIG_SMOKE.get(), BigSmokeParticle.BigSmokeFactory::new);
+            Minecraft.getInstance().particleEngine.register(ParticleRegister.RESTRICTED_HEIGHT_SMOKE_PARTICLE.get(), RestrictedSmokeParticle.RestrictedHeightFactory::new);
+            Minecraft.getInstance().particleEngine.register(ParticleRegister.MUSHROOM_SMOKE_PARTICLE.get(), RestrictedSmokeParticle.MushroomFactory::new);
+            Minecraft.getInstance().particleEngine.register(ParticleRegister.SHOCK_WAVE.get(), ShockWaveParticle.Factory::new);
 
-            Minecraft.getInstance().particles.registerFactory(ParticleRegister.EXPLODE_CORE.get(), ExplodeCoreParticle.Factory::new);
+            Minecraft.getInstance().particleEngine.register(ParticleRegister.EXPLODE_CORE.get(), ExplodeCoreParticle.Factory::new);
         }
 
         @SubscribeEvent
-        public static void onContainerTypeRegistry(final RegistryEvent.Register<ContainerType<?>> event){
+        public static void onContainerTypeRegistry(final RegistryEvent.Register<MenuType<?>> event){
             event.getRegistry().registerAll(ContainerTypeList.C4_BOMB_CONTAINER_TYPE);
         }
 

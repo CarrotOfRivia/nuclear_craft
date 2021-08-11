@@ -1,20 +1,20 @@
 package com.song.nuclear_craft.entities.containers;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 
 import javax.annotation.Nullable;
 import java.awt.*;
 
-public class UraniumCentrifugeContainer extends Container {
+public class UraniumCentrifugeContainer extends AbstractContainerMenu {
 
-    protected UraniumCentrifugeContainer(@Nullable ContainerType<?> type, int id) {
+    protected UraniumCentrifugeContainer(@Nullable MenuType<?> type, int id) {
         super(type, id);
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
+    public boolean stillValid(Player playerIn) {
         return true;
     }
 }

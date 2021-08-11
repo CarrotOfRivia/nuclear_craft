@@ -5,11 +5,10 @@ import com.song.nuclear_craft.items.Ammo.AmmoSize;
 import com.song.nuclear_craft.items.Ammo.AmmoType;
 import com.song.nuclear_craft.items.GunConfigurable;
 import com.song.nuclear_craft.villagers.NCTradingRecipe;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.common.ForgeConfigSpec;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ConfigCommon {
     public static ForgeConfigSpec COMMON;

@@ -2,10 +2,10 @@ package com.song.nuclear_craft.particles;
 
 import com.song.nuclear_craft.entities.NukeExplosionHandler;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particles.BasicParticleType;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.particles.SimpleParticleType;
 
-public class RestrictedSmokeParticle extends SpriteTexturedParticle {
+public class RestrictedSmokeParticle extends TextureSheetParticle {
     private double yLim;
     private double xLim;
 
@@ -19,11 +19,11 @@ public class RestrictedSmokeParticle extends SpriteTexturedParticle {
 
     private boolean canChangeColor=false;
 
-    protected RestrictedSmokeParticle(ClientWorld world, double x, double y, double z) {
+    protected RestrictedSmokeParticle(ClientLevel world, double x, double y, double z) {
         super(world, x, y, z);
     }
 
-    protected RestrictedSmokeParticle(ClientWorld world, double x, double y, double z, double motionX, double motionY, double motionZ, double xLim, double yLim, double scale, boolean canChangeColor) {
+    protected RestrictedSmokeParticle(ClientLevel world, double x, double y, double z, double motionX, double motionY, double motionZ, double xLim, double yLim, double scale, boolean canChangeColor) {
         super(world, x, y, z, motionX, motionY, motionZ);
         this.xInit = x;
         this.yInit = y;
@@ -31,9 +31,9 @@ public class RestrictedSmokeParticle extends SpriteTexturedParticle {
 
         this.xLim = xLim;
         this.yLim = yLim;
-        this.multiplyParticleScaleBy((float) scale);
-        this.maxAge=3000;
-        this.particleGravity=0;
+        this.scale((float) scale);
+        this.lifetime=3000;
+        this.gravity=0;
 
         this.xMotionInit = motionX;
         this.yMotionInit = motionY;
@@ -43,20 +43,20 @@ public class RestrictedSmokeParticle extends SpriteTexturedParticle {
     }
 
     @Override
-    public IParticleRenderType getRenderType() {
-        return IParticleRenderType.PARTICLE_SHEET_OPAQUE;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
     }
 
     @Override
     public void tick() {
         super.tick();
-        if(this.posY-yInit < yLim){
-            this.motionX = xMotionInit;
-            this.motionY = yMotionInit;
-            this.motionZ = zMotionInit;
+        if(this.y-yInit < yLim){
+            this.xd = xMotionInit;
+            this.yd = yMotionInit;
+            this.zd = zMotionInit;
         }
         else {
-            this.setExpired();
+            this.remove();
         }
 
         if (canChangeColor){
@@ -69,45 +69,45 @@ public class RestrictedSmokeParticle extends SpriteTexturedParticle {
             }
         }
 
-        if((this.posX-xInit)*(this.posX-xInit)+(this.posZ-zInit)*(this.posZ-zInit)>xLim*xLim){
-            this.setExpired();
+        if((this.x-xInit)*(this.x-xInit)+(this.z-zInit)*(this.z-zInit)>xLim*xLim){
+            this.remove();
         }
     }
 
     @Override
-    public int getBrightnessForRender(float partialTick) {
+    public int getLightColor(float partialTick) {
         return 15728880;
     }
 
-    public static class MushroomFactory implements IParticleFactory<BasicParticleType> {
-        private final IAnimatedSprite iAnimatedSprite;
+    public static class MushroomFactory implements ParticleProvider<SimpleParticleType> {
+        private final SpriteSet iAnimatedSprite;
 
-        public MushroomFactory(IAnimatedSprite iAnimatedSprite){
+        public MushroomFactory(SpriteSet iAnimatedSprite){
             this.iAnimatedSprite = iAnimatedSprite;
         }
 
         @Override
-        public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             float radius = NukeExplosionHandler.getBlastRadius();
             RestrictedSmokeParticle nukeParticle = new RestrictedSmokeParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, radius, 2*radius, radius/3, false);
-            nukeParticle.selectSpriteRandomly(this.iAnimatedSprite);
+            nukeParticle.pickSprite(this.iAnimatedSprite);
             nukeParticle.setColor(1.0F, 1.0F, 1.0F);
             return nukeParticle;
         }
     }
 
-    public static class RestrictedHeightFactory implements IParticleFactory<BasicParticleType> {
-        private final IAnimatedSprite iAnimatedSprite;
+    public static class RestrictedHeightFactory implements ParticleProvider<SimpleParticleType> {
+        private final SpriteSet iAnimatedSprite;
 
-        public RestrictedHeightFactory(IAnimatedSprite iAnimatedSprite){
+        public RestrictedHeightFactory(SpriteSet iAnimatedSprite){
             this.iAnimatedSprite = iAnimatedSprite;
         }
 
         @Override
-        public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             float radius = NukeExplosionHandler.getBlastRadius();
             RestrictedSmokeParticle nukeParticle = new RestrictedSmokeParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, radius, 2*radius, radius/3, true);
-            nukeParticle.selectSpriteRandomly(this.iAnimatedSprite);
+            nukeParticle.pickSprite(this.iAnimatedSprite);
             nukeParticle.setColor(1.0F, 1.0F, 1.0F);
             return nukeParticle;
         }

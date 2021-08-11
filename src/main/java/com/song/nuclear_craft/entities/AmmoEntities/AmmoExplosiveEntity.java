@@ -2,37 +2,37 @@ package com.song.nuclear_craft.entities.AmmoEntities;
 
 import com.song.nuclear_craft.entities.AbstractAmmoEntity;
 import com.song.nuclear_craft.entities.ExplosionUtils;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.FMLPlayMessages;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
 
 public class AmmoExplosiveEntity extends AbstractAmmoEntity {
-    public AmmoExplosiveEntity(EntityType<? extends AbstractAmmoEntity> type, World world) {
+    public AmmoExplosiveEntity(EntityType<? extends AbstractAmmoEntity> type, Level world) {
         super(type, world);
     }
 
-    public AmmoExplosiveEntity(FMLPlayMessages.SpawnEntity entity, World world) {
+    public AmmoExplosiveEntity(FMLPlayMessages.SpawnEntity entity, Level world) {
         super(entity, world);
     }
 
-    public AmmoExplosiveEntity(double x, double y, double z, World world, ItemStack itemStack, PlayerEntity shooter) {
+    public AmmoExplosiveEntity(double x, double y, double z, Level world, ItemStack itemStack, Player shooter) {
         super(x, y, z, world, itemStack, shooter);
     }
 
     @Override
-    protected void onImpact(RayTraceResult result) {
-        super.onImpact(result);
-        if(result.getType()== RayTraceResult.Type.ENTITY && ((EntityRayTraceResult)result).getEntity() instanceof AbstractAmmoEntity){
+    protected void onHit(HitResult result) {
+        super.onHit(result);
+        if(result.getType()== HitResult.Type.ENTITY && ((EntityHitResult)result).getEntity() instanceof AbstractAmmoEntity){
             return;
         }
         teleportToHitPoint(result);
-        if (!world.isRemote){
-            ExplosionUtils.oldNukeExplode(world, this, this.getPosX(), this.getPosY(), this.getPosZ(), 5, false, 20);
+        if (!level.isClientSide){
+            ExplosionUtils.oldNukeExplode(level, this, this.getX(), this.getY(), this.getZ(), 5, false, 20);
         }
-        this.remove();
+        this.setRemoved(RemovalReason.KILLED);
     }
 }
