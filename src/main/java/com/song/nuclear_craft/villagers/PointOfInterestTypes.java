@@ -4,9 +4,9 @@ import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.blocks.BlockList;
 import com.song.nuclear_craft.misc.Util;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class PointOfInterestTypes {
     public static final DeferredRegister<PoiType> POINT_OF_INTEREST_TYPE = DeferredRegister.create(ForgeRegistries.POI_TYPES, NuclearCraft.MODID);

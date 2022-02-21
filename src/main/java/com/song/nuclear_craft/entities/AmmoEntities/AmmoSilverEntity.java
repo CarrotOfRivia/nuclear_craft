@@ -6,7 +6,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
+import net.minecraftforge.network.PlayMessages;
 
 public class AmmoSilverEntity extends AbstractAmmoEntity {
 
@@ -14,7 +14,7 @@ public class AmmoSilverEntity extends AbstractAmmoEntity {
         super(type, world);
     }
 
-    public AmmoSilverEntity(FMLPlayMessages.SpawnEntity entity, Level world) {
+    public AmmoSilverEntity(PlayMessages.SpawnEntity entity, Level world) {
         super(entity, world);
     }
 

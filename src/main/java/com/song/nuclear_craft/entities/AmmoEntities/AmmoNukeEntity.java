@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
+import net.minecraftforge.network.PlayMessages;
 
 public class AmmoNukeEntity extends AbstractAmmoEntity {
 
@@ -16,7 +16,7 @@ public class AmmoNukeEntity extends AbstractAmmoEntity {
         super(type, world);
     }
 
-    public AmmoNukeEntity(FMLPlayMessages.SpawnEntity entity, Level world) {
+    public AmmoNukeEntity(PlayMessages.SpawnEntity entity, Level world) {
         super(entity, world);
     }
 

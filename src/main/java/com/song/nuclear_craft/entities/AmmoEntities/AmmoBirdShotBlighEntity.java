@@ -11,7 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
+import net.minecraftforge.network.PlayMessages;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -24,7 +24,7 @@ public class AmmoBirdShotBlighEntity extends AmmoBirdShotNormalEntity{
         super(type, world);
     }
 
-    public AmmoBirdShotBlighEntity(FMLPlayMessages.SpawnEntity entity, Level world) {
+    public AmmoBirdShotBlighEntity(PlayMessages.SpawnEntity entity, Level world) {
         super(entity, world);
     }
 

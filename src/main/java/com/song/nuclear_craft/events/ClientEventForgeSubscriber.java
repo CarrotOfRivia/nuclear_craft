@@ -44,14 +44,14 @@ public class ClientEventForgeSubscriber {
     private static final float fovBefore = 1f;
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onRenderWorldLastEvent(final RenderWorldLastEvent event){
+    public void onRenderWorldLastEvent(final RenderLevelLastEvent event){
         LocalPlayer player = Minecraft.getInstance().player;
         if (player == null) {
             return;
         }
 
         MultiBufferSource.BufferSource renderTypeBuffer = Minecraft.getInstance().renderBuffers().bufferSource();
-        PoseStack matrixStack = event.getMatrixStack();
+        PoseStack matrixStack = event.getPoseStack();
         matrixStack.pushPose();
         VertexConsumer builder = renderTypeBuffer.getBuffer(RenderType.translucent());
         builder.color(255, 0f, 0f, 255);
@@ -60,8 +60,8 @@ public class ClientEventForgeSubscriber {
     }
 
     @SubscribeEvent
-    public void onInitGuiEvent(final GuiScreenEvent.InitGuiEvent event){
-        Screen gui = event.getGui();
+    public void onInitGuiEvent(final ScreenEvent.InitScreenEvent event){
+        Screen gui = event.getScreen();
         if (gui instanceof C4BombContainerScreen){
             int i = (gui.width - ((C4BombContainerScreen) gui).getXSize()) / 2;
             int j = (gui.height - ((C4BombContainerScreen) gui).getYSize()) / 2;
@@ -69,7 +69,7 @@ public class ClientEventForgeSubscriber {
             for (int row=0; row<=2; row++){
                 for(int col=0; col<=3; col++){
                     int finalInput_id = input_id;
-                    event.addWidget(new Button(i+14+col*30, j+57+row*30, 20, 20,
+                    event.addListener(new Button(i+14+col*30, j+57+row*30, 20, 20,
                             new TextComponent(""+input_id), button-> {
                         NuclearCraftPacketHandler.C4_SETTING_CHANNEL.sendToServer(new C4BombSettingPacket(((C4BombContainerScreen) gui).getMenu().tileEntity.getBlockPos(), "add_"+ finalInput_id));
                     }));
@@ -80,15 +80,15 @@ public class ClientEventForgeSubscriber {
                     }
                 }
             }
-            event.addWidget(new Button(i+44, j+117, 20, 20,
+            event.addListener(new Button(i+44, j+117, 20, 20,
                     new TextComponent("0"), button-> {
                 NuclearCraftPacketHandler.C4_SETTING_CHANNEL.sendToServer(new C4BombSettingPacket(((C4BombContainerScreen) gui).getMenu().tileEntity.getBlockPos(), "add_"+ 0));
             }));
-            event.addWidget(new ImageButton(i+74, j+117, 20, 20, 0, 0, 2, BUTTON_X, 20, 20,
+            event.addListener(new ImageButton(i+74, j+117, 20, 20, 0, 0, 2, BUTTON_X, 20, 20,
                     button-> {
                 NuclearCraftPacketHandler.C4_SETTING_CHANNEL.sendToServer(new C4BombSettingPacket(((C4BombContainerScreen) gui).getMenu().tileEntity.getBlockPos(), "delete"));
             }));
-            event.addWidget(new ImageButton(i+104, j+117, 20, 20, 0, 0, 2, BUTTON_SKELETON, 20, 20,
+            event.addListener(new ImageButton(i+104, j+117, 20, 20, 0, 0, 2, BUTTON_SKELETON, 20, 20,
                     button-> {
                 NuclearCraftPacketHandler.C4_SETTING_CHANNEL.sendToServer(new C4BombSettingPacket(((C4BombContainerScreen) gui).getMenu().tileEntity.getBlockPos(), "activate"));
             }));
@@ -96,7 +96,7 @@ public class ClientEventForgeSubscriber {
     }
 
     @SubscribeEvent
-    public void onFovUpdate(final FOVUpdateEvent event){
+    public void onFovUpdate(final FOVModifierEvent event){
         Player entity = event.getEntity();
         Item item = entity.getMainHandItem().getItem();
         if(zoom.consumeClick()){

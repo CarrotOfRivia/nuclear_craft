@@ -8,14 +8,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
+import net.minecraftforge.network.PlayMessages;
 
 public class AmmoExplosiveEntity extends AbstractAmmoEntity {
     public AmmoExplosiveEntity(EntityType<? extends AbstractAmmoEntity> type, Level world) {
         super(type, world);
     }
 
-    public AmmoExplosiveEntity(FMLPlayMessages.SpawnEntity entity, Level world) {
+    public AmmoExplosiveEntity(PlayMessages.SpawnEntity entity, Level world) {
         super(entity, world);
     }
 

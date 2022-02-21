@@ -31,8 +31,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.network.PlayMessages;
 
 import javax.annotation.Nonnull;
 
@@ -67,7 +67,7 @@ public class AbstractAmmoEntity extends ThrowableItemProjectile {
     }
 
 //    @OnlyIn(Dist.CLIENT)
-    public AbstractAmmoEntity(FMLPlayMessages.SpawnEntity entity, Level world){
+    public AbstractAmmoEntity(PlayMessages.SpawnEntity entity, Level world){
         this(EntityRegister.BULLET_ENTITY.get(), world);
         this.setDeltaMovement(entity.getVelX(), entity.getVelY(), entity.getVelZ());
         this.lerpHeadTo(entity.getYaw(), entity.getPitch());

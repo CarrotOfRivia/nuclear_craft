@@ -11,11 +11,6 @@ public class IncendiaryTileEntity extends C4BombTileEntity{
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
-        return super.save(compound);
-    }
-
-    @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
     }

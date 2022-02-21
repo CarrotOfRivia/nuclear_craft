@@ -27,7 +27,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
@@ -173,8 +173,8 @@ public class C4BombTileEntity extends BlockEntity implements MenuProvider {
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
-        CompoundTag nbt = super.save(compound);
+    public void saveAdditional(CompoundTag nbt) {
+        super.saveAdditional(nbt);
         nbt.putInt("fuse_age", fuse_age);
         nbt.putInt("explode_time", explode_time);
         nbt.putBoolean("is_active", is_active);
@@ -183,7 +183,6 @@ public class C4BombTileEntity extends BlockEntity implements MenuProvider {
         nbt.putString("inputPanel", inputPanel);
         nbt.putInt("defuseTime", defuseTime);
         nbt.putInt("currentDefuseStatus", currentDefuseStatus);
-        return nbt;
     }
 
     @Override

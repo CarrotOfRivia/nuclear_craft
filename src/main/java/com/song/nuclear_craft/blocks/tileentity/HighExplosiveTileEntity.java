@@ -12,10 +12,6 @@ public class HighExplosiveTileEntity extends C4BombTileEntity{
         super(TileEntityRegister.C4_HIGH_EXPLOSIVE_TE_TYPE.get(), blockPos, blockState);
     }
 
-    @Override
-    public CompoundTag save(CompoundTag compound) {
-        return super.save(compound);
-    }
 
     @Override
     public void load(CompoundTag nbt) {

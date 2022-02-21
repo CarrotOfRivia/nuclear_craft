@@ -14,10 +14,6 @@ public class AtomicBombTileEntity extends C4BombTileEntity{
         super(tileEntityTypeIn, explode_time, blockPos, blockState);
     }
 
-    @Override
-    public CompoundTag save(CompoundTag compound) {
-        return super.save(compound);
-    }
 
     @Override
     public void load(CompoundTag nbt) {

@@ -3,9 +3,9 @@ package com.song.nuclear_craft.blocks.tileentity;
 import com.song.nuclear_craft.NuclearCraft;
 import com.song.nuclear_craft.blocks.BlockList;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class TileEntityRegister {
     public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, NuclearCraft.MODID);
