@@ -129,15 +129,12 @@ public class NuclearCraft
         public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
             // register blocks
             LOGGER.info("HELLO from Register Block");
-            event.getRegistry().registerAll(BlockList.C4_ATOMIC_BOMB, BlockList.C4_HIGH_EXPLOSIVE, BlockList.C4_INCENDIARY, BlockList.C4_SMOKE);
         }
 
         @SubscribeEvent
         public static void onItemsRegistry(final RegistryEvent.Register<Item> event) {
             // register items
             LOGGER.info("HELLO from Register Item");
-            event.getRegistry().registerAll(ItemList.C4_ATOMIC_BOMB, ItemList.C4_HIGH_EXPLOSIVE, ItemList.C4_INCENDIARY,
-                    ItemList.C4_SMOKE);
         }
 
         @SubscribeEvent

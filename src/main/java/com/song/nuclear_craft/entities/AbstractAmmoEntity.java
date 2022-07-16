@@ -152,10 +152,13 @@ public class AbstractAmmoEntity extends ThrowableItemProjectile {
         this.setDeltaMovement(this.getDeltaMovement().add(0, -gravity, 0));
 
         this.age++;
-        Vec3 vector3d = this.getDeltaMovement();
-        float f = (float) vector3d.horizontalDistanceSqr();
-        this.setYRot((float)(Mth.atan2(vector3d.x, vector3d.z) * (double)(180F / (float)Math.PI)));
-        this.setXRot((float)(Mth.atan2(vector3d.y, (double)f) * (double)(180F / (float)Math.PI)));
+        // The following code somehow returns NaN
+        // I straight up removed the code since we don't need it anyway
+        // bullet flies so quickly that we don't need every detail
+//        Vec3 vector3d = this.getDeltaMovement();
+//        float f = (float) vector3d.horizontalDistanceSqr();
+//        this.setYRot((float)(Mth.atan2(vector3d.x, vector3d.z) * (double)(180F / (float)Math.PI)));
+//        this.setXRot((float)(Mth.atan2(vector3d.y, (double)f) * (double)(180F / (float)Math.PI)));
 
         // remove aged bullets which are not removed by other means
         if(this.age >= 1000){

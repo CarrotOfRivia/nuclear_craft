@@ -38,10 +38,10 @@ public class ItemList {
     public static final RegistryObject<RocketLauncherWaterDrop> ROCKET_LAUNCHER_WATER_DROP = ITEMS.register("rocket_launcher_water_drop", RocketLauncherWaterDrop::new);
 
     // C4 Bombs
-    public static final Item C4_ATOMIC_BOMB = new C4BombItem(BlockList.C4_ATOMIC_BOMB, new Item.Properties().tab(NuclearCraft.ITEM_GROUP));
-    public static final Item C4_HIGH_EXPLOSIVE = new C4BombItem(BlockList.C4_HIGH_EXPLOSIVE, new Item.Properties().tab(NuclearCraft.ITEM_GROUP));
-    public static final Item C4_INCENDIARY = new C4BombItem(BlockList.C4_INCENDIARY, new Item.Properties().tab(NuclearCraft.ITEM_GROUP));
-    public static final Item C4_SMOKE = new C4BombItem(BlockList.C4_SMOKE, new Item.Properties().tab(NuclearCraft.ITEM_GROUP));
+    public static final RegistryObject<Item> C4_ATOMIC_BOMB = ITEMS.register("c4_atomic_bomb", () -> new C4BombItem(BlockList.C4_ATOMIC_BOMB.get(), new Item.Properties().tab(NuclearCraft.ITEM_GROUP)));
+    public static final RegistryObject<Item> C4_HIGH_EXPLOSIVE = ITEMS.register("c4_high_explosive", () -> new C4BombItem(BlockList.C4_HIGH_EXPLOSIVE.get(), new Item.Properties().tab(NuclearCraft.ITEM_GROUP)));
+    public static final RegistryObject<Item> C4_INCENDIARY = ITEMS.register("c4_incendiary", () -> new C4BombItem(BlockList.C4_INCENDIARY.get(), new Item.Properties().tab(NuclearCraft.ITEM_GROUP)));
+    public static final RegistryObject<Item> C4_SMOKE = ITEMS.register("c4_smoke", () -> new C4BombItem(BlockList.C4_SMOKE.get(), new Item.Properties().tab(NuclearCraft.ITEM_GROUP)));
 
     // Statues
     public static final RegistryObject<Item> STATUE_OF_LIBERTY = ITEMS.register("statue_of_liberty", ()->new BlockItem(BlockList.STATUE_OF_LIBERTY.get(), new Item.Properties().tab(NuclearCraft.ITEM_GROUP)));
@@ -98,10 +98,4 @@ public class ItemList {
         }
     }
 
-    static {
-        C4_ATOMIC_BOMB.setRegistryName(Objects.requireNonNull(BlockList.C4_ATOMIC_BOMB.getRegistryName()));
-        C4_HIGH_EXPLOSIVE.setRegistryName(Objects.requireNonNull(BlockList.C4_HIGH_EXPLOSIVE.getRegistryName()));
-        C4_INCENDIARY.setRegistryName(Objects.requireNonNull(BlockList.C4_INCENDIARY.getRegistryName()));
-        C4_SMOKE.setRegistryName(Objects.requireNonNull(BlockList.C4_SMOKE.getRegistryName()));
-    }
 }

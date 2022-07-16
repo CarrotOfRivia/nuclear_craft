@@ -6,6 +6,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.core.BlockPos;
@@ -73,11 +74,12 @@ public class WaterDropRocketEntity extends FireworkRocketEntity {
                     world.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState());
                     continue;
                 }
-                Block block = world.getBlockState(blockPos).getBlock();
+                BlockState blockState = world.getBlockState(blockPos);
+                Block block = blockState.getBlock();
                 if(block == Blocks.STONE){
                     world.setBlockAndUpdate(blockPos, Blocks.BLACKSTONE.defaultBlockState());
                 }
-                else if(BlockTags.LOGS.contains(block)){
+                else if(blockState.is(BlockTags.LOGS)){
                     world.setBlockAndUpdate(blockPos, Blocks.COAL_BLOCK.defaultBlockState());
                 }
                 else if(block == Blocks.BEDROCK){

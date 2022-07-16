@@ -27,6 +27,6 @@ public class ScopeZoomGui extends GuiComponent implements Widget {
         assert this.mc != null;
 //        this.mc.getTextureManager().bindForSetup(ZOOM_TEXTURE);
         RenderSystem.setShaderTexture(0, ZOOM_TEXTURE);
-        blit(matrixStack, 0, 0, this.getBlitOffset(), 0, 0, xSize, ySize, ySize, xSize);
+        blit(matrixStack, 0, 0, this.getBlitOffset(), 0, 0, xSize, ySize, xSize, ySize);
     }
 }
